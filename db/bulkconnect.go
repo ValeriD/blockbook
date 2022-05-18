@@ -337,6 +337,7 @@ func (b *BulkConnect) ConnectBlock(block *bchain.Block, storeBlockTxs bool) erro
 	} else if b.chainType == bchain.ChainEthereumType {
 		return b.connectBlockEthereumType(block, storeBlockTxs)
 	}
+	//FIXME
 	// for default is to connect blocks in non bulk mode
 	return b.d.ConnectBlock(block)
 }
@@ -356,6 +357,7 @@ func (b *BulkConnect) Close() error {
 		storeAddressContractsChan = make(chan error)
 		go b.parallelStoreAddressContracts(storeAddressContractsChan, true)
 	}
+	//FIXME
 	wb := gorocksdb.NewWriteBatch()
 	defer wb.Destroy()
 	bac := b.bulkAddressesCount

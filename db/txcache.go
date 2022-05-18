@@ -86,6 +86,7 @@ func (c *TxCache) GetTransaction(txid string) (*bchain.Tx, int, error) {
 				return nil, 0, err
 			}
 		} else {
+			//FIXME
 			return nil, 0, errors.New("Unknown chain type")
 		}
 		if c.enabled {
