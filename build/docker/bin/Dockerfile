@@ -41,14 +41,23 @@ RUN strip /opt/rocksdb/ldb /opt/rocksdb/sst_dump && \
     cp /opt/rocksdb/ldb /opt/rocksdb/sst_dump /build
 
 # pre-load depencencies
+# RUN \
+#     cleanup() { rm -rf $GOPATH/src/github.com/trezor ; } && \
+#     trap cleanup EXIT && \
+#     mkdir -p $GOPATH/src/github.com/trezor && \
+#     cd $GOPATH/src/github.com/trezor && \
+#     git clone https://github.com/trezor/blockbook.git && \
+#     cd blockbook && \
+#     go mod download
 RUN \
-    cleanup() { rm -rf $GOPATH/src/github.com/trezor ; } && \
+cleanup() { rm -rf $GOPATH/src/github.com/trezor ; } && \
     trap cleanup EXIT && \
     mkdir -p $GOPATH/src/github.com/trezor && \
-    cd $GOPATH/src/github.com/trezor && \
-    git clone https://github.com/trezor/blockbook.git && \
-    cd blockbook && \
-    go mod download
+    cd $GOPATH/src/github.com/trezor
+
+COPY /home/valeri/Documents/Work/GoStartups/blockbook .
+
+RUN go mod download
 
 ADD Makefile /build/Makefile
 

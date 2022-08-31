@@ -484,10 +484,11 @@ func (d *RocksDB) ConnectBlock(block *bchain.Block) error {
 		txAddressesMap := make(map[string]*TxAddresses)
 		balances := make(map[string]*AddrBalance)
 		addressContracts := make(map[string]*AddrContracts)
-		if err := d.processAddressesHydraType(block, addresses, txAddressesMap, balances, addressContracts); err != nil {
+		blockTxs, err := d.processAddressesHydraType(block, addresses, txAddressesMap, balances, addressContracts)
+		if err != nil {
 			return err
 		}
-		if err := d.storeTxAddresses(wb, txAddressesMap); err != nil {
+		if _, err := d.processAddressesHydraType(block, addresses, txAddressesMap, balances, addressContracts); err != nil {
 			return err
 		}
 		if err := d.storeBalances(wb, balances); err != nil {
@@ -496,9 +497,20 @@ func (d *RocksDB) ConnectBlock(block *bchain.Block) error {
 		if err := d.storeAddressContracts(wb, addressContracts); err != nil {
 			return err
 		}
+		if err := d.storeHydraTxAddresses(wb, txAddressesMap, blockTxs); err != nil {
+			return err
+		}
 		if err := d.storeAndCleanupBlockTxs(wb, block); err != nil {
 			return err
 		}
+
+		// if err := d.storeBalances(wb, balances); err != nil {
+		// 	return err
+		// }
+
+		// if err := d.storeAndCleanupBlockTxs(wb, block); err != nil {
+		// 	return err
+		// }
 
 	} else {
 		return errors.New("Unknown chain type")
@@ -699,162 +711,7 @@ func (d *RocksDB) GetAndResetConnectBlockStats() string {
 	d.cbs = connectBlockStats{}
 	return s
 }
-func (d *RocksDB) processAddressesHydraType(block *bchain.Block, addresses addressesMap, txAddressesMap map[string]*TxAddresses, balances map[string]*AddrBalance, addressContracts map[string]*AddrContracts) error {
 
-	blockTxIDs := make([][]byte, len(block.Txs))
-	blockTxAddresses := make([]*TxAddresses, len(block.Txs))
-	
-	// first process all outputs so that inputs can refer to txs in this block
-	for txi := range block.Txs {
-		tx := &block.Txs[txi]
-		btxID, err := d.chainParser.PackTxid(tx.Txid)
-		if err != nil {
-			return err
-		}
-		blockTxIDs[txi] = btxID
-		ta := TxAddresses{Height: block.Height}
-		ta.Outputs = make([]TxOutput, len(tx.Vout))
-		txAddressesMap[string(btxID)] = &ta
-		blockTxAddresses[txi] = &ta
-		for i, output := range tx.Vout {
-			tao := &ta.Outputs[i]
-			tao.ValueSat = output.ValueSat
-			addrDesc, err := d.chainParser.GetAddrDescFromVout(&output)
-			if err != nil || len(addrDesc) == 0 || len(addrDesc) > maxAddrDescLen {
-				if err != nil {
-					// do not log ErrAddressMissing, transactions can be without to address (for example eth contracts)
-					if err != bchain.ErrAddressMissing {
-						glog.Warningf("rocksdb: addrDesc: %v - height %d, tx %v, output %v, error %v", err, block.Height, tx.Txid, output, err)
-					}
-				} else {
-					glog.V(1).Infof("rocksdb: height %d, tx %v, vout %v, skipping addrDesc of length %d", block.Height, tx.Txid, i, len(addrDesc))
-				}
-				continue
-			}
-			tao.AddrDesc = addrDesc
-			if d.chainParser.IsAddrDescIndexable(addrDesc) {
-				strAddrDesc := string(addrDesc)
-				balance, e := balances[strAddrDesc]
-				if !e {
-					balance, err = d.GetAddrDescBalance(addrDesc, addressBalanceDetailUTXOIndexed)
-					if err != nil {
-						return err
-					}
-					if balance == nil {
-						balance = &AddrBalance{}
-					}
-					balances[strAddrDesc] = balance
-					d.cbs.balancesMiss++
-				} else {
-					d.cbs.balancesHit++
-				}
-				balance.BalanceSat.Add(&balance.BalanceSat, &output.ValueSat)
-				balance.addUtxo(&Utxo{
-					BtxID:    btxID,
-					Vout:     int32(i),
-					Height:   block.Height,
-					ValueSat: output.ValueSat,
-				})
-				// counted := addToAddressesMap(addresses, strAddrDesc, btxID, int32(i))
-				// if !counted {
-				// 	balance.Txs++
-				// }
-
-				//Add the contracts
-				if err = d.addToAddressesAndContractsEthereumType(addrDesc, btxID, ^int32(i), nil /*FIXME get the contract address */, addresses, addressContracts, true); err != nil {
-					return err
-				}
-			}
-		}
-	}
-	// process inputs
-	for txi := range block.Txs {
-		tx := &block.Txs[txi]
-		spendingTxid := blockTxIDs[txi]
-		ta := blockTxAddresses[txi]
-		ta.Inputs = make([]TxInput, len(tx.Vin))
-		logged := false
-		for i, input := range tx.Vin {
-			tai := &ta.Inputs[i]
-			btxID, err := d.chainParser.PackTxid(input.Txid)
-			if err != nil {
-				// do not process inputs without input txid
-				if err == bchain.ErrTxidMissing {
-					continue
-				}
-				return err
-			}
-			stxID := string(btxID)
-			ita, e := txAddressesMap[stxID]
-			if !e {
-				ita, err = d.getTxAddresses(btxID)
-				if err != nil {
-					return err
-				}
-				if ita == nil {
-					// allow parser to process unknown input, some coins may implement special handling, default is to log warning
-					tai.AddrDesc = d.chainParser.GetAddrDescForUnknownInput(tx, i)
-					continue
-				}
-				txAddressesMap[stxID] = ita
-				d.cbs.txAddressesMiss++
-			} else {
-				d.cbs.txAddressesHit++
-			}
-			if len(ita.Outputs) <= int(input.Vout) {
-				glog.Warningf("rocksdb: height %d, tx %v, input tx %v vout %v is out of bounds of stored tx", block.Height, tx.Txid, input.Txid, input.Vout)
-				continue
-			}
-			spentOutput := &ita.Outputs[int(input.Vout)]
-			if spentOutput.Spent {
-				glog.Warningf("rocksdb: height %d, tx %v, input tx %v vout %v is double spend", block.Height, tx.Txid, input.Txid, input.Vout)
-			}
-			tai.AddrDesc = spentOutput.AddrDesc
-			tai.ValueSat = spentOutput.ValueSat
-			// mark the output as spent in tx
-			spentOutput.Spent = true
-			if len(spentOutput.AddrDesc) == 0 {
-				if !logged {
-					glog.V(1).Infof("rocksdb: height %d, tx %v, input tx %v vout %v skipping empty address", block.Height, tx.Txid, input.Txid, input.Vout)
-					logged = true
-				}
-				continue
-			}
-			if d.chainParser.IsAddrDescIndexable(spentOutput.AddrDesc) {
-				strAddrDesc := string(spentOutput.AddrDesc)
-				balance, e := balances[strAddrDesc]
-				if !e {
-					balance, err = d.GetAddrDescBalance(spentOutput.AddrDesc, addressBalanceDetailUTXOIndexed)
-					if err != nil {
-						return err
-					}
-					if balance == nil {
-						balance = &AddrBalance{}
-					}
-					balances[strAddrDesc] = balance
-					d.cbs.balancesMiss++
-				} else {
-					d.cbs.balancesHit++
-				}
-				// counted := addToAddressesMap(addresses, strAddrDesc, spendingTxid, ^int32(i))
-				// if !counted {
-				// 	balance.Txs++
-				// }
-				if err = d.addToAddressesAndContractsEthereumType(spentOutput.AddrDesc, spendingTxid, ^int32(i), nil, addresses, addressContracts, true); err != nil {
-					return err
-				}
-
-				balance.BalanceSat.Sub(&balance.BalanceSat, &spentOutput.ValueSat)
-				balance.markUtxoAsSpent(btxID, int32(input.Vout))
-				if balance.BalanceSat.Sign() < 0 {
-					d.resetValueSatToZero(&balance.BalanceSat, spentOutput.AddrDesc, "balance")
-				}
-				balance.SentSat.Add(&balance.SentSat, &spentOutput.ValueSat)
-			}
-		}
-	}
-	return nil
-}
 func (d *RocksDB) processAddressesBitcoinType(block *bchain.Block, addresses addressesMap, txAddressesMap map[string]*TxAddresses, balances map[string]*AddrBalance) error {
 	blockTxIDs := make([][]byte, len(block.Txs))
 	blockTxAddresses := make([]*TxAddresses, len(block.Txs))
@@ -902,6 +759,7 @@ func (d *RocksDB) processAddressesBitcoinType(block *bchain.Block, addresses add
 				} else {
 					d.cbs.balancesHit++
 				}
+
 				balance.BalanceSat.Add(&balance.BalanceSat, &output.ValueSat)
 				balance.addUtxo(&Utxo{
 					BtxID:    btxID,
@@ -913,6 +771,8 @@ func (d *RocksDB) processAddressesBitcoinType(block *bchain.Block, addresses add
 				if !counted {
 					balance.Txs++
 				}
+				glog.Info(block.Height, len(tx.Vout), addrDesc, balances[strAddrDesc].BalanceSat)
+
 			}
 		}
 	}

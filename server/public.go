@@ -649,11 +649,14 @@ func (s *PublicServer) getAddressQueryParams(r *http.Request, accountDetails api
 	case "nonzero":
 		tokensToReturn = api.TokensToReturnNonzeroBalance
 	}
+
 	gap, ec := strconv.Atoi(r.URL.Query().Get("gap"))
 	if ec != nil {
 		gap = 0
 	}
 	contract := r.URL.Query().Get("contract")
+	glog.Info(tokensToReturn, 1)
+
 	return page, pageSize, accountDetails, &api.AddressFilter{
 		Vout:           voutFilter,
 		TokensToReturn: tokensToReturn,
@@ -666,6 +669,7 @@ func (s *PublicServer) getAddressQueryParams(r *http.Request, accountDetails api
 func (s *PublicServer) explorerAddress(w http.ResponseWriter, r *http.Request) (tpl, *TemplateData, error) {
 	var addressParam string
 	i := strings.LastIndexByte(r.URL.Path, '/')
+
 	if i > 0 {
 		addressParam = r.URL.Path[i+1:]
 	}

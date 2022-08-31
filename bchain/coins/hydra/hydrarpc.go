@@ -28,11 +28,6 @@ type rpcLogWithTxHash struct {
 	Hash string `json:"transactionHash"`
 }
 
-type RpcReceipt struct {
-	GasUsed string    `json:"gasUsed"`
-	Status  string    `json:"status"`
-	Logs    []*RpcLog `json:"logs"`
-}
 type cmdTransactionReceipt struct {
 	Method string   `json:"method"`
 	Params []string `json:"params"`
@@ -40,7 +35,7 @@ type cmdTransactionReceipt struct {
 type resTransactionReceipt struct {
 	Error  *bchain.RPCError `json:"error"`
 	Result struct {
-		RpcReceipt RpcReceipt `json:"result"`
+		RpcReceipt rpcReceipt `json:"result"`
 	}
 }
 type resEstimateSmartFee struct {
@@ -129,7 +124,6 @@ func (b *HydraRPC) EstimateSmartFee(blocks int, conservative bool) (big.Int, err
 }
 
 func (b *HydraRPC) GetBlock(hash string, height uint32) (*bchain.Block, error) {
-	glog.Info("Here")
 	var err error
 	if hash == "" {
 		hash, err = b.GetBlockHash(height)
@@ -140,12 +134,10 @@ func (b *HydraRPC) GetBlock(hash string, height uint32) (*bchain.Block, error) {
 	if !b.ParseBlocks {
 		return b.GetBlockFull(hash)
 	}
-	glog.Info("Here1")
 	// optimization
 	if height > 0 {
 		return b.GetBlockWithoutHeader(hash, height)
 	}
-	glog.Info("Here2")
 	header, err := b.GetBlockHeader(hash)
 	if err != nil {
 		return nil, err
@@ -158,13 +150,117 @@ func (b *HydraRPC) GetBlock(hash string, height uint32) (*bchain.Block, error) {
 	if err != nil {
 		return nil, errors.Annotatef(err, "hash %v", hash)
 	}
+
+	logs, err := b.getHrc20EventsForBlock(int(height))
+	if err != nil {
+		return nil, errors.Annotatef(err, "hash %v", hash)
+	}
+
 	for _, i := range block.Txs {
-		ct, _ := b.GetHRC20LogsForTransaction(i.Txid)
+		ct := &rpcReceipt{Logs: logs[i.Txid]}
 		i.CoinSpecificData = ct
 	}
+
 	block.BlockHeader = *header
-	glog.Info(block)
 	return block, nil
+}
+
+// GetBlockInfo returns extended header (more info than in bchain.BlockHeader) with a list of txids
+func (b *HydraRPC) GetBlockInfo(hash string) (*bchain.BlockInfo, error) {
+	glog.V(1).Info("rpc: getblock (verbosity=1) ", hash)
+
+	res := btc.ResGetBlockInfo{}
+	req := btc.CmdGetBlock{Method: "getblock"}
+	req.Params.BlockHash = hash
+	req.Params.Verbosity = 1
+	err := b.Call(&req, &res)
+
+	if err != nil {
+		return nil, errors.Annotatef(err, "hash %v", hash)
+	}
+	if res.Error != nil {
+		if btc.IsErrBlockNotFound(res.Error) {
+			return nil, bchain.ErrBlockNotFound
+		}
+		return nil, errors.Annotatef(res.Error, "hash %v", hash)
+	}
+	return &res.Result, nil
+}
+
+type cmdSearchLogsRequest struct {
+	Method string `json:"method"`
+	Params struct {
+		FromBlock int         `json:"fromBlock"`
+		ToBlock   int         `json:"toBlock,omitempty"`
+		Address   []string    `json:"addresses,omitempty"`
+		Optional  interface{} `json:"omitempty"`
+
+		// Address   struct {
+		// 	Address []string `json:"addresses,omitempty"`
+		// }
+		// Topics struct {
+		// 	Topics []string `json:"topics,omitempty"`
+		// }
+		// Minconf uint `json:"minconf,omitempty"`
+	} `json:"params"`
+}
+type Topics struct {
+	Topics []string `json:"topics"`
+}
+type rpcReceipt struct {
+	GasUsed string    `json:"gasUsed"`
+	Status  string    `json:"status"`
+	Logs    []*rpcLog `json:"logs"`
+}
+
+type rpcLog struct {
+	Address string   `json:"address"`
+	Topics  []string `json:"topics"`
+	Data    string   `json:"data"`
+}
+
+type rpcLogsWithTxHash struct {
+	Hash string   `json:"transactionHash,omitempty"`
+	Logs []rpcLog `json:"log,omitempty"`
+}
+
+type rpcSearchLogsRes struct {
+	Error  interface{}         `json:"error"`
+	Id     string              `json:"id"`
+	Result []rpcLogsWithTxHash `json:"result"`
+}
+
+func (b *HydraRPC) getHrc20EventsForBlock(blockNumber int) (map[string][]*rpcLog, error) {
+	if blockNumber == 0 {
+		return nil, nil
+	}
+	glog.V(1).Info("rpc: searchlogs ", blockNumber)
+
+	//Fetch the data from the rpc about the logs in the current block number
+	req := cmdSearchLogsRequest{Method: "searchlogs"}
+	req.Params.FromBlock = blockNumber
+	req.Params.ToBlock = blockNumber
+	topics := Topics{}
+	topics.Topics = []string{hrc20TransferEventSignature}
+	req.Params.Address = []string{}
+	req.Params.Optional = topics
+
+	var res rpcSearchLogsRes
+	err := b.Call(&req, &res)
+	if err != nil || res.Error != nil {
+		return nil, errors.Annotatef(err, "blockNumber %v", blockNumber)
+	}
+
+	rpcLogs := res.Result
+
+	r := make(map[string][]*rpcLog)
+	for i := range rpcLogs {
+		l := &rpcLogs[i]
+		for j := range l.Logs {
+			r[l.Hash] = append(r[l.Hash], &l.Logs[j])
+		}
+	}
+	return r, nil
 }
 
 // GetBlockFull returns block with given hash
@@ -186,6 +282,10 @@ func (b *HydraRPC) GetBlockFull(hash string) (*bchain.Block, error) {
 		}
 		return nil, errors.Annotatef(res.Error, "hash %v", hash)
 	}
+	logs, err := b.getHrc20EventsForBlock(int(res.Result.Height))
+	if err != nil {
+		return nil, errors.Annotatef(err, "hash %v", hash)
+	}
 
 	for i := range res.Result.Txs {
 		tx := &res.Result.Txs[i]
@@ -198,8 +298,10 @@ func (b *HydraRPC) GetBlockFull(hash string) (*bchain.Block, error) {
 			}
 			vout.JsonValue = ""
 		}
-		tx.CoinSpecificData, _ = b.GetHRC20LogsForTransaction(tx.Txid)
+		ct := &rpcReceipt{Logs: logs[tx.Txid]}
+		tx.CoinSpecificData = ct
 	}
+
 	glog.Info("Full block: ", res.Result)
 
 	return &res.Result, nil
@@ -223,16 +325,20 @@ func (b *HydraRPC) GetBlockWithoutHeader(hash string, height uint32) (*bchain.Bl
 	}
 	block.BlockHeader.Hash = hash
 	block.BlockHeader.Height = height
+	logs, err := b.getHrc20EventsForBlock(int(height))
+	if err != nil {
+		return nil, errors.Annotatef(err, "hash %v", hash)
+	}
+
 	for _, i := range block.Txs {
-		ct, _ := b.GetHRC20LogsForTransaction(i.Txid)
+		ct := &rpcReceipt{Logs: logs[i.Txid]}
 		i.CoinSpecificData = ct
 	}
-	glog.Info("Block without header: ", block)
 
 	return block, nil
 }
 
-func (b *HydraRPC) GetHRC20LogsForTransaction(transactionHash string) (*RpcReceipt, error) {
+func (b *HydraRPC) GetHRC20LogsForTransaction(transactionHash string) (*rpcReceipt, error) {
 	res := resTransactionReceipt{}
 	req := cmdTransactionReceipt{Method: "gettransactionreceipt"}
 	req.Params = []string{transactionHash}
@@ -244,6 +350,14 @@ func (b *HydraRPC) GetHRC20LogsForTransaction(transactionHash string) (*RpcRecei
 	if res.Error != nil {
 		return nil, res.Error
 	}
+	rpcLogs := res.Result.RpcReceipt.Logs
+	var rpcReceipt rpcReceipt
+	rpcReceipt.GasUsed = res.Result.RpcReceipt.GasUsed
+	for j := range rpcLogs {
+		if rpcLogs[j].Topics[0] == hrc20TransferEventSignature {
+			rpcReceipt.Logs = append(rpcReceipt.Logs, rpcLogs[j])
+		}
+	}
 
-	return &res.Result.RpcReceipt, nil
+	return &rpcReceipt, nil
 }

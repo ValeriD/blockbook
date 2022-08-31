@@ -1,0 +1,3 @@
+Fix the parsing of the transactions in the parser (check rocksdb.go : GetTx())
+
+Fix the fetching if the transaciton is not found in the db. 
