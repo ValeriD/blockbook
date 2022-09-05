@@ -1,15 +1,18 @@
 package hydra
 
 import (
-	"bytes"
-	"encoding/json"
-	"io"
+	"encoding/hex"
+	"math/big"
+	"reflect"
 
+	"github.com/dcb9/go-ethereum/common/hexutil"
+	proto "github.com/golang/protobuf/proto"
+	"github.com/juju/errors"
 	"github.com/martinboehm/btcd/wire"
 	"github.com/martinboehm/btcutil/chaincfg"
 	"github.com/trezor/blockbook/bchain"
 	"github.com/trezor/blockbook/bchain/coins/btc"
-	"github.com/trezor/blockbook/bchain/coins/utils"
+	"github.com/trezor/blockbook/bchain/coins/eth"
 )
 
 // magic numbers
@@ -41,6 +44,7 @@ func init() {
 // HydraParser handle
 type HydraParser struct {
 	*btc.BitcoinLikeParser
+	baseparser *bchain.BaseParser
 }
 
 // NewHydraParser returns new DashParser instance
@@ -48,6 +52,36 @@ func NewHydraParser(params *chaincfg.Params, c *btc.Configuration) *HydraParser 
 	return &HydraParser{
 		BitcoinLikeParser: btc.NewBitcoinLikeParser(params, c),
 	}
+}
+
+type rpcLog struct {
+	Address string   `json:"address"`
+	Topics  []string `json:"topics"`
+	Data    string   `json:"data"`
+}
+
+type rpcLogWithTxHash struct {
+	rpcLog
+	Hash string `json:"transactionHash"`
+}
+
+type rpcReceipt struct {
+	GasUsed string    `json:"gasUsed"`
+	Status  string    `json:"status"`
+	Logs    []*rpcLog `json:"logs"`
+}
+
+type completeTransaction struct {
+	Tx      *bchain.Tx  `json:"tx"`
+	Receipt *rpcReceipt `json:"receipt,omitempty"`
+}
+
+type rpcBlockTransactions struct {
+	Transactions []bchain.Tx `json:"transactions"`
+}
+
+type rpcBlockTxids struct {
+	Transactions []string `json:"transactions"`
 }
 
 // GetChainParams contains network parameters for the main Hydra network,
@@ -71,85 +105,241 @@ func GetChainParams(chain string) *chaincfg.Params {
 	}
 }
 
-func parseBlockHeader(r io.Reader) (*wire.BlockHeader, error) {
-	h := &wire.BlockHeader{}
-	err := h.Deserialize(r)
-	if err != nil {
-		return nil, err
+func (p *HydraParser) PackTx(tx *bchain.Tx, height uint32, blockTime int64) ([]byte, error) {
+	var err error
+	r, ok := tx.CoinSpecificData.(completeTransaction)
+	if !ok {
+		return nil, errors.New("Missing CoinSpecificData")
 	}
 
-	// hash_state_root 32
-	// hash_utxo_root 32
-	// hash_prevout_stake 32
-	// hash_prevout_n 4
-	buf := make([]byte, 100)
-	_, err = io.ReadFull(r, buf)
-	if err != nil {
-		return nil, err
+	pti := make([]*ProtoCompleteTransaction_VinType, len(tx.Vin))
+	for i, vi := range tx.Vin {
+		hex, err := hex.DecodeString(vi.ScriptSig.Hex)
+		if err != nil {
+			return nil, errors.Annotatef(err, "Vin %v Hex %v", i, vi.ScriptSig.Hex)
+		}
+		itxid, err := p.PackTxid(vi.Txid)
+		if err != nil && err != bchain.ErrTxidMissing {
+			return nil, errors.Annotatef(err, "Vin %v Txid %v", i, vi.Txid)
+		}
+
+		pti[i] = &ProtoCompleteTransaction_VinType{
+			Addresses:    vi.Addresses,
+			Coinbase:     vi.Coinbase,
+			ScriptSigHex: hex,
+			Sequence:     vi.Sequence,
+			Txid:         itxid,
+			Vout:         vi.Vout,
+		}
+	}
+	pto := make([]*ProtoCompleteTransaction_VoutType, len(tx.Vout))
+	for i, vo := range tx.Vout {
+		hex, err := hex.DecodeString(vo.ScriptPubKey.Hex)
+		if err != nil {
+			return nil, errors.Annotatef(err, "Vout %v Hex %v", i, vo.ScriptPubKey.Hex)
+		}
+		pto[i] = &ProtoCompleteTransaction_VoutType{
+			Addresses:       vo.ScriptPubKey.Addresses,
+			N:               vo.N,
+			ScriptPubKeyHex: hex,
+			ValueSat:        vo.ValueSat.Bytes(),
+		}
+	}
+	pt := &ProtoCompleteTransaction{
+		Blocktime: uint64(blockTime),
+		Height:    height,
+		Locktime:  tx.LockTime,
+		Vin:       pti,
+		Vout:      pto,
+		Version:   tx.Version,
+	}
+	if pt.Hex, err = hex.DecodeString(tx.Hex); err != nil {
+		return nil, errors.Annotatef(err, "Hex %v", tx.Hex)
+	}
+	if pt.Txid, err = p.PackTxid(tx.Txid); err != nil {
+		return nil, errors.Annotatef(err, "Txid %v", tx.Txid)
+	}
+	if !reflect.ValueOf(r).IsNil() {
+		pt.Receipt = &ProtoCompleteTransaction_ReceiptType{}
+		if pt.Receipt.GasUsed, err = hexDecodeBig(r.Receipt.GasUsed); err != nil {
+			return nil, errors.Annotatef(err, "GasUsed %v", r.Receipt.GasUsed)
+		}
+		if r.Receipt.Status != "" {
+			if pt.Receipt.Status, err = hexDecodeBig(r.Receipt.Status); err != nil {
+				return nil, errors.Annotatef(err, "Status %v", r.Receipt.Status)
+			}
+		} else {
+			// unknown status, use 'U' as status bytes
+			// there is a potential for conflict with value 0x55 but this is not used by any chain at this moment
+			pt.Receipt.Status = []byte{'U'}
+		}
+		ptLogs := make([]*ProtoCompleteTransaction_ReceiptType_LogType, len(r.Receipt.Logs))
+		for i, l := range r.Receipt.Logs {
+			a, err := hexutil.Decode(l.Address)
+			if err != nil {
+				return nil, errors.Annotatef(err, "Address cannot be decoded %v", l)
+			}
+			d, err := hexutil.Decode(l.Data)
+			if err != nil {
+				return nil, errors.Annotatef(err, "Data cannot be decoded %v", l)
+			}
+			t := make([][]byte, len(l.Topics))
+			for j, s := range l.Topics {
+				t[j], err = hexutil.Decode(s)
+				if err != nil {
+					return nil, errors.Annotatef(err, "Topic cannot be decoded %v", l)
+				}
+			}
+			ptLogs[i] = &ProtoCompleteTransaction_ReceiptType_LogType{
+				Address: a,
+				Data:    d,
+				Topics:  t,
+			}
+
+		}
+		pt.Receipt.Log = ptLogs
 	}
 
-	sigLength, err := wire.ReadVarInt(r, 0)
-	if err != nil {
-		return nil, err
-	}
-	sigBuf := make([]byte, sigLength)
-	_, err = io.ReadFull(r, sigBuf)
-	if err != nil {
-		return nil, err
-	}
-
-	return h, err
+	return proto.Marshal(pt)
 }
 
-func (p *HydraParser) ParseBlock(b []byte) (*bchain.Block, error) {
-	r := bytes.NewReader(b)
-	w := wire.MsgBlock{}
-
-	h, err := parseBlockHeader(r)
+// UnpackTx unpacks transaction from protobuf byte array
+func (p *HydraParser) UnpackTx(buf []byte) (*bchain.Tx, uint32, error) {
+	var pt ProtoCompleteTransaction
+	err := proto.Unmarshal(buf, &pt)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
-
-	err = utils.DecodeTransactions(r, 0, wire.WitnessEncoding, &w)
+	txid, err := p.UnpackTxid(pt.Txid)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
-
-	txs := make([]bchain.Tx, len(w.Transactions))
-	for ti, t := range w.Transactions {
-		txs[ti] = p.TxFromMsgTx(t, false)
+	vin := make([]bchain.Vin, len(pt.Vin))
+	for i, pti := range pt.Vin {
+		itxid, err := p.UnpackTxid(pti.Txid)
+		if err != nil {
+			return nil, 0, err
+		}
+		vin[i] = bchain.Vin{
+			Addresses: pti.Addresses,
+			Coinbase:  pti.Coinbase,
+			ScriptSig: bchain.ScriptSig{
+				Hex: hex.EncodeToString(pti.ScriptSigHex),
+			},
+			Sequence: pti.Sequence,
+			Txid:     itxid,
+			Vout:     pti.Vout,
+		}
 	}
-
-	return &bchain.Block{
-		BlockHeader: bchain.BlockHeader{
-			Size: len(b),
-			Time: h.Timestamp.Unix(),
-		},
-		Txs: txs,
-	}, nil
+	vout := make([]bchain.Vout, len(pt.Vout))
+	for i, pto := range pt.Vout {
+		var vs big.Int
+		vs.SetBytes(pto.ValueSat)
+		vout[i] = bchain.Vout{
+			N: pto.N,
+			ScriptPubKey: bchain.ScriptPubKey{
+				Addresses: pto.Addresses,
+				Hex:       hex.EncodeToString(pto.ScriptPubKeyHex),
+			},
+			ValueSat: vs,
+		}
+	}
+	var rr *rpcReceipt
+	if pt.Receipt != nil {
+		logs := make([]*rpcLog, len(pt.Receipt.Log))
+		for i, l := range pt.Receipt.Log {
+			topics := make([]string, len(l.Topics))
+			for j, t := range l.Topics {
+				topics[j] = hexutil.Encode(t)
+			}
+			logs[i] = &rpcLog{
+				Address: hexutil.Encode(l.Address),
+				Data:    hexutil.Encode(l.Data),
+				Topics:  topics,
+			}
+		}
+		status := ""
+		// handle a special value []byte{'U'} as unknown state
+		if len(pt.Receipt.Status) != 1 || pt.Receipt.Status[0] != 'U' {
+			status = hexEncodeBig(pt.Receipt.Status)
+		}
+		rr = &rpcReceipt{
+			GasUsed: hexEncodeBig(pt.Receipt.GasUsed),
+			Status:  status,
+			Logs:    logs,
+		}
+	}
+	tx := bchain.Tx{
+		Blocktime:        int64(pt.Blocktime),
+		Hex:              hex.EncodeToString(pt.Hex),
+		LockTime:         pt.Locktime,
+		Time:             int64(pt.Blocktime),
+		Txid:             txid,
+		Vin:              vin,
+		Vout:             vout,
+		Version:          pt.Version,
+		CoinSpecificData: rr,
+	}
+	return &tx, pt.Height, nil
 }
 
-// ParseTxFromJson parses JSON message containing transaction and returns Tx struct
-func (p *HydraParser) ParseTxFromJson(msg json.RawMessage) (*bchain.Tx, error) {
-	var tx bchain.Tx
-	err := json.Unmarshal(msg, &tx)
+func has0xPrefix(s string) bool {
+	return len(s) >= 2 && s[0] == '0' && (s[1]|32) == 'x'
+}
+
+func hexDecodeBig(s string) ([]byte, error) {
+	b, err := hexutil.DecodeBig(s)
 	if err != nil {
 		return nil, err
 	}
+	return b.Bytes(), nil
+}
 
-	for i := range tx.Vout {
-		vout := &tx.Vout[i]
-		// convert vout.JsonValue to big.Int and clear it, it is only temporary value used for unmarshal
-		vout.ValueSat, err = p.AmountToBigInt(vout.JsonValue)
+func hexEncodeBig(b []byte) string {
+	var i big.Int
+	i.SetBytes(b)
+	return hexutil.EncodeBig(&i)
+}
+
+// EthereumTypeGetErc20FromTx returns Erc20 data from bchain.Tx
+func (p *HydraParser) EthereumTypeGetErc20FromTx(tx *bchain.Tx) ([]bchain.Erc20Transfer, error) {
+	var r []bchain.Erc20Transfer
+	var err error
+	csd, ok := tx.CoinSpecificData.(completeTransaction)
+	if ok {
+		if csd.Receipt != nil {
+			r, err = hrc20GetTransfersFromLog(csd.Receipt.Logs)
+		}
 		if err != nil {
 			return nil, err
 		}
-		vout.JsonValue = ""
+	}
+	return r, nil
+}
 
-		if vout.ScriptPubKey.Addresses == nil {
-			vout.ScriptPubKey.Addresses = []string{}
+// GetEthereumTxData returns EthereumTxData from bchain.Tx
+func GetEthereumTxData(tx *bchain.Tx) *eth.EthereumTxData {
+	return GetEthereumTxDataFromSpecificData(tx.CoinSpecificData)
+}
+
+//FIXME
+// GetEthereumTxDataFromSpecificData returns EthereumTxData from coinSpecificData
+func GetEthereumTxDataFromSpecificData(coinSpecificData interface{}) *eth.EthereumTxData {
+
+	etd := eth.EthereumTxData{Status: eth.TxStatusPending}
+	csd, ok := coinSpecificData.(completeTransaction)
+	if ok {
+		if csd.Receipt != nil {
+			switch csd.Receipt.Status {
+			case "0x1":
+				etd.Status = eth.TxStatusOK
+			case "": // old transactions did not set status
+				etd.Status = eth.TxStatusUnknown
+			default:
+				etd.Status = eth.TxStatusFailure
+			}
+			etd.GasUsed, _ = hexutil.DecodeBig(csd.Receipt.GasUsed)
 		}
 	}
-
-	return &tx, nil
+	return &etd
 }
