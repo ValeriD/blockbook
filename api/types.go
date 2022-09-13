@@ -141,6 +141,9 @@ type TokenType string
 // ERC20TokenType is Ethereum ERC20 token
 const ERC20TokenType TokenType = "ERC20"
 
+//HRC20TokenType is Hydra HRC20 token
+const HRC20TokenType TokenType = "HRC20"
+
 // XPUBAddressTokenType is address derived from xpub
 const XPUBAddressTokenType TokenType = "XPUBAddress"
 

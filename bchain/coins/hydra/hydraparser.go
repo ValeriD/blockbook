@@ -3,7 +3,6 @@ package hydra
 import (
 	"encoding/hex"
 	"math/big"
-	"reflect"
 
 	"github.com/dcb9/go-ethereum/common/hexutil"
 	proto "github.com/golang/protobuf/proto"
@@ -44,7 +43,6 @@ func init() {
 // HydraParser handle
 type HydraParser struct {
 	*btc.BitcoinLikeParser
-	baseparser *bchain.BaseParser
 }
 
 // NewHydraParser returns new DashParser instance
@@ -52,6 +50,11 @@ func NewHydraParser(params *chaincfg.Params, c *btc.Configuration) *HydraParser 
 	return &HydraParser{
 		BitcoinLikeParser: btc.NewBitcoinLikeParser(params, c),
 	}
+}
+
+// GetChainType returns EthereumType
+func (p *HydraParser) GetChainType() bchain.ChainType {
+	return bchain.ChainHydraType
 }
 
 type rpcLog struct {
@@ -103,6 +106,17 @@ func GetChainParams(chain string) *chaincfg.Params {
 	default:
 		return &MainNetParams
 	}
+}
+
+func (p *HydraParser) GetAddrDescFromAddress(address string) (bchain.AddressDescriptor, error) {
+	if has0xPrefix(address) {
+		address = address[2:]
+	}
+
+	if len(address) == eth.EthereumTypeAddressDescriptorLen*2 {
+		return hex.DecodeString(address)
+	}
+	return p.BitcoinLikeParser.GetAddrDescFromAddress(address)
 }
 
 func (p *HydraParser) PackTx(tx *bchain.Tx, height uint32, blockTime int64) ([]byte, error) {
@@ -159,9 +173,9 @@ func (p *HydraParser) PackTx(tx *bchain.Tx, height uint32, blockTime int64) ([]b
 	if pt.Txid, err = p.PackTxid(tx.Txid); err != nil {
 		return nil, errors.Annotatef(err, "Txid %v", tx.Txid)
 	}
-	if !reflect.ValueOf(r).IsNil() {
+	if r.Receipt != nil {
 		pt.Receipt = &ProtoCompleteTransaction_ReceiptType{}
-		if pt.Receipt.GasUsed, err = hexDecodeBig(r.Receipt.GasUsed); err != nil {
+		if pt.Receipt.GasUsed, err = hexDecodeBig(string(r.Receipt.GasUsed)); err != nil {
 			return nil, errors.Annotatef(err, "GasUsed %v", r.Receipt.GasUsed)
 		}
 		if r.Receipt.Status != "" {
@@ -175,17 +189,18 @@ func (p *HydraParser) PackTx(tx *bchain.Tx, height uint32, blockTime int64) ([]b
 		}
 		ptLogs := make([]*ProtoCompleteTransaction_ReceiptType_LogType, len(r.Receipt.Logs))
 		for i, l := range r.Receipt.Logs {
+			l.Address = "0x" + l.Address
 			a, err := hexutil.Decode(l.Address)
 			if err != nil {
 				return nil, errors.Annotatef(err, "Address cannot be decoded %v", l)
 			}
-			d, err := hexutil.Decode(l.Data)
+			d, err := hexutil.Decode("0x" + l.Data)
 			if err != nil {
 				return nil, errors.Annotatef(err, "Data cannot be decoded %v", l)
 			}
 			t := make([][]byte, len(l.Topics))
 			for j, s := range l.Topics {
-				t[j], err = hexutil.Decode(s)
+				t[j], err = hexutil.Decode("0x" + s)
 				if err != nil {
 					return nil, errors.Annotatef(err, "Topic cannot be decoded %v", l)
 				}
@@ -250,10 +265,10 @@ func (p *HydraParser) UnpackTx(buf []byte) (*bchain.Tx, uint32, error) {
 		for i, l := range pt.Receipt.Log {
 			topics := make([]string, len(l.Topics))
 			for j, t := range l.Topics {
-				topics[j] = hexutil.Encode(t)
+				topics[j] = hexutil.Encode(t)[2:]
 			}
 			logs[i] = &rpcLog{
-				Address: hexutil.Encode(l.Address),
+				Address: hexutil.Encode(l.Address)[2:],
 				Data:    hexutil.Encode(l.Data),
 				Topics:  topics,
 			}
@@ -270,16 +285,20 @@ func (p *HydraParser) UnpackTx(buf []byte) (*bchain.Tx, uint32, error) {
 		}
 	}
 	tx := bchain.Tx{
-		Blocktime:        int64(pt.Blocktime),
-		Hex:              hex.EncodeToString(pt.Hex),
-		LockTime:         pt.Locktime,
-		Time:             int64(pt.Blocktime),
-		Txid:             txid,
-		Vin:              vin,
-		Vout:             vout,
-		Version:          pt.Version,
-		CoinSpecificData: rr,
+		Blocktime: int64(pt.Blocktime),
+		Hex:       hex.EncodeToString(pt.Hex),
+		LockTime:  pt.Locktime,
+		Time:      int64(pt.Blocktime),
+		Txid:      txid,
+		Vin:       vin,
+		Vout:      vout,
+		Version:   pt.Version,
 	}
+	completeTx := completeTransaction{
+		Tx:      &tx,
+		Receipt: rr,
+	}
+	tx.CoinSpecificData = completeTx
 	return &tx, pt.Height, nil
 }
 
@@ -308,7 +327,7 @@ func (p *HydraParser) EthereumTypeGetErc20FromTx(tx *bchain.Tx) ([]bchain.Erc20T
 	csd, ok := tx.CoinSpecificData.(completeTransaction)
 	if ok {
 		if csd.Receipt != nil {
-			r, err = hrc20GetTransfersFromLog(csd.Receipt.Logs)
+			r, err = p.hrc20GetTransfersFromLog(csd.Receipt.Logs)
 		}
 		if err != nil {
 			return nil, err

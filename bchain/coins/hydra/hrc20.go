@@ -2,11 +2,14 @@ package hydra
 
 import (
 	"bytes"
+	"crypto/sha256"
 	"encoding/hex"
 	"math/big"
+	"strconv"
 	"sync"
 	"unicode/utf8"
 
+	"github.com/btcsuite/btcutil/base58"
 	"github.com/dcb9/go-ethereum/common/hexutil"
 	ethcommon "github.com/ethereum/go-ethereum/common"
 	"github.com/golang/glog"
@@ -40,6 +43,18 @@ const hrc20SymbolSignature = "95d89b41"
 const hrc20DecimalsSignature = "313ce567"
 const hrc20BalanceOf = "70a08231"
 
+func (p *HydraParser) getAddressFromTopic(s string) string {
+	x, _ := hex.DecodeString(s)
+	h := append(p.Params.PubKeyHashAddrID, x...)
+
+	cks1 := sha256.Sum256(h)
+	cks := sha256.Sum256(cks1[:])
+
+	h = append(h, cks[:4]...)
+
+	return base58.Encode(h)
+}
+
 func addressFromPaddedHex(s string) (string, error) {
 	var t big.Int
 	var ok bool
@@ -52,10 +67,10 @@ func addressFromPaddedHex(s string) (string, error) {
 		return "", errors.New("Data is not a number")
 	}
 	a := ethcommon.BigToAddress(&t)
-	return a.String(), nil
+	return a.String()[2:], nil
 }
 
-func hrc20GetTransfersFromLog(logs []*rpcLog) ([]bchain.Erc20Transfer, error) {
+func (p *HydraParser) hrc20GetTransfersFromLog(logs []*rpcLog) ([]bchain.Erc20Transfer, error) {
 	var r []bchain.Erc20Transfer
 	for _, l := range logs {
 		if len(l.Topics) == 3 && l.Topics[0] == hrc20TransferEventSignature {
@@ -64,6 +79,7 @@ func hrc20GetTransfersFromLog(logs []*rpcLog) ([]bchain.Erc20Transfer, error) {
 			if !ok {
 				return nil, errors.New("Data is not a number")
 			}
+
 			from, err := addressFromPaddedHex(l.Topics[1])
 			if err != nil {
 				return nil, err
@@ -80,6 +96,9 @@ func hrc20GetTransfersFromLog(logs []*rpcLog) ([]bchain.Erc20Transfer, error) {
 			})
 		}
 	}
+
+	r[0].From = p.getAddressFromTopic(r[0].From)
+	r[len(r)-1].To = p.getAddressFromTopic(r[len(r)-1].To)
 	return r, nil
 }
 
@@ -92,7 +111,7 @@ type resCallContract struct {
 	Error  *bchain.RPCError `json:"error"`
 	Result struct {
 		ExecutionResult struct {
-			output string `json:"output"`
+			Output string `json:"output"`
 		} `json:"executionResult"`
 	}
 }
@@ -104,16 +123,15 @@ func (b *HydraRPC) hydraCall(data, to string) (string, error) {
 	req.Params = append(req.Params, data)
 
 	res := &resCallContract{}
-
 	err := b.Call(req, res)
-	if err == nil {
+	if err != nil {
 		return "", err
 	}
 	if res.Error != nil {
 		return "", res.Error
 	}
 
-	return res.Result.ExecutionResult.output, nil
+	return res.Result.ExecutionResult.Output, nil
 }
 
 func parseErc20NumericProperty(contractDesc bchain.AddressDescriptor, data string) *big.Int {
@@ -179,13 +197,13 @@ func (b *HydraRPC) EthereumTypeGetErc20ContractInfo(contractDesc bchain.AddressD
 	contract, found := cachedContracts[cds]
 	cachedContractsMux.Unlock()
 	if !found {
-		address := hexutil.Encode(contractDesc)
+		address := hexutil.Encode(contractDesc)[2:]
 		data, err := b.hydraCall(hrc20NameSignature, address)
 		if err != nil {
 			// ignore the error from the eth_call - since geth v1.9.15 they changed the behavior
 			// and returning error "execution reverted" for some non contract addresses
 			// https://github.com/ethereum/go-ethereum/issues/21249#issuecomment-648647672
-			glog.Warning(errors.Annotatef(err, "erc20NameSignature %v", address))
+			glog.Warning(errors.Annotatef(err, "hrc20NameSignature %v", address))
 			return nil, nil
 			// return nil, errors.Annotatef(err, "erc20NameSignature %v", address)
 		}
@@ -193,14 +211,14 @@ func (b *HydraRPC) EthereumTypeGetErc20ContractInfo(contractDesc bchain.AddressD
 		if name != "" {
 			data, err = b.hydraCall(hrc20SymbolSignature, address)
 			if err != nil {
-				glog.Warning(errors.Annotatef(err, "erc20SymbolSignature %v", address))
+				glog.Warning(errors.Annotatef(err, "hrc20SymbolSignature %v", address))
 				return nil, nil
 				// return nil, errors.Annotatef(err, "erc20SymbolSignature %v", address)
 			}
 			symbol := parseHrc20StringProperty(contractDesc, data)
 			data, err = b.hydraCall(hrc20DecimalsSignature, address)
 			if err != nil {
-				glog.Warning(errors.Annotatef(err, "erc20DecimalsSignature %v", address))
+				glog.Warning(errors.Annotatef(err, "hrc20DecimalsSignature %v", address))
 				// return nil, errors.Annotatef(err, "erc20DecimalsSignature %v", address)
 			}
 			contract = &bchain.Erc20Contract{
@@ -241,25 +259,28 @@ func (b *HydraRPC) EthereumTypeGetErc20ContractBalance(addrDesc, contractDesc bc
 }
 
 type cmdGetTransactionReceipt struct {
-	Method string `json:"method"`
-	Params struct {
-		Hash string `json:"hash"`
-	} `json:"params"`
+	Method string   `json:"method"`
+	Params []string `json:"params"`
 }
 
 type resGetTransactionReceipt struct {
 	Error  *bchain.RPCError `json:"error"`
-	Result rpcReceipt       `json:"result"`
+	Result []rpcReceiptUint `json:"result"`
+}
+
+type rpcReceiptUint struct {
+	GasUsed uint64    `json:"gasUsed"`
+	Status  string    `json:"status"`
+	Logs    []*rpcLog `json:"log"`
 }
 
 func (b *HydraRPC) getLogsForTx(txid string) (*rpcReceipt, error) {
 
-	res := resGetTransactionReceipt{}
-	req := cmdGetTransactionReceipt{Method: "gettransactionreceipt"}
-	req.Params.Hash = txid
+	res := &resGetTransactionReceipt{}
+	req := &cmdGetTransactionReceipt{Method: "gettransactionreceipt"}
+	req.Params = append(req.Params, txid)
 
 	err := b.Call(req, res)
-
 	if err != nil {
 		return nil, err
 	}
@@ -267,6 +288,15 @@ func (b *HydraRPC) getLogsForTx(txid string) (*rpcReceipt, error) {
 	if res.Error != nil {
 		return nil, res.Error
 	}
+	if len(res.Result) == 0 {
+		return nil, nil
+	} else {
+		receipt := &rpcReceipt{
+			GasUsed: "0x" + strconv.FormatUint(res.Result[0].GasUsed, 16),
+			Status:  res.Result[0].Status,
+			Logs:    res.Result[0].Logs,
+		}
 
-	return &res.Result, nil
+		return receipt, nil
+	}
 }

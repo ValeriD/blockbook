@@ -130,7 +130,6 @@ func (b *HydraRPC) getHrc20EventsForBlock(blockNumber int) (map[string][]*rpcLog
 	if err != nil || res.Error != nil {
 		return nil, errors.Annotatef(err, "blockNumber %v", blockNumber)
 	}
-
 	rpcLogs := res.Result
 
 	r := make(map[string][]*rpcLog)
@@ -180,8 +179,6 @@ func (b *HydraRPC) GetBlockFull(hash string) (*bchain.Block, error) {
 	req.Params.Verbosity = 2
 	err := b.Call(&req, &res)
 
-	glog.Infof("%+v", res)
-
 	if err != nil {
 		return nil, errors.Annotatef(err, "hash %v", hash)
 	}
@@ -211,8 +208,6 @@ func (b *HydraRPC) GetBlockFull(hash string) (*bchain.Block, error) {
 		ct := &completeTransaction{Tx: tx, Receipt: receipt}
 		tx.CoinSpecificData = ct
 	}
-
-	glog.Info("Full block: ", res.Result)
 
 	return &res.Result, nil
 }
@@ -287,7 +282,6 @@ func (b *HydraRPC) GetTransaction(txid string) (*bchain.Tx, error) {
 	}
 
 	receipt, err := b.getLogsForTx(txid)
-
 	if err != nil {
 		return nil, errors.Annotatef(err, "txid %v", txid)
 	}
