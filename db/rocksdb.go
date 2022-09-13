@@ -121,6 +121,7 @@ var cfBaseNames = []string{"default", "height", "addresses", "blockTxs", "transa
 // type specific columns
 var cfNamesBitcoinType = []string{"addressBalance", "txAddresses"}
 var cfNamesEthereumType = []string{"addressContracts"}
+var cfNamesHydraType = []string{"addressBalance", "txAddresses", "addressContracts"}
 
 func openDB(path string, c *gorocksdb.Cache, openFiles int) (*gorocksdb.DB, []*gorocksdb.ColumnFamilyHandle, error) {
 	// opts with bloom filter
@@ -153,6 +154,8 @@ func NewRocksDB(path string, cacheSize, maxOpenFiles int, parser bchain.BlockCha
 		cfNames = append(cfNames, cfNamesBitcoinType...)
 	} else if chainType == bchain.ChainEthereumType {
 		cfNames = append(cfNames, cfNamesEthereumType...)
+	} else if chainType == bchain.ChainHydraType {
+		cfNames = append(cfNames, cfNamesHydraType...)
 	} else {
 		return nil, errors.New("Unknown chain type")
 	}
@@ -450,7 +453,7 @@ func (d *RocksDB) ConnectBlock(block *bchain.Block) error {
 		return err
 	}
 	addresses := make(addressesMap)
-	if chainType == bchain.ChainBitcoinType {
+	if chainType == bchain.ChainBitcoinType || chainType == bchain.ChainHydraType {
 		txAddressesMap := make(map[string]*TxAddresses)
 		balances := make(map[string]*AddrBalance)
 		if err := d.processAddressesBitcoinType(block, addresses, txAddressesMap, balances); err != nil {

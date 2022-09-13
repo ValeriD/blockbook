@@ -298,7 +298,7 @@ func mainWithExitCode() int {
 		}
 		// initialize mempool after the initial sync is complete
 		var addrDescForOutpoint bchain.AddrDescForOutpointFunc
-		if chain.GetChainParser().GetChainType() == bchain.ChainBitcoinType {
+		if chain.GetChainParser().GetChainType() == bchain.ChainBitcoinType || chain.GetChainParser().GetChainType() == bchain.ChainHydraType {
 			addrDescForOutpoint = index.AddrDescForOutpoint
 		}
 		err = chain.InitializeMempool(addrDescForOutpoint, onNewTxAddr, onNewTx)

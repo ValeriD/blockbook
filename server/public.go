@@ -153,7 +153,7 @@ func (s *PublicServer) ConnectFullPublicInterface() {
 
 	var apiDefault int
 	// ethereum supports only api V2
-	if s.chainParser.GetChainType() == bchain.ChainEthereumType {
+	if s.chainParser.GetChainType() == bchain.ChainEthereumType || s.chainParser.GetChainType() == bchain.ChainHydraType {
 		apiDefault = apiV2
 	} else {
 		apiDefault = apiV1

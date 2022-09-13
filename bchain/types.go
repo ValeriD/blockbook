@@ -19,6 +19,8 @@ const (
 	ChainBitcoinType = ChainType(iota)
 	// ChainEthereumType is blockchain derived from ethereum
 	ChainEthereumType
+	// ChainHydraType is blockchain hybrid betweeen ethereum and bitcoin
+	ChainHydraType
 )
 
 // errors with specific meaning returned by blockchain rpc

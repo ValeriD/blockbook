@@ -135,7 +135,7 @@ func (w *Worker) GetTransactionFromBchainTx(bchainTx *bchain.Tx, height int, spe
 	var ethSpecific *EthereumSpecific
 	var blockhash string
 	if bchainTx.Confirmations > 0 {
-		if w.chainType == bchain.ChainBitcoinType {
+		if w.chainType == bchain.ChainBitcoinType || w.chainType == bchain.ChainHydraType {
 			ta, err = w.db.GetTxAddresses(bchainTx.Txid)
 			if err != nil {
 				return nil, errors.Annotatef(err, "GetTxAddresses %v", bchainTx.Txid)
@@ -163,7 +163,7 @@ func (w *Worker) GetTransactionFromBchainTx(bchainTx *bchain.Tx, height int, spe
 		}
 		vin.Hex = bchainVin.ScriptSig.Hex
 		vin.Coinbase = bchainVin.Coinbase
-		if w.chainType == bchain.ChainBitcoinType {
+		if w.chainType == bchain.ChainBitcoinType || w.chainType == bchain.ChainHydraType {
 			//  bchainVin.Txid=="" is coinbase transaction
 			if bchainVin.Txid != "" {
 				// load spending addresses from TxAddresses
@@ -276,6 +276,33 @@ func (w *Worker) GetTransactionFromBchainTx(bchainTx *bchain.Tx, height int, spe
 			Status:   ethTxData.Status,
 			Data:     ethTxData.Data,
 		}
+	} else if w.chainType == bchain.ChainHydraType {
+		// for coinbase transactions valIn is 0
+		feesSat.Sub(&valInSat, &valOutSat)
+		if feesSat.Sign() == -1 {
+			feesSat.SetUint64(0)
+		}
+		pValInSat = &valInSat
+
+		ets, err := w.chainParser.EthereumTypeGetErc20FromTx(bchainTx)
+		if err != nil {
+			glog.Errorf("GetErc20FromTx error %v, %v", err, bchainTx)
+		}
+		tokens = w.getTokensFromErc20(ets)
+		ethTxData := eth.GetEthereumTxData(bchainTx)
+		// mempool txs do not have fees yet
+		if ethTxData.GasUsed != nil {
+			feesSat.Mul(ethTxData.GasPrice, ethTxData.GasUsed)
+		}
+
+		ethSpecific = &EthereumSpecific{
+			GasLimit: ethTxData.GasLimit,
+			GasPrice: (*Amount)(ethTxData.GasPrice),
+			GasUsed:  ethTxData.GasUsed,
+			Nonce:    ethTxData.Nonce,
+			Status:   ethTxData.Status,
+			Data:     ethTxData.Data,
+		}
 	}
 	// for now do not return size, we would have to compute vsize of segwit transactions
 	// size:=len(bchainTx.Hex) / 2
@@ -336,7 +363,7 @@ func (w *Worker) GetTransactionFromMempoolTx(mempoolTx *bchain.MempoolTx) (*Tx, 
 		}
 		vin.Hex = bchainVin.ScriptSig.Hex
 		vin.Coinbase = bchainVin.Coinbase
-		if w.chainType == bchain.ChainBitcoinType {
+		if w.chainType == bchain.ChainBitcoinType || w.chainType == bchain.ChainHydraType {
 			//  bchainVin.Txid=="" is coinbase transaction
 			if bchainVin.Txid != "" {
 				vin.ValueSat = (*Amount)(&bchainVin.ValueSat)
@@ -391,6 +418,24 @@ func (w *Worker) GetTransactionFromMempoolTx(mempoolTx *bchain.MempoolTx) (*Tx, 
 			Status:   ethTxData.Status,
 			Data:     ethTxData.Data,
 		}
+	} else if w.chainType == bchain.ChainHydraType {
+		// for coinbase transactions valIn is 0
+		feesSat.Sub(&valInSat, &valOutSat)
+		if feesSat.Sign() == -1 {
+			feesSat.SetUint64(0)
+		}
+		pValInSat = &valInSat
+
+		tokens = w.getTokensFromErc20(mempoolTx.Erc20)
+		ethTxData := eth.GetEthereumTxDataFromSpecificData(mempoolTx.CoinSpecificData)
+		ethSpecific = &EthereumSpecific{
+			GasLimit: ethTxData.GasLimit,
+			GasPrice: (*Amount)(ethTxData.GasPrice),
+			GasUsed:  ethTxData.GasUsed,
+			Nonce:    ethTxData.Nonce,
+			Status:   ethTxData.Status,
+			Data:     ethTxData.Data,
+		}
 	}
 	r := &Tx{
 		Blocktime:        mempoolTx.Blocktime,
@@ -411,6 +456,40 @@ func (w *Worker) GetTransactionFromMempoolTx(mempoolTx *bchain.MempoolTx) (*Tx, 
 }
 
 func (w *Worker) getTokensFromErc20(erc20 []bchain.Erc20Transfer) []TokenTransfer {
+	tokens := make([]TokenTransfer, len(erc20))
+	for i := range erc20 {
+		e := &erc20[i]
+		cd, err := w.chainParser.GetAddrDescFromAddress(e.Contract)
+		if err != nil {
+			glog.Errorf("GetAddrDescFromAddress error %v, contract %v", err, e.Contract)
+			continue
+		}
+		erc20c, err := w.chain.EthereumTypeGetErc20ContractInfo(cd)
+		if err != nil {
+			glog.Errorf("GetErc20ContractInfo error %v, contract %v", err, e.Contract)
+		}
+		if erc20c == nil {
+			erc20c = &bchain.Erc20Contract{Name: e.Contract}
+		}
+		tt := ERC20TokenType
+		if w.chainParser.GetChainType() == bchain.ChainHydraType {
+			tt = HRC20TokenType
+		}
+		tokens[i] = TokenTransfer{
+			Type:     tt,
+			Token:    e.Contract,
+			From:     e.From,
+			To:       e.To,
+			Decimals: erc20c.Decimals,
+			Value:    (*Amount)(&e.Tokens),
+			Name:     erc20c.Name,
+			Symbol:   erc20c.Symbol,
+		}
+	}
+	return tokens
+}
+
+func (w *Worker) getTokensFromHrc20(erc20 []bchain.Erc20Transfer) []TokenTransfer {
 	tokens := make([]TokenTransfer, len(erc20))
 	for i := range erc20 {
 		e := &erc20[i]
@@ -766,7 +845,7 @@ func (w *Worker) txFromTxid(txid string, bestheight uint32, option AccountDetail
 	var tx *Tx
 	var err error
 	// only ChainBitcoinType supports TxHistoryLight
-	if option == AccountDetailsTxHistoryLight && w.chainType == bchain.ChainBitcoinType {
+	if option == AccountDetailsTxHistoryLight && (w.chainType == bchain.ChainBitcoinType || w.chainType == bchain.ChainHydraType) {
 		ta, err := w.db.GetTxAddresses(txid)
 		if err != nil {
 			return nil, errors.Annotatef(err, "GetTxAddresses %v", txid)
@@ -877,6 +956,26 @@ func (w *Worker) GetAddress(address string, page int, txsOnPage int, option Acco
 			return nil, err
 		}
 		nonce = strconv.Itoa(int(n))
+
+	} else if w.chainType == bchain.ChainHydraType {
+		var n uint64
+		_, tokens, erc20c, n, nonTokenTxs, totalResults, err = w.getEthereumTypeAddressBalances(addrDesc, option, filter)
+		if err != nil {
+			return nil, err
+		}
+		nonce = strconv.Itoa(int(n))
+		ba, err = w.db.GetAddrDescBalance(addrDesc, db.AddressBalanceDetailNoUTXO)
+		if err != nil {
+			return nil, NewAPIError(fmt.Sprintf("Address not found, %v", err), true)
+		}
+		if ba != nil {
+			// totalResults is known only if there is no filter
+			if filter.Vout == AddressFilterVoutOff && filter.FromHeight == 0 && filter.ToHeight == 0 {
+				totalResults = int(ba.Txs)
+			} else {
+				totalResults = -1
+			}
+		}
 	} else {
 		// ba can be nil if the address is only in mempool!
 		ba, err = w.db.GetAddrDescBalance(addrDesc, db.AddressBalanceDetailNoUTXO)
@@ -964,7 +1063,7 @@ func (w *Worker) GetAddress(address string, page int, txsOnPage int, option Acco
 			}
 		}
 	}
-	if w.chainType == bchain.ChainBitcoinType {
+	if w.chainType == bchain.ChainBitcoinType || w.chainType == bchain.ChainHydraType {
 		totalReceived = ba.ReceivedSat()
 		totalSent = &ba.SentSat
 	}
@@ -1010,7 +1109,7 @@ func (w *Worker) balanceHistoryForTxid(addrDesc bchain.AddressDescriptor, txid s
 	var ta *db.TxAddresses
 	var bchainTx *bchain.Tx
 	var height uint32
-	if w.chainType == bchain.ChainBitcoinType {
+	if w.chainType == bchain.ChainBitcoinType { //TODO add HydraType
 		ta, err = w.db.GetTxAddresses(txid)
 		if err != nil {
 			return nil, err
@@ -1020,7 +1119,7 @@ func (w *Worker) balanceHistoryForTxid(addrDesc bchain.AddressDescriptor, txid s
 			return nil, nil
 		}
 		height = ta.Height
-	} else if w.chainType == bchain.ChainEthereumType {
+	} else if w.chainType == bchain.ChainEthereumType { //TODO add HydraType
 		var h int
 		bchainTx, h, err = w.txCache.GetTransaction(txid)
 		if err != nil {
@@ -1045,7 +1144,8 @@ func (w *Worker) balanceHistoryForTxid(addrDesc bchain.AddressDescriptor, txid s
 		Txid:          txid,
 	}
 	countSentToSelf := false
-	if w.chainType == bchain.ChainBitcoinType {
+	//FIXME
+	if w.chainType == bchain.ChainBitcoinType || w.chainType == bchain.ChainHydraType {
 		// detect if this input is the first of selfAddrDesc
 		// to not to count sentToSelf multiple times if counting multiple xpub addresses
 		ownInputIndex := -1
@@ -1323,7 +1423,7 @@ func (w *Worker) getAddrDescUtxo(addrDesc bchain.AddressDescriptor, ba *db.AddrB
 
 // GetAddressUtxo returns unspent outputs for given address
 func (w *Worker) GetAddressUtxo(address string, onlyConfirmed bool) (Utxos, error) {
-	if w.chainType != bchain.ChainBitcoinType {
+	if w.chainType != bchain.ChainBitcoinType && w.chainType != bchain.ChainHydraType {
 		return nil, NewAPIError("Not supported", true)
 	}
 	start := time.Now()
@@ -1747,7 +1847,7 @@ func (w *Worker) ComputeFeeStats(blockFrom, blockTo int, stopCompute chan os.Sig
 				Time:   bi.Time,
 			}
 			txids := bi.Txids
-			if w.chainType == bchain.ChainBitcoinType {
+			if w.chainType == bchain.ChainBitcoinType || w.chainType == bchain.ChainHydraType {
 				// skip the coinbase transaction
 				txids = txids[1:]
 			}
