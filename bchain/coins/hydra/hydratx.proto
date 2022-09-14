@@ -23,8 +23,10 @@ syntax = "proto3";
                 repeated bytes Topics = 3;
             }
             bytes GasUsed = 1;
-            bytes Status = 2;
-            repeated LogType Log = 3;
+            bytes GasLimit = 2;
+            bytes GasPrice = 3;
+            bytes Status = 4;
+            repeated LogType Log = 5;
         }
         bytes Txid = 1;
         bytes Hex = 2;

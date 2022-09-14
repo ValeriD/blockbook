@@ -17,6 +17,7 @@ import (
 	"github.com/juju/errors"
 	"github.com/trezor/blockbook/bchain"
 	"github.com/trezor/blockbook/bchain/coins/eth"
+	"github.com/trezor/blockbook/bchain/coins/hydra"
 	"github.com/trezor/blockbook/common"
 	"github.com/trezor/blockbook/db"
 )
@@ -289,11 +290,11 @@ func (w *Worker) GetTransactionFromBchainTx(bchainTx *bchain.Tx, height int, spe
 			glog.Errorf("GetErc20FromTx error %v, %v", err, bchainTx)
 		}
 		tokens = w.getTokensFromErc20(ets)
-		ethTxData := eth.GetEthereumTxData(bchainTx)
+		ethTxData := hydra.GetEthereumTxData(bchainTx)
 		// mempool txs do not have fees yet
-		if ethTxData.GasUsed != nil {
-			feesSat.Mul(ethTxData.GasPrice, ethTxData.GasUsed)
-		}
+		// if ethTxData.GasUsed != nil {
+		// 	feesSat.Mul(ethTxData.GasPrice, ethTxData.GasUsed)
+		// }
 
 		ethSpecific = &EthereumSpecific{
 			GasLimit: ethTxData.GasLimit,

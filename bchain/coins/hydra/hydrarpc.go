@@ -280,12 +280,13 @@ func (b *HydraRPC) GetTransaction(txid string) (*bchain.Tx, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	receipt, err := b.getLogsForTx(txid)
 	if err != nil {
 		return nil, errors.Annotatef(err, "txid %v", txid)
 	}
-
+	if receipt != nil {
+		getEthSpecificDataFromVouts(tx.Vout, receipt)
+	}
 	ct := completeTransaction{Tx: tx, Receipt: receipt}
 	tx.CoinSpecificData = ct
 

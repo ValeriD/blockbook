@@ -1,8 +1,10 @@
 package hydra
 
 import (
+	"encoding/binary"
 	"encoding/hex"
 	"math/big"
+	"strconv"
 
 	"github.com/dcb9/go-ethereum/common/hexutil"
 	proto "github.com/golang/protobuf/proto"
@@ -69,9 +71,12 @@ type rpcLogWithTxHash struct {
 }
 
 type rpcReceipt struct {
-	GasUsed string    `json:"gasUsed"`
-	Status  string    `json:"status"`
-	Logs    []*rpcLog `json:"logs"`
+	GasUsed  string    `json:"gasUsed"`
+	GasLimit string    `json:"gasLimit"`
+	GasPrice string    `json:"gasPrice"`
+	Status   string    `json:"status"`
+	Logs     []*rpcLog `json:"logs"`
+	Data     string    `json:"data,omitempty"`
 }
 
 type completeTransaction struct {
@@ -178,6 +183,12 @@ func (p *HydraParser) PackTx(tx *bchain.Tx, height uint32, blockTime int64) ([]b
 		if pt.Receipt.GasUsed, err = hexDecodeBig(string(r.Receipt.GasUsed)); err != nil {
 			return nil, errors.Annotatef(err, "GasUsed %v", r.Receipt.GasUsed)
 		}
+		if pt.Receipt.GasLimit, err = hexutil.Decode(r.Receipt.GasLimit); err != nil {
+			return nil, errors.Annotatef(err, "GasLimit %v", r.Receipt.GasLimit)
+		}
+		if pt.Receipt.GasPrice, err = hexDecodeBig(r.Receipt.GasPrice); err != nil {
+			return nil, errors.Annotatef(err, "Price %v", r.Receipt.GasPrice)
+		}
 		if r.Receipt.Status != "" {
 			if pt.Receipt.Status, err = hexDecodeBig(r.Receipt.Status); err != nil {
 				return nil, errors.Annotatef(err, "Status %v", r.Receipt.Status)
@@ -279,9 +290,11 @@ func (p *HydraParser) UnpackTx(buf []byte) (*bchain.Tx, uint32, error) {
 			status = hexEncodeBig(pt.Receipt.Status)
 		}
 		rr = &rpcReceipt{
-			GasUsed: hexEncodeBig(pt.Receipt.GasUsed),
-			Status:  status,
-			Logs:    logs,
+			GasUsed:  hexEncodeBig(pt.Receipt.GasUsed),
+			GasLimit: hexEncodeBig(pt.Receipt.GasLimit),
+			GasPrice: hexEncodeBig(pt.Receipt.GasPrice),
+			Status:   status,
+			Logs:     logs,
 		}
 	}
 	tx := bchain.Tx{
@@ -300,6 +313,46 @@ func (p *HydraParser) UnpackTx(buf []byte) (*bchain.Tx, uint32, error) {
 	}
 	tx.CoinSpecificData = completeTx
 	return &tx, pt.Height, nil
+}
+
+func getEthSpecificDataFromVouts(vouts []bchain.Vout, receipt *rpcReceipt) {
+	for _, v := range vouts {
+		if len(v.ScriptPubKey.Addresses) == 0 {
+			gasPrice, _ := hex.DecodeString("20")
+			receipt.GasLimit = getGasLimitFromHex(v.ScriptPubKey.Hex)
+			receipt.GasPrice = hexEncodeBig(gasPrice)
+		}
+	}
+}
+
+func getGasLimitFromHex(data string) string {
+	// Retrieve the size of the gas limit data
+	var sizeStart int64
+	var sizeEnd int64
+	if data[0:2] == "01" {
+		sizeStart = 4
+		sizeEnd = 6
+	} else {
+		sizeStart = 2
+		sizeEnd = 4
+	}
+	size, _ := strconv.ParseInt(data[sizeStart:sizeEnd], 16, 0)
+
+	gasLimitLast := size*2 + sizeEnd
+
+	//Fetch the size
+	b, _ := hex.DecodeString(data[sizeEnd:gasLimitLast])
+	if len(b) < 8 {
+		b = append(b, []byte{0x00}...)
+	}
+
+	a := binary.LittleEndian.Uint32(b)
+
+	s := strconv.FormatUint(uint64(a), 16)
+	if len(s)%2 != 0 {
+		s = "0" + s
+	}
+	return "0x" + s
 }
 
 func has0xPrefix(s string) bool {
@@ -357,7 +410,9 @@ func GetEthereumTxDataFromSpecificData(coinSpecificData interface{}) *eth.Ethere
 			default:
 				etd.Status = eth.TxStatusFailure
 			}
+			etd.GasLimit, _ = hexutil.DecodeBig(csd.Receipt.GasLimit)
 			etd.GasUsed, _ = hexutil.DecodeBig(csd.Receipt.GasUsed)
+			etd.GasPrice, _ = hexutil.DecodeBig(csd.Receipt.GasPrice)
 		}
 	}
 	return &etd

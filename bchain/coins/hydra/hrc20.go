@@ -78,6 +78,9 @@ func (p *HydraParser) hrc20GetTransfersFromLog(logs []*rpcLog) ([]bchain.Erc20Tr
 			if !has0xPrefix(l.Data) {
 				l.Data = "0x" + l.Data
 			}
+			if has0xPrefix(l.Address) {
+				l.Address = l.Address[2:]
+			}
 			_, ok := t.SetString(l.Data, 0)
 			if !ok {
 				return nil, errors.New("Data is not a number")
@@ -99,9 +102,10 @@ func (p *HydraParser) hrc20GetTransfersFromLog(logs []*rpcLog) ([]bchain.Erc20Tr
 			})
 		}
 	}
-
-	r[0].From = p.getAddressFromTopic(r[0].From)
-	r[len(r)-1].To = p.getAddressFromTopic(r[len(r)-1].To)
+	if len(r) > 0 {
+		r[0].From = p.getAddressFromTopic(r[0].From)
+		r[len(r)-1].To = p.getAddressFromTopic(r[len(r)-1].To)
+	}
 	return r, nil
 }
 
@@ -273,7 +277,7 @@ type resGetTransactionReceipt struct {
 
 type rpcReceiptUint struct {
 	GasUsed uint64    `json:"gasUsed"`
-	Status  string    `json:"status"`
+	Status  string    `json:"excepted"`
 	Logs    []*rpcLog `json:"log"`
 }
 
@@ -294,9 +298,16 @@ func (b *HydraRPC) getLogsForTx(txid string) (*rpcReceipt, error) {
 	if len(res.Result) == 0 {
 		return nil, nil
 	} else {
+		status := eth.TxStatusPending
+		if res.Result[0].Status == "None" {
+			status = eth.TxStatusOK
+		} else if res.Result[0].Status == "Revert" {
+			status = eth.TxStatusFailure
+		}
+
 		receipt := &rpcReceipt{
 			GasUsed: "0x" + strconv.FormatUint(res.Result[0].GasUsed, 16),
-			Status:  res.Result[0].Status,
+			Status:  "0x" + strconv.FormatInt(int64(status), 16),
 			Logs:    res.Result[0].Logs,
 		}
 
