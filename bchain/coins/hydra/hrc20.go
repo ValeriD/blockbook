@@ -75,6 +75,9 @@ func (p *HydraParser) hrc20GetTransfersFromLog(logs []*rpcLog) ([]bchain.Erc20Tr
 	for _, l := range logs {
 		if len(l.Topics) == 3 && l.Topics[0] == hrc20TransferEventSignature {
 			var t big.Int
+			if !has0xPrefix(l.Data) {
+				l.Data = "0x" + l.Data
+			}
 			_, ok := t.SetString(l.Data, 0)
 			if !ok {
 				return nil, errors.New("Data is not a number")
