@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/dcb9/go-ethereum/common/hexutil"
+	"github.com/golang/glog"
 	proto "github.com/golang/protobuf/proto"
 	"github.com/juju/errors"
 	"github.com/martinboehm/btcd/wire"
@@ -31,6 +32,7 @@ var (
 func init() {
 	MainNetParams = chaincfg.MainNetParams
 	MainNetParams.Net = MainnetMagic
+	MainNetParams.CoinbaseMaturity = 500
 	MainNetParams.PubKeyHashAddrID = []byte{40}
 	MainNetParams.ScriptHashAddrID = []byte{63}
 	MainNetParams.Bech32HRPSegwit = "hc"
@@ -183,7 +185,7 @@ func (p *HydraParser) PackTx(tx *bchain.Tx, height uint32, blockTime int64) ([]b
 		if pt.Receipt.GasUsed, err = hexDecodeBig(string(r.Receipt.GasUsed)); err != nil {
 			return nil, errors.Annotatef(err, "GasUsed %v", r.Receipt.GasUsed)
 		}
-		if pt.Receipt.GasLimit, err = hexutil.Decode(r.Receipt.GasLimit); err != nil {
+		if pt.Receipt.GasLimit, err = hex.DecodeString(r.Receipt.GasLimit[2:]); err != nil {
 			return nil, errors.Annotatef(err, "GasLimit %v", r.Receipt.GasLimit)
 		}
 		if pt.Receipt.GasPrice, err = hexDecodeBig(r.Receipt.GasPrice); err != nil {
@@ -320,6 +322,8 @@ func getEthSpecificDataFromVouts(vouts []bchain.Vout, receipt *rpcReceipt) {
 		if len(v.ScriptPubKey.Addresses) == 0 {
 			gasPrice, _ := hex.DecodeString("20")
 			receipt.GasLimit = getGasLimitFromHex(v.ScriptPubKey.Hex)
+			glog.Infof("%+v", receipt.GasLimit)
+
 			receipt.GasPrice = hexEncodeBig(gasPrice)
 		}
 	}
@@ -349,9 +353,9 @@ func getGasLimitFromHex(data string) string {
 	a := binary.LittleEndian.Uint32(b)
 
 	s := strconv.FormatUint(uint64(a), 16)
-	if len(s)%2 != 0 {
-		s = "0" + s
-	}
+	// if len(s)%2 != 0 {
+	// 	s = "0" + s
+	// }
 	return "0x" + s
 }
 
