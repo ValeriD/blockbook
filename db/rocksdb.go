@@ -453,7 +453,7 @@ func (d *RocksDB) ConnectBlock(block *bchain.Block) error {
 		return err
 	}
 	addresses := make(addressesMap)
-	if chainType == bchain.ChainBitcoinType || chainType == bchain.ChainHydraType {
+	if chainType == bchain.ChainBitcoinType {
 		txAddressesMap := make(map[string]*TxAddresses)
 		balances := make(map[string]*AddrBalance)
 		if err := d.processAddressesBitcoinType(block, addresses, txAddressesMap, balances); err != nil {
@@ -478,6 +478,27 @@ func (d *RocksDB) ConnectBlock(block *bchain.Block) error {
 			return err
 		}
 		if err := d.storeAndCleanupBlockTxsEthereumType(wb, block, blockTxs); err != nil {
+			return err
+		}
+
+	} else if chainType == bchain.ChainHydraType {
+		txAddressesMap := make(map[string]*TxAddresses)
+		balances := make(map[string]*AddrBalance)
+		addressContracts := make(map[string]*AddrContracts)
+
+		if err := d.processAddressesHydraType(block, addresses, txAddressesMap, balances, addressContracts); err != nil {
+			return err
+		}
+		if err := d.storeTxAddresses(wb, txAddressesMap); err != nil {
+			return err
+		}
+		if err := d.storeAddressContracts(wb, addressContracts); err != nil {
+			return err
+		}
+		if err := d.storeBalances(wb, balances); err != nil {
+			return err
+		}
+		if err := d.storeAndCleanupBlockTxs(wb, block); err != nil {
 			return err
 		}
 	} else {
