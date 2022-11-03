@@ -10,7 +10,7 @@
     <div class="row line-mid">
         <div class="col-md-4">
             <div class="row tx-in">
-                <table class="table data-table">
+                <table class="table table-striped data-table table-hover">
                     <tbody>
                         {{- range $vin := $tx.Vin -}}
                         <tr{{if $vin.IsOwn}} class="tx-own"{{end}}>
@@ -40,7 +40,7 @@
         </div>
         <div class="col-md-4">
             <div class="row tx-out">
-                <table class="table data-table">
+                <table class="table table-striped data-table table-hover">
                     <tbody>
                         {{- range $vout := $tx.Vout -}}
                         <tr{{if $vout.IsOwn}} class="tx-own"{{end}}>
@@ -75,7 +75,7 @@
     <div class="row" style="padding: 2px 15px;">
         <div class="col-md-4">
             <div class="row tx-in">
-                <table class="table data-table">
+                <table class="table table-striped data-table table-hover">
                     <tbody>
                         <tr{{if isOwnAddress $data $erc20.From}} class="tx-own"{{end}}>
                             <td>
@@ -93,7 +93,7 @@
         </div>
         <div class="col-md-4">
             <div class="row tx-out">
-                <table class="table data-table">
+                <table class="table table-striped data-table table-hover">
                     <tbody>
                         <tr{{if isOwnAddress $data $erc20.To}} class="tx-own"{{end}}>
                             <td>

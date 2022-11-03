@@ -7,7 +7,7 @@
 <h3>Confirmed</h3>
 <div class="data-div row">
     <div class="col-lg-10">
-        <table class="table data-table">
+        <table class="table table-striped data-table table-hover">
             <tbody>
                 {{- if eq .ChainType 1 -}}
                 <tr>
@@ -30,7 +30,7 @@
                 <tr>
                     <td>ERC20 Tokens</td>
                     <td style="padding: 0;">
-                        <table class="table data-table">
+                        <table class="table table-striped data-table table-hover">
                             <tbody>
                                 <tr>
                                     <th>Contract</th>
@@ -82,7 +82,7 @@
 {{- if $addr.UnconfirmedTxs -}}
 <h3>Unconfirmed</h3>
 <div class="data-div">
-    <table class="table data-table">
+    <table class="table table-striped data-table table-hover">
         <tbody>
             <tr>
                 <td style="width: 25%;">Unconfirmed Balance</td>

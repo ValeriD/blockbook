@@ -33,11 +33,12 @@ h3 {
 
 .navbar-form {
     padding-bottom: 1px;
+    margin-top: 6px;
 }
 
 .navbar-form .form-control {
-    background-color: gray;
-    color: #fff;
+    background-color: #f4f7fa;
+    color: #222;
     border-radius: 3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -84,29 +85,29 @@ h3 {
 }
 
 #header {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     margin: 0;
     padding-bottom: 0;
     padding-top: 0;
-    background-color: #212121;
+    background-color: #FFF;
     border: 0;
+    z-index: 999;
 }
 
 .bg-trezor {
-    background-color: #212121!important;
+    background-color: #FFF!important;
     padding-top: 3px;
     padding-bottom: 2px;
     z-index: 2;
 }
 
 .bg-trezor .navbar-brand {
-    color: rgba(255, 255, 255);
+    color: #222;
     font-weight: bold;
     font-size: 19px;
-    fill: #FFFFFF;
 }
 
 @media (max-width: 768px) {
@@ -127,16 +128,16 @@ h3 {
 }
 
 #footer {
-    background-color: #212121;
-    color: #fff;
+    background-color: #FFF;
+    color: #222;
     height: 42px;
     overflow: hidden;
 }
 
 .alert-data {
     color: #383d41;
-    background-color: #f4f4f4;
-    border-color: #d6d8db;
+    background-color: #F5F7FA;
+    border-color: transparent;
     padding: 15px;
 }
 
@@ -171,16 +172,19 @@ h3 {
 }
 
 .txvalues-default {
-    background-color: #EBEBEB;
-    color: #333;
+    background-color: #f8f9fa;
+    border: 1px solid #8888fc;
+    color: #212529;
 }
 
 .txvalues-success {
-    background-color: dimgray;
+    background-color: #e9e9ff;
 }
 
 .txvalues-primary {
-    background-color: #000;
+    background-color: #e0fb92;
+    font-weight: 700;
+    color: #222;
 }
 
 .txvalues-danger {
@@ -230,6 +234,7 @@ h3 {
 
 .data-table td, .data-table th {
     padding: .4rem;
+    font-weight: 600;
 }
 
 .data-table span.ellipsis {
@@ -238,6 +243,7 @@ h3 {
 
 .data {
     font-weight: bold;
+    color: #1b10be;
 }
 
 table.data-table table.data-table th {
@@ -306,4 +312,47 @@ table.data-table table.data-table th {
 
 .key {
     color: #333;
+}
+
+.text-success {
+    color: #11d482 !important;
+}
+
+.navbar-dark .navbar-brand:focus, .navbar-dark .navbar-brand:hover {
+    color: #1b10be;
+}
+
+navbar-dark .navbar-nav .nav-link {
+    color: #222;
+    font-weight: 600;
+    margin-top: 3px;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #1e30ba;
+}
+
+.nav-link .active {
+    color: #1e30ba;
+}
+
+.nav_logo {
+    max-width: 132px;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #F5F7FA !important;
+}
+
+.table thead th {
+    border-top: none;
+    font-weight: 600;
+}
+
+.link {
+    margin-left: 3px;
+}
+
+.footer {
+    max-width: 100px;
 }
