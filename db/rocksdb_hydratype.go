@@ -2,6 +2,8 @@ package db
 
 import (
 	"bytes"
+	"encoding/hex"
+	"fmt"
 
 	"github.com/golang/glog"
 	"github.com/juju/errors"
@@ -12,8 +14,29 @@ import (
 // GetAddrDescContracts returns AddrContracts for given addrDesc
 func (d *RocksDB) GetHydraAddrDescContracts(addrDesc bchain.AddressDescriptor) (*AddrContracts, error) {
 	glog.Infof("Here")
-	val, err := d.db.GetCF(d.ro, d.cfh[cfAddressContracts], addrDesc)
+	glog.Warningf("addr: %d \n", addrDesc)
+	val, err := d.db.GetCF(d.ro, d.cfh[cfAddresses], addrDesc)
+	iterate2 := d.db.NewIteratorCF(d.ro, d.cfh[cfAddressContracts])
 
+	for iterate2.SeekToFirst(); iterate2.Valid(); iterate2.Next() {
+
+		address, stuff, err := d.chainParser.GetAddressesFromAddrDesc(iterate2.Key().Data())
+
+		fmt.Println()
+
+		if len(address) != 0 {
+			fmt.Printf("Address2 %v\n With stuff2 %v\n and err2 %v\n", address, stuff, err)
+
+			tx, s, err := d.chainParser.UnpackTx(iterate2.Value().Data())
+
+			fmt.Println("Length: ", len(iterate2.Value().Data()))
+			if err == nil {
+				fmt.Printf("Decoded %v with %s and err %v\n", tx.Hex, s, err)
+			}
+		}
+	}
+
+	fmt.Println("Slice is: \n", val)
 	if err != nil {
 		return nil, err
 	}
@@ -101,9 +124,82 @@ func (d *RocksDB) addToAddressesAndContractsHydraType(addrDesc bchain.AddressDes
 	return nil
 }
 
+func (d *RocksDB) addToHydraContractsMap(txid string, from string, to string) map[string]string {
+	return nil
+}
+
 func (d *RocksDB) processAddressesHydraType(block *bchain.Block, addresses addressesMap, txAddressesMap map[string]*TxAddresses, balances map[string]*AddrBalance, addressContracts map[string]*AddrContracts) error {
 	blockTxIDs := make([][]byte, len(block.Txs))
 	blockTxAddresses := make([]*TxAddresses, len(block.Txs))
+
+	fmt.Println("First address map:")
+	fmt.Println(addresses)
+
+	for tx := range block.Txs {
+		mytx := &block.Txs[tx]
+
+		fmt.Println("Tx id: ", mytx.Txid)
+		// contracts
+		contracts, _ := d.chainParser.EthereumTypeGetErc20FromTx(mytx)
+		exLogs, err := d.chainParser.GetTransactionHydraParser(mytx.Txid)
+
+		if exLogs != nil {
+			fmt.Println("get example tx logs hydra: ")
+			fmt.Println(exLogs)
+			if len(exLogs.Logs) != 0 {
+				for _, rl := range exLogs.Logs {
+					fmt.Println("Log hydra: ")
+					fmt.Println(rl)
+				}
+				fmt.Println(err)
+			}
+		}
+
+		// fmt.Println("\n")
+		// fmt.Println("Receipt is: ")
+		// fmt.Println(txReceipt)
+		// fmt.Println("\n")
+		// fmt.Println("Error is: ")
+		// fmt.Println(err)
+		// fmt.Println("\n")
+		fmt.Println("Contracts are: ")
+
+		// if found
+		// add from, to with cotnract address map
+		// check that map on address indexing
+		// check each contract balance
+		fmt.Println(contracts)
+		// when connected to new block this is called.
+		for i, v := range mytx.Vin {
+			for i2, v2 := range v.Addresses {
+				mytx.Vin[i].Addresses[i2] = hex.EncodeToString([]byte(v2))
+			}
+		}
+		for i, v := range mytx.Vout {
+			for i2, v2 := range v.ScriptPubKey.Addresses {
+				mytx.Vout[i].ScriptPubKey.Addresses[i2] = hex.EncodeToString([]byte(v2))
+			}
+		}
+		for _, v := range mytx.Vin {
+			for _, v2 := range v.Addresses {
+				fmt.Println("VIN ADDRESS: " + v2)
+			}
+		}
+
+		for _, v := range mytx.Vout {
+			for _, v2 := range v.ScriptPubKey.Addresses {
+				fmt.Println("VOUT ADDRESS: " + v2)
+			}
+		}
+
+		btxID, err := d.chainParser.PackTxid(mytx.Txid)
+		if err != nil {
+			return err
+		}
+
+		fmt.Println("Hex transaction id: %v \n", btxID)
+	}
+
 	// first process all outputs so that inputs can refer to txs in this block
 	for txi := range block.Txs {
 		tx := &block.Txs[txi]
@@ -115,11 +211,14 @@ func (d *RocksDB) processAddressesHydraType(block *bchain.Block, addresses addre
 		ta := TxAddresses{Height: block.Height}
 		ta.Outputs = make([]TxOutput, len(tx.Vout))
 		txAddressesMap[string(btxID)] = &ta
+		fmt.Println("Tx addresses map: ")
+		fmt.Println(txAddressesMap)
 		blockTxAddresses[txi] = &ta
 		for i, output := range tx.Vout {
 			tao := &ta.Outputs[i]
 			tao.ValueSat = output.ValueSat
 			addrDesc, err := d.chainParser.GetAddrDescFromVout(&output)
+			fmt.Println("Addr descriptor: " + addrDesc.String())
 			if err != nil || len(addrDesc) == 0 || len(addrDesc) > maxAddrDescLen {
 				if err != nil {
 					// do not log ErrAddressMissing, transactions can be without to address (for example eth contracts)
@@ -155,6 +254,17 @@ func (d *RocksDB) processAddressesHydraType(block *bchain.Block, addresses addre
 					Height:   block.Height,
 					ValueSat: output.ValueSat,
 				})
+				fmt.Println("Real addreses list: ")
+				fmt.Println(addresses)
+				for _, v := range addresses {
+					for _, ti := range v {
+						fmt.Println(ti.indexes)
+						fmt.Println(ti.btxID)
+					}
+				}
+				fmt.Println("btxid: ")
+				fmt.Println(btxID)
+				fmt.Println(string(btxID))
 				counted := addToAddressesMap(addresses, strAddrDesc, btxID, int32(i))
 				if !counted {
 					balance.Txs++
@@ -183,6 +293,16 @@ func (d *RocksDB) processAddressesHydraType(block *bchain.Block, addresses addre
 			ita, e := txAddressesMap[stxID]
 			if !e {
 				ita, err = d.getTxAddresses(btxID)
+				for _, ti := range ita.Inputs {
+					fmt.Println("Input addrdesc: " + ti.AddrDesc.String())
+					fmt.Println("Input valueSat: " + ti.ValueSat.String())
+					fmt.Println("Input ValueSatBase10: " + ti.ValueSat.Text(10))
+				}
+				for _, ti := range ita.Outputs {
+					fmt.Println("Output addrdesc: " + ti.AddrDesc.String())
+					fmt.Println("Output valueSat: " + ti.ValueSat.String())
+					fmt.Println("Output ValueSatBase10: " + ti.ValueSat.Text(10))
+				}
 				if err != nil {
 					return err
 				}
@@ -248,9 +368,20 @@ func (d *RocksDB) processAddressesHydraType(block *bchain.Block, addresses addre
 		tx := &block.Txs[txi]
 		btxID, err := d.chainParser.PackTxid(tx.Txid)
 		erc20, err := d.chainParser.EthereumTypeGetErc20FromTx(tx)
+		fmt.Println("Ercs we get: ", erc20)
+		fmt.Println("Err is: ", err)
+		if len(erc20) != 0 {
+			for _, et := range erc20 {
+				fmt.Printf("Any erc20s2:? %s \n", et.Contract)
+				fmt.Printf("from:? %s \n", et.From)
+				fmt.Printf("to:? %s \n", et.To)
+				fmt.Printf("token2:? %s \n", &et.Tokens)
+			}
+		}
 		if err != nil {
 			continue
 		}
+		fmt.Printf("Any erc20s?: %s", erc20)
 		for i, t := range erc20 {
 			var contract, from, to bchain.AddressDescriptor
 			contract, err = d.chainParser.GetAddrDescFromAddress(t.Contract)
@@ -266,6 +397,30 @@ func (d *RocksDB) processAddressesHydraType(block *bchain.Block, addresses addre
 				continue
 			}
 
+			fmt.Println("Adding addresses: ")
+
+			for k, v := range addresses {
+				fmt.Printf("What is k?: %v \n", k)
+				for i2, ti := range v {
+					fmt.Printf("What is this hydratype: %v \n ", i2)
+
+					fmt.Println("Indexes hydratype: ")
+					for i3, v2 := range ti.indexes {
+						fmt.Printf("Index: %v \n", v2)
+						fmt.Printf("Index: %v \n", i3)
+					}
+				}
+			}
+
+			for k, ac := range addressContracts {
+				fmt.Printf("What is k2?: %v \n", k)
+				fmt.Printf("Total txs: %v \n", ac.TotalTxs)
+				for i2, ac2 := range ac.Contracts {
+					fmt.Printf("Contract tx: %v \n", ac2.Contract.String())
+					fmt.Printf("Txs: %v \n", ac2.Txs)
+					fmt.Printf("What is i2: %v \n", i2)
+				}
+			}
 			if err = d.addToAddressesAndContractsHydraType(to, btxID, int32(i), contract, addresses, addressContracts, true); err != nil {
 				return err
 			}

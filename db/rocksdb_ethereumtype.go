@@ -3,6 +3,7 @@ package db
 import (
 	"bytes"
 	"encoding/hex"
+	"fmt"
 
 	vlq "github.com/bsm/go-vlq"
 	"github.com/flier/gorocksdb"
@@ -28,6 +29,12 @@ type AddrContracts struct {
 func (d *RocksDB) storeAddressContracts(wb *gorocksdb.WriteBatch, acm map[string]*AddrContracts) error {
 	buf := make([]byte, 64)
 	varBuf := make([]byte, vlq.MaxLen64)
+	fmt.Println("Storing address contracts:: %v \n", acm)
+	for _, ac := range acm {
+		for _, ac2 := range ac.Contracts {
+			fmt.Println("Contract adding: %v \n", ac2.Contract)
+		}
+	}
 	for addrDesc, acs := range acm {
 		// address with 0 contracts is removed from db - happens on disconnect
 		if acs == nil || (acs.NonContractTxs == 0 && len(acs.Contracts) == 0) {
@@ -43,6 +50,9 @@ func (d *RocksDB) storeAddressContracts(wb *gorocksdb.WriteBatch, acm map[string
 				l = packVaruint(ac.Txs, varBuf)
 				buf = append(buf, varBuf[:l]...)
 			}
+			fmt.Printf("Adding addrDesc contract: %w \n", addrDesc)
+			addr, add, _ := d.chainParser.GetAddressesFromAddrDesc(bchain.AddressDescriptor(addrDesc))
+			fmt.Printf("addrDesc contract data: %v %v \n", addr, add)
 			wb.PutCF(d.cfh[cfAddressContracts], bchain.AddressDescriptor(addrDesc), buf)
 		}
 	}
@@ -51,7 +61,9 @@ func (d *RocksDB) storeAddressContracts(wb *gorocksdb.WriteBatch, acm map[string
 
 // GetAddrDescContracts returns AddrContracts for given addrDesc
 func (d *RocksDB) GetAddrDescContracts(addrDesc bchain.AddressDescriptor) (*AddrContracts, error) {
+
 	val, err := d.db.GetCF(d.ro, d.cfh[cfAddressContracts], addrDesc)
+
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +78,7 @@ func (d *RocksDB) GetAddrDescContracts(addrDesc bchain.AddressDescriptor) (*Addr
 	buf = buf[l:]
 	c := make([]AddrContract, 0, 4)
 	for len(buf) > 0 {
-		if len(buf) < eth.EthereumTypeAddressDescriptorLen {
+		if len(buf) < eth.EthereumTypeAddressDescriptorLen-2 {
 			return nil, errors.New("Invalid data stored in cfAddressContracts for AddrDesc " + addrDesc.String())
 		}
 		txs, l := unpackVaruint(buf[eth.EthereumTypeAddressDescriptorLen:])

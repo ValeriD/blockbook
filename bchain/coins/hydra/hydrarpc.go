@@ -1,7 +1,9 @@
 package hydra
 
 import (
+	"encoding/hex"
 	"encoding/json"
+	"fmt"
 	"math/big"
 
 	"github.com/golang/glog"
@@ -28,6 +30,19 @@ type cmdEstimateSmartFee struct {
 	Method string `json:"method"`
 }
 
+type resGetBalance struct {
+	Result struct {
+		address string   `json:"address"`
+		balance big.Int  `json:"number"`
+		storage []string `json:"storage"`
+		code    string   `json:"code"`
+	}
+}
+
+type cmdGetBalance struct {
+	Method string `json:"method"`
+}
+
 type cmdGetBlock struct {
 	Method string `json:"method"`
 	Params struct {
@@ -49,19 +64,12 @@ type Topics struct {
 	Topics []string `json:"topics"`
 }
 
-type rpcLogsWithTxHash struct {
-	Hash string   `json:"transactionHash,omitempty"`
-	Logs []rpcLog `json:"log,omitempty"`
-}
-
-type rpcSearchLogsRes struct {
-	Error  interface{}         `json:"error"`
-	Id     string              `json:"id"`
-	Result []rpcLogsWithTxHash `json:"result"`
-}
+// Get global instance somehow.
+var MyHydraRPC *HydraRPC
 
 // NewHydraRPC returns new HydraRPC instance.
 func NewHydraRPC(config json.RawMessage, pushHandler func(bchain.NotificationType)) (bchain.BlockChain, error) {
+
 	b, err := btc.NewBitcoinRPC(config, pushHandler)
 	if err != nil {
 		return nil, err
@@ -73,6 +81,8 @@ func NewHydraRPC(config json.RawMessage, pushHandler func(bchain.NotificationTyp
 	}
 	s.RPCMarshaler = btc.JSONMarshalerV1{}
 	s.ChainConfig.SupportsEstimateSmartFee = true
+
+	MyHydraRPC = s
 
 	return s, nil
 }
@@ -110,7 +120,7 @@ func (b *HydraRPC) GetTransactionForMempool(txid string) (*bchain.Tx, error) {
 	return b.GetTransaction(txid)
 }
 
-func (b *HydraRPC) getHrc20EventsForBlock(blockNumber int) (map[string][]*rpcLog, error) {
+func (b *HydraRPC) getHrc20EventsForBlock(blockNumber int) (map[string][]*bchain.RpcLog, error) {
 	if blockNumber == 0 {
 		return nil, nil
 	}
@@ -125,14 +135,14 @@ func (b *HydraRPC) getHrc20EventsForBlock(blockNumber int) (map[string][]*rpcLog
 	req.Params.Address = []string{}
 	req.Params.Optional = topics
 
-	var res rpcSearchLogsRes
+	var res bchain.RpcSearchLogsRes
 	err := b.Call(&req, &res)
 	if err != nil || res.Error != nil {
 		return nil, errors.Annotatef(err, "blockNumber %v", blockNumber)
 	}
 	rpcLogs := res.Result
 
-	r := make(map[string][]*rpcLog)
+	r := make(map[string][]*bchain.RpcLog)
 	for i := range rpcLogs {
 		l := &rpcLogs[i]
 		for j := range l.Logs {
@@ -161,7 +171,7 @@ func (b *HydraRPC) GetBlock(hash string, height uint32) (*bchain.Block, error) {
 	}
 
 	for _, i := range block.Txs {
-		receipt := &rpcReceipt{Logs: logs[i.Txid]}
+		receipt := &bchain.RpcReceipt{Logs: logs[i.Txid]}
 		ct := &completeTransaction{Tx: &i, Receipt: receipt}
 		i.CoinSpecificData = ct
 	}
@@ -199,12 +209,17 @@ func (b *HydraRPC) GetBlockFull(hash string) (*bchain.Block, error) {
 			vout := &tx.Vout[j]
 			// convert vout.JsonValue to big.Int and clear it, it is only temporary value used for unmarshal
 			vout.ValueSat, err = b.Parser.AmountToBigInt(vout.JsonValue)
+			for i2, v := range vout.ScriptPubKey.Addresses {
+				fmt.Println("Encrypting tx hex: " + tx.Hex)
+				fmt.Println("With: " + hex.EncodeToString([]byte(v)))
+				vout.ScriptPubKey.Addresses[i2] = hex.EncodeToString([]byte(v))
+			}
 			if err != nil {
 				return nil, err
 			}
 			vout.JsonValue = ""
 		}
-		receipt := &rpcReceipt{Logs: logs[tx.Txid]}
+		receipt := &bchain.RpcReceipt{Logs: logs[tx.Txid]}
 		ct := &completeTransaction{Tx: tx, Receipt: receipt}
 		tx.CoinSpecificData = ct
 	}
@@ -232,7 +247,7 @@ func (b *HydraRPC) GetBlockWithoutHeader(hash string, height uint32) (*bchain.Bl
 	}
 
 	for _, i := range block.Txs {
-		receipt := &rpcReceipt{Logs: logs[i.Txid]}
+		receipt := &bchain.RpcReceipt{Logs: logs[i.Txid]}
 		ct := &completeTransaction{Tx: &i, Receipt: receipt}
 		i.CoinSpecificData = ct
 	}
@@ -256,6 +271,8 @@ type cmdGetRawTransaction struct {
 // getRawTransaction returns json as returned by backend, with all coin specific data
 func (b *HydraRPC) getRawTransaction(txid string) (*bchain.Tx, error) {
 	glog.V(1).Info("rpc: getrawtransaction ", txid)
+	fmt.Println("Getting raw tx")
+	fmt.Println("Getting raw tx with txid ", txid)
 
 	res := resGetRawTransaction{}
 	req := cmdGetRawTransaction{Method: "getrawtransaction"}
@@ -272,6 +289,7 @@ func (b *HydraRPC) getRawTransaction(txid string) (*bchain.Tx, error) {
 		}
 		return nil, errors.Annotatef(res.Error, "txid %v", txid)
 	}
+
 	return &res.Result, nil
 }
 
@@ -308,6 +326,27 @@ func (b *HydraRPC) GetTransactionSpecific(tx *bchain.Tx) (json.RawMessage, error
 	}
 	m, err := json.Marshal(&csd)
 	return json.RawMessage(m), err
+}
+
+func (b *HydraRPC) EthereumTypeGetBalance(addrDesc bchain.AddressDescriptor) (*big.Int, error) {
+	req := cmdGetBalance{Method: "getaccountinfo"}
+	res := resGetBalance{}
+	err := b.Call(&req, &res)
+
+	var r big.Int
+	if err != nil {
+		return &r, err
+	}
+	var n *big.Int = &res.Result.balance
+
+	contracts := cachedContracts
+	fmt.Println("Cached contracts size: ", len(cachedContracts))
+
+	for key, contract := range contracts {
+		fmt.Println("String: ", key, "=>", "Contract: ", contract.Name+" symbol: "+contract.Symbol+" address: "+contract.Contract)
+	}
+
+	return n, nil
 }
 
 // EstimateSmartFee returns fee estimation

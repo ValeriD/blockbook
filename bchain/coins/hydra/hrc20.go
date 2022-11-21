@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 	"math/big"
 	"strconv"
 	"sync"
@@ -70,7 +71,7 @@ func addressFromPaddedHex(s string) (string, error) {
 	return a.String()[2:], nil
 }
 
-func (p *HydraParser) hrc20GetTransfersFromLog(logs []*rpcLog) ([]bchain.Erc20Transfer, error) {
+func (p *HydraParser) hrc20GetTransfersFromLog(logs []*bchain.RpcLog) ([]bchain.Erc20Transfer, error) {
 	var r []bchain.Erc20Transfer
 	for _, l := range logs {
 		if len(l.Topics) == 3 && l.Topics[0] == hrc20TransferEventSignature {
@@ -209,7 +210,6 @@ func (b *HydraRPC) EthereumTypeGetErc20ContractInfo(contractDesc bchain.AddressD
 		if err != nil {
 			// ignore the error from the eth_call - since geth v1.9.15 they changed the behavior
 			// and returning error "execution reverted" for some non contract addresses
-			// https://github.com/ethereum/go-ethereum/issues/21249#issuecomment-648647672
 			glog.Warning(errors.Annotatef(err, "hrc20NameSignature %v", address))
 			return nil, nil
 			// return nil, errors.Annotatef(err, "erc20NameSignature %v", address)
@@ -276,26 +276,35 @@ type resGetTransactionReceipt struct {
 }
 
 type rpcReceiptUint struct {
-	GasUsed uint64    `json:"gasUsed"`
-	Status  string    `json:"excepted"`
-	Logs    []*rpcLog `json:"log"`
+	GasUsed uint64           `json:"gasUsed"`
+	Status  string           `json:"excepted"`
+	Logs    []*bchain.RpcLog `json:"log"`
 }
 
-func (b *HydraRPC) getLogsForTx(txid string) (*rpcReceipt, error) {
+func (b *HydraRPC) getLogsForTx(txid string) (*bchain.RpcReceipt, error) {
 
 	res := &resGetTransactionReceipt{}
 	req := &cmdGetTransactionReceipt{Method: "gettransactionreceipt"}
 	req.Params = append(req.Params, txid)
+	fmt.Println("Is func start called?")
 
 	err := b.Call(req, res)
+
+	fmt.Println("rpc result: ")
+	fmt.Println(res)
 	if err != nil {
+		fmt.Println("Err not null.")
+
 		return nil, err
 	}
 
 	if res.Error != nil {
+		fmt.Println("Well, error")
+
 		return nil, res.Error
 	}
 	if len(res.Result) == 0 {
+		fmt.Println("No result")
 		return nil, nil
 	} else {
 		status := eth.TxStatusPending
@@ -305,11 +314,19 @@ func (b *HydraRPC) getLogsForTx(txid string) (*rpcReceipt, error) {
 			status = eth.TxStatusFailure
 		}
 
-		receipt := &rpcReceipt{
+		receipt := &bchain.RpcReceipt{
 			GasUsed: "0x" + strconv.FormatUint(res.Result[0].GasUsed, 16),
 			Status:  "0x" + strconv.FormatInt(int64(status), 16),
 			Logs:    res.Result[0].Logs,
 		}
+		fmt.Println("Returning receipt")
+		fmt.Println("For " + txid)
+		fmt.Println(receipt)
+		fmt.Println(receipt.Data)
+		fmt.Println(&receipt.Data)
+		fmt.Println(res.Result[0])
+		fmt.Println(res.Result)
+		fmt.Println(res.Result[0].Logs)
 
 		return receipt, nil
 	}

@@ -23,6 +23,10 @@ func (p *BaseParser) ParseBlock(b []byte) (*Block, error) {
 	return nil, errors.New("ParseBlock: not implemented")
 }
 
+func (p *BaseParser) GetTransactionHydraParser(txid string) (*RpcReceipt, error) {
+	return nil, errors.New("Not implemented yet")
+}
+
 // ParseTx parses byte array containing transaction and returns Tx struct - currently not implemented
 func (p *BaseParser) ParseTx(b []byte) (*Tx, error) {
 	return nil, errors.New("ParseTx: not implemented")

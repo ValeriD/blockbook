@@ -3,6 +3,7 @@ package hydra
 import (
 	"encoding/binary"
 	"encoding/hex"
+	"fmt"
 	"math/big"
 	"strconv"
 
@@ -71,18 +72,9 @@ type rpcLogWithTxHash struct {
 	Hash string `json:"transactionHash"`
 }
 
-type rpcReceipt struct {
-	GasUsed  string    `json:"gasUsed"`
-	GasLimit string    `json:"gasLimit"`
-	GasPrice string    `json:"gasPrice"`
-	Status   string    `json:"status"`
-	Logs     []*rpcLog `json:"logs"`
-	Data     string    `json:"data,omitempty"`
-}
-
 type completeTransaction struct {
-	Tx      *bchain.Tx  `json:"tx"`
-	Receipt *rpcReceipt `json:"receipt,omitempty"`
+	Tx      *bchain.Tx         `json:"tx"`
+	Receipt *bchain.RpcReceipt `json:"receipt,omitempty"`
 }
 
 type rpcBlockTransactions struct {
@@ -134,7 +126,7 @@ func (p *HydraParser) PackTx(tx *bchain.Tx, height uint32, blockTime int64) ([]b
 
 	pti := make([]*ProtoCompleteTransaction_VinType, len(tx.Vin))
 	for i, vi := range tx.Vin {
-		hex, err := hex.DecodeString(vi.ScriptSig.Hex)
+		hexstr, err := hex.DecodeString(vi.ScriptSig.Hex)
 		if err != nil {
 			return nil, errors.Annotatef(err, "Vin %v Hex %v", i, vi.ScriptSig.Hex)
 		}
@@ -143,10 +135,18 @@ func (p *HydraParser) PackTx(tx *bchain.Tx, height uint32, blockTime int64) ([]b
 			return nil, errors.Annotatef(err, "Vin %v Txid %v", i, vi.Txid)
 		}
 
+		// TODO: Not sure if this is needed.
+		vinHexAddresses := vi.Addresses
+
+		for i2, v := range vinHexAddresses {
+			vinHexAddresses[i2] = hex.EncodeToString([]byte(v))
+
+		}
+
 		pti[i] = &ProtoCompleteTransaction_VinType{
-			Addresses:    vi.Addresses,
+			Addresses:    vinHexAddresses,
 			Coinbase:     vi.Coinbase,
-			ScriptSigHex: hex,
+			ScriptSigHex: hexstr,
 			Sequence:     vi.Sequence,
 			Txid:         itxid,
 			Vout:         vi.Vout,
@@ -154,14 +154,23 @@ func (p *HydraParser) PackTx(tx *bchain.Tx, height uint32, blockTime int64) ([]b
 	}
 	pto := make([]*ProtoCompleteTransaction_VoutType, len(tx.Vout))
 	for i, vo := range tx.Vout {
-		hex, err := hex.DecodeString(vo.ScriptPubKey.Hex)
+
+		//  TODO: Not sure if this is needed too.
+		vinHexAddresses := vo.ScriptPubKey.Addresses
+
+		for i2, v := range vinHexAddresses {
+			vinHexAddresses[i2] = hex.EncodeToString([]byte(v))
+		}
+
+		hexstr, err := hex.DecodeString(vo.ScriptPubKey.Hex)
+
 		if err != nil {
 			return nil, errors.Annotatef(err, "Vout %v Hex %v", i, vo.ScriptPubKey.Hex)
 		}
 		pto[i] = &ProtoCompleteTransaction_VoutType{
-			Addresses:       vo.ScriptPubKey.Addresses,
+			Addresses:       vinHexAddresses,
 			N:               vo.N,
-			ScriptPubKeyHex: hex,
+			ScriptPubKeyHex: hexstr,
 			ValueSat:        vo.ValueSat.Bytes(),
 		}
 	}
@@ -247,8 +256,16 @@ func (p *HydraParser) UnpackTx(buf []byte) (*bchain.Tx, uint32, error) {
 		if err != nil {
 			return nil, 0, err
 		}
+
+		// TODO: this is for unhexing if above is used.
+		hexToNormalAddresses := pti.Addresses
+		// for i2, v := range hexToNormalAddresses {
+		// 	res, err := hex.DecodeString(v)
+		// 	hexToNormalAddresses[i2] = string(res)
+		// }
+
 		vin[i] = bchain.Vin{
-			Addresses: pti.Addresses,
+			Addresses: hexToNormalAddresses,
 			Coinbase:  pti.Coinbase,
 			ScriptSig: bchain.ScriptSig{
 				Hex: hex.EncodeToString(pti.ScriptSigHex),
@@ -260,26 +277,33 @@ func (p *HydraParser) UnpackTx(buf []byte) (*bchain.Tx, uint32, error) {
 	}
 	vout := make([]bchain.Vout, len(pt.Vout))
 	for i, pto := range pt.Vout {
+
+		hexToNormalAddresses := pto.Addresses
+		//for i2, v := range hexToNormalAddresses {
+		//res, err := hex.DecodeString(v)
+		//hexToNormalAddresses[i2] = string(res)
+		//}
 		var vs big.Int
 		vs.SetBytes(pto.ValueSat)
+
 		vout[i] = bchain.Vout{
 			N: pto.N,
 			ScriptPubKey: bchain.ScriptPubKey{
-				Addresses: pto.Addresses,
+				Addresses: hexToNormalAddresses,
 				Hex:       hex.EncodeToString(pto.ScriptPubKeyHex),
 			},
 			ValueSat: vs,
 		}
 	}
-	var rr *rpcReceipt
+	var rr *bchain.RpcReceipt
 	if pt.Receipt != nil {
-		logs := make([]*rpcLog, len(pt.Receipt.Log))
+		logs := make([]*bchain.RpcLog, len(pt.Receipt.Log))
 		for i, l := range pt.Receipt.Log {
 			topics := make([]string, len(l.Topics))
 			for j, t := range l.Topics {
 				topics[j] = hexutil.Encode(t)[2:]
 			}
-			logs[i] = &rpcLog{
+			logs[i] = &bchain.RpcLog{
 				Address: hexutil.Encode(l.Address)[2:],
 				Data:    hexutil.Encode(l.Data),
 				Topics:  topics,
@@ -290,7 +314,7 @@ func (p *HydraParser) UnpackTx(buf []byte) (*bchain.Tx, uint32, error) {
 		if len(pt.Receipt.Status) != 1 || pt.Receipt.Status[0] != 'U' {
 			status = hexEncodeBig(pt.Receipt.Status)
 		}
-		rr = &rpcReceipt{
+		rr = &bchain.RpcReceipt{
 			GasUsed:  hexEncodeBig(pt.Receipt.GasUsed),
 			GasLimit: hexEncodeBig(pt.Receipt.GasLimit),
 			GasPrice: hexEncodeBig(pt.Receipt.GasPrice),
@@ -298,16 +322,18 @@ func (p *HydraParser) UnpackTx(buf []byte) (*bchain.Tx, uint32, error) {
 			Logs:     logs,
 		}
 	}
+
 	tx := bchain.Tx{
 		Blocktime: int64(pt.Blocktime),
 		Hex:       hex.EncodeToString(pt.Hex),
 		LockTime:  pt.Locktime,
-		Time:      int64(pt.Blocktime),
+		Time:      22222,
 		Txid:      txid,
 		Vin:       vin,
 		Vout:      vout,
 		Version:   pt.Version,
 	}
+
 	completeTx := completeTransaction{
 		Tx:      &tx,
 		Receipt: rr,
@@ -316,7 +342,7 @@ func (p *HydraParser) UnpackTx(buf []byte) (*bchain.Tx, uint32, error) {
 	return &tx, pt.Height, nil
 }
 
-func getEthSpecificDataFromVouts(vouts []bchain.Vout, receipt *rpcReceipt) {
+func getEthSpecificDataFromVouts(vouts []bchain.Vout, receipt *bchain.RpcReceipt) {
 	for _, v := range vouts {
 		if len(v.ScriptPubKey.Addresses) == 0 {
 			gasPrice, _ := hex.DecodeString("20")
@@ -375,18 +401,73 @@ func hexEncodeBig(b []byte) string {
 }
 
 // EthereumTypeGetErc20FromTx returns Erc20 data from bchain.Tx
+
+func (p *HydraParser) GetTransactionHydraParser(txid string) (*bchain.RpcReceipt, error) {
+	secondlogsTx, _ := MyHydraRPC.GetTransaction(txid)
+
+	mysecondlogs, _ := MyHydraRPC.getLogsForTx(secondlogsTx.Txid)
+
+	if mysecondlogs != nil {
+		if len(mysecondlogs.Logs) != 0 {
+			for _, rl := range mysecondlogs.Logs {
+				fmt.Println("Log2: ")
+				fmt.Println(rl.Address)
+				fmt.Println(rl.Data)
+				fmt.Println(rl.Topics)
+			}
+		}
+		return mysecondlogs, nil
+	}
+
+	return nil, nil
+}
+
 func (p *HydraParser) EthereumTypeGetErc20FromTx(tx *bchain.Tx) ([]bchain.Erc20Transfer, error) {
+	fmt.Printf("Called on: %s \n", tx.Txid)
 	var r []bchain.Erc20Transfer
 	var err error
 	csd, ok := tx.CoinSpecificData.(completeTransaction)
+
+	// if csd.Tx != nil {
+	// 	fmt.Println("Complete tx: ")
+	// 	fmt.Println(csd.Tx)
+	// }
+	// if len(&csd.Tx.Vin) != 0 && len(csd.Tx.Vout) != 0 {
+	fmt.Println(csd)
+	if csd.Tx != nil {
+		for _, v := range csd.Tx.Vin {
+			for _, v2 := range v.Addresses {
+				fmt.Println("vin Tx address: " + v2)
+			}
+		}
+		for _, v := range csd.Tx.Vout {
+			for _, v2 := range v.ScriptPubKey.Addresses {
+				fmt.Println("vout Tx address: " + v2)
+			}
+		}
+	}
+
+	// }
+
+	if ok {
+
+		fmt.Println("Receipt tx: ")
+		fmt.Println(&csd.Receipt)
+		fmt.Println(&csd.Receipt == nil)
+		fmt.Println(csd.Receipt == nil)
+	}
 	if ok {
 		if csd.Receipt != nil {
 			r, err = p.hrc20GetTransfersFromLog(csd.Receipt.Logs)
+			fmt.Printf("hrc20transfers: %s \n", r)
 		}
 		if err != nil {
+			fmt.Println("Err is here: ", err)
 			return nil, err
 		}
 	}
+	fmt.Println("Returning hrc transfers: ")
+	fmt.Println(r)
 	return r, nil
 }
 

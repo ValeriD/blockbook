@@ -348,6 +348,7 @@ type BlockChainParser interface {
 	DeriveAddressDescriptorsFromTo(descriptor *XpubDescriptor, change uint32, fromIndex uint32, toIndex uint32) ([]AddressDescriptor, error)
 	// EthereumType specific
 	EthereumTypeGetErc20FromTx(tx *Tx) ([]Erc20Transfer, error)
+	GetTransactionHydraParser(txid string) (*RpcReceipt, error)
 }
 
 // Mempool defines common interface to mempool
@@ -357,4 +358,30 @@ type Mempool interface {
 	GetAddrDescTransactions(addrDesc AddressDescriptor) ([]Outpoint, error)
 	GetAllEntries() MempoolTxidEntries
 	GetTransactionTime(txid string) uint32
+}
+
+type RpcReceipt struct {
+	GasUsed  string    `json:"gasUsed"`
+	GasLimit string    `json:"gasLimit"`
+	GasPrice string    `json:"gasPrice"`
+	Status   string    `json:"status"`
+	Logs     []*RpcLog `json:"logs"`
+	Data     string    `json:"data,omitempty"`
+}
+
+type RpcLog struct {
+	Address string   `json:"address"`
+	Topics  []string `json:"topics"`
+	Data    string   `json:"data"`
+}
+
+type RpcLogsWithTxHash struct {
+	Hash string   `json:"transactionHash,omitempty"`
+	Logs []RpcLog `json:"log,omitempty"`
+}
+
+type RpcSearchLogsRes struct {
+	Error  interface{}         `json:"error"`
+	Id     string              `json:"id"`
+	Result []RpcLogsWithTxHash `json:"result"`
 }

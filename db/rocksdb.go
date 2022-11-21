@@ -111,7 +111,8 @@ const (
 	cfAddressBalance
 	cfTxAddresses
 	// EthereumType
-	cfAddressContracts = cfAddressBalance
+	cfAddressContracts      = cfAddressBalance
+	cfHydraAddressContracts = 8
 )
 
 // common columns
@@ -121,7 +122,7 @@ var cfBaseNames = []string{"default", "height", "addresses", "blockTxs", "transa
 // type specific columns
 var cfNamesBitcoinType = []string{"addressBalance", "txAddresses"}
 var cfNamesEthereumType = []string{"addressContracts"}
-var cfNamesHydraType = []string{"addressBalance", "txAddresses", "addressContracts"}
+var cfNamesHydraType = []string{"addressBalance", "txAddresses", "addressContracts", "hydraAddressContracts"}
 
 func openDB(path string, c *gorocksdb.Cache, openFiles int) (*gorocksdb.DB, []*gorocksdb.ColumnFamilyHandle, error) {
 	// opts with bloom filter
@@ -369,6 +370,9 @@ func (d *RocksDB) GetTransactions(address string, lower uint32, higher uint32, f
 	if err != nil {
 		return err
 	}
+	fmt.Printf("Getting transactions for addr: %d \n", address)
+	fmt.Printf("Getting transactions for addr, lower: %d \n", lower)
+	fmt.Printf("Getting transactions for addr, higher: %d \n", higher)
 	return d.GetAddrDescTransactions(addrDesc, lower, higher, fn)
 }
 
@@ -453,6 +457,7 @@ func (d *RocksDB) ConnectBlock(block *bchain.Block) error {
 		return err
 	}
 	addresses := make(addressesMap)
+	fmt.Println("Connected to new block. \n")
 	if chainType == bchain.ChainBitcoinType {
 		txAddressesMap := make(map[string]*TxAddresses)
 		balances := make(map[string]*AddrBalance)
@@ -489,13 +494,30 @@ func (d *RocksDB) ConnectBlock(block *bchain.Block) error {
 		if err := d.processAddressesHydraType(block, addresses, txAddressesMap, balances, addressContracts); err != nil {
 			return err
 		}
+		for _, ta := range txAddressesMap {
+			for _, ti := range ta.Inputs {
+				fmt.Println("Input addrdesc ", ti.AddrDesc)
+				fmt.Println("Input value sat  ", ti.ValueSat)
+			}
+			// check here
+			for _, to := range ta.Outputs {
+				fmt.Println("Output addrdesc ", to.AddrDesc)
+				fmt.Println("Output value sat  ", to.ValueSat)
+			}
+			fmt.Println("tx height: ", ta.Height)
+		}
 		if err := d.storeTxAddresses(wb, txAddressesMap); err != nil {
+			fmt.Printf("Storing tx addresses: %s \n", txAddressesMap)
+
 			return err
 		}
 		if err := d.storeAddressContracts(wb, addressContracts); err != nil {
+			fmt.Printf("Storing address contracts: %s \n", addressContracts)
 			return err
 		}
 		if err := d.storeBalances(wb, balances); err != nil {
+			fmt.Printf("Storing balances: %s \n", balances)
+
 			return err
 		}
 		if err := d.storeAndCleanupBlockTxs(wb, block); err != nil {
@@ -851,6 +873,10 @@ func (d *RocksDB) processAddressesBitcoinType(block *bchain.Block, addresses add
 // the method assumes that outputs in the block are processed before the inputs
 // the return value is true if the tx was processed before, to not to count the tx multiple times
 func addToAddressesMap(addresses addressesMap, strAddrDesc string, btxID []byte, index int32) bool {
+
+	fmt.Println("bytes: ", string(btxID))
+	fmt.Println(btxID)
+
 	// check that the address was already processed in this block
 	// if not found, it has certainly not been counted
 	at, found := addresses[strAddrDesc]
@@ -872,19 +898,43 @@ func addToAddressesMap(addresses addressesMap, strAddrDesc string, btxID []byte,
 
 func (d *RocksDB) storeAddresses(wb *gorocksdb.WriteBatch, height uint32, addresses addressesMap) error {
 	for addrDesc, txi := range addresses {
+		for _, ti := range txi {
+			fmt.Println("TX indice: ", ti.btxID)
+			for _, v := range ti.indexes {
+				fmt.Println("TX indice specific: ", v)
+			}
+		}
 		ba := bchain.AddressDescriptor(addrDesc)
 		key := packAddressKey(ba, height)
 		val := d.packTxIndexes(txi)
+		fmt.Printf("AddressStore: %d \n %s", key, val)
 		wb.PutCF(d.cfh[cfAddresses], key, val)
+
 	}
 	return nil
 }
 
 func (d *RocksDB) storeTxAddresses(wb *gorocksdb.WriteBatch, am map[string]*TxAddresses) error {
+	for k, _ := range am {
+		fmt.Printf("Transaction tx store: %v \n", k)
+	}
 	varBuf := make([]byte, maxPackedBigintBytes)
 	buf := make([]byte, 1024)
 	for txID, ta := range am {
+		for _, ti := range ta.Inputs {
+			fmt.Println("TA INPUT: ")
+			fmt.Println(ti.AddrDesc)
+			fmt.Println(ti.ValueSat)
+		}
+		for _, to := range ta.Outputs {
+			fmt.Println("TA OUTPUT: ")
+			fmt.Println(to.AddrDesc)
+
+			fmt.Println(to.ValueSat)
+
+		}
 		buf = packTxAddresses(ta, buf, varBuf)
+		fmt.Printf("TxStore: %d \n", buf)
 		wb.PutCF(d.cfh[cfTxAddresses], []byte(txID), buf)
 	}
 	return nil
@@ -899,6 +949,8 @@ func (d *RocksDB) storeBalances(wb *gorocksdb.WriteBatch, abm map[string]*AddrBa
 		if ab == nil || ab.Txs <= 0 {
 			wb.DeleteCF(d.cfh[cfAddressBalance], bchain.AddressDescriptor(addrDesc))
 		} else {
+			fmt.Printf("BalanceStore: %d \n", ab.BalanceSat)
+			fmt.Printf("Check at: %d \n", d.cfh[cfAddressBalance])
 			buf = packAddrBalance(ab, buf, varBuf)
 			wb.PutCF(d.cfh[cfAddressBalance], bchain.AddressDescriptor(addrDesc), buf)
 		}
@@ -995,6 +1047,7 @@ func (d *RocksDB) getBlockTxs(height uint32) ([]blockTxs, error) {
 
 // GetAddrDescBalance returns AddrBalance for given addrDesc
 func (d *RocksDB) GetAddrDescBalance(addrDesc bchain.AddressDescriptor, detail AddressBalanceDetail) (*AddrBalance, error) {
+	fmt.Printf("Address: %d \n", d.cfh[cfAddressBalance])
 	val, err := d.db.GetCF(d.ro, d.cfh[cfAddressBalance], addrDesc)
 	if err != nil {
 		return nil, err
@@ -1061,18 +1114,30 @@ func (d *RocksDB) AddrDescForOutpoint(outpoint bchain.Outpoint) (bchain.AddressD
 
 func packTxAddresses(ta *TxAddresses, buf []byte, varBuf []byte) []byte {
 	buf = buf[:0]
+	fmt.Println("Original buf: ")
+	fmt.Println(buf)
 	l := packVaruint(uint(ta.Height), varBuf)
 	buf = append(buf, varBuf[:l]...)
 	l = packVaruint(uint(len(ta.Inputs)), varBuf)
 	buf = append(buf, varBuf[:l]...)
 	for i := range ta.Inputs {
+		fmt.Println("Appending ta input: ")
+		fmt.Println(ta.Inputs[i].AddrDesc)
+		fmt.Println(ta.Inputs[i].ValueSat)
+
 		buf = appendTxInput(&ta.Inputs[i], buf, varBuf)
 	}
 	l = packVaruint(uint(len(ta.Outputs)), varBuf)
 	buf = append(buf, varBuf[:l]...)
 	for i := range ta.Outputs {
+		fmt.Println("Appending ta output: ")
+		fmt.Println(ta.Outputs[i].AddrDesc)
+		fmt.Println(ta.Outputs[i].Spent)
+		fmt.Println(ta.Outputs[i].ValueSat)
 		buf = appendTxOutput(&ta.Outputs[i], buf, varBuf)
 	}
+	fmt.Println("Buf output: ")
+	fmt.Println(buf)
 	return buf
 }
 
@@ -1549,6 +1614,7 @@ func (d *RocksDB) disconnectBlock(height uint32, blockTxs []blockTxs) error {
 	key := packUint(height)
 	wb.DeleteCF(d.cfh[cfBlockTxs], key)
 	wb.DeleteCF(d.cfh[cfHeight], key)
+	fmt.Println("Storing tx addresses here")
 	d.storeTxAddresses(wb, txAddressesToUpdate)
 	d.storeBalancesDisconnect(wb, balances)
 	for s := range txsToDelete {
@@ -1651,6 +1717,16 @@ func (d *RocksDB) PutTx(tx *bchain.Tx, height uint32, blockTime int64) error {
 	key, err := d.chainParser.PackTxid(tx.Txid)
 	if err != nil {
 		return nil
+	}
+	for i, v := range tx.Vin {
+		for i2, _ := range v.Addresses {
+			tx.Vin[i].Addresses[i2] = hex.EncodeToString([]byte(v.Addresses[i2]))
+		}
+	}
+	for i, v := range tx.Vout {
+		for i2, _ := range v.ScriptPubKey.Addresses {
+			tx.Vout[i].ScriptPubKey.Addresses[i2] = hex.EncodeToString([]byte(v.ScriptPubKey.Addresses[i2]))
+		}
 	}
 	buf, err := d.chainParser.PackTx(tx, height, blockTime)
 	if err != nil {

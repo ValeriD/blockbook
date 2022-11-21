@@ -1,0 +1,2397 @@
+Creating new hydra RPC With: 
+[123 10 32 32 32 32 34 100 101 112 114 101 99 97 116 101 100 114 112 99 34 58 32 34 101 115 116 105 109 97 116 101 102 101 101 34 44 10 32 32 32 32 34 102 105 97 116 95 114 97 116 101 115 34 58 32 34 99 111 105 110 103 101 99 107 111 34 44 10 32 32 32 32 34 102 105 97 116 95 114 97 116 101 115 95 112 97 114 97 109 115 34 58 32 34 123 92 34 117 114 108 92 34 58 32 92 34 104 116 116 112 115 58 47 47 97 112 105 46 99 111 105 110 103 101 99 107 111 46 99 111 109 47 97 112 105 47 118 51 92 34 44 32 92 34 99 111 105 110 92 34 58 32 92 34 104 121 100 114 97 92 34 44 32 92 34 112 101 114 105 111 100 83 101 99 111 110 100 115 92 34 58 32 54 48 125 34 44 10 32 32 32 32 34 108 111 103 101 118 101 110 116 115 34 58 32 34 49 34 44 10 32 32 32 32 34 99 111 105 110 95 110 97 109 101 34 58 32 34 72 121 100 114 97 34 44 10 32 32 32 32 34 99 111 105 110 95 115 104 111 114 116 99 117 116 34 58 32 34 72 89 68 82 65 34 44 10 32 32 32 32 34 99 111 105 110 95 108 97 98 101 108 34 58 32 34 72 121 100 114 97 34 44 10 32 32 32 32 34 114 112 99 95 117 114 108 34 58 32 34 104 116 116 112 115 58 47 47 104 121 100 114 97 46 110 111 100 101 115 46 99 104 97 110 103 101 120 46 105 111 58 34 44 10 32 32 32 32 34 114 112 99 95 117 115 101 114 34 58 32 34 117 115 101 114 34 44 10 32 32 32 32 34 114 112 99 95 112 97 115 115 34 58 32 34 112 97 115 115 34 44 10 32 32 32 32 34 114 112 99 95 116 105 109 101 111 117 116 34 58 32 50 53 44 10 32 32 32 32 34 112 97 114 115 101 34 58 32 116 114 117 101 44 10 32 32 32 32 34 109 101 115 115 97 103 101 95 113 117 101 117 101 95 98 105 110 100 105 110 103 34 58 32 34 116 99 112 58 47 47 49 50 55 46 48 46 48 46 49 58 51 56 51 54 51 34 44 10 32 32 32 32 34 115 117 98 118 101 114 115 105 111 110 34 58 32 34 34 44 10 32 32 32 32 34 97 100 100 114 101 115 115 95 102 111 114 109 97 116 34 58 32 34 34 44 10 32 32 32 32 34 120 112 117 98 95 109 97 103 105 99 34 58 32 55 54 48 54 55 51 53 56 44 10 32 32 32 32 34 120 112 117 98 95 109 97 103 105 99 95 115 101 103 119 105 116 95 112 50 115 104 34 58 32 55 55 52 50 57 57 51 56 44 10 32 32 32 32 34 120 112 117 98 95 109 97 103 105 99 95 115 101 103 119 105 116 95 110 97 116 105 118 101 34 58 32 55 56 55 57 50 53 49 56 44 10 32 32 32 32 34 115 108 105 112 52 52 34 58 32 50 51 48 49 44 10 10 32 32 32 32 34 109 101 109 112 111 111 108 95 119 111 114 107 101 114 115 34 58 32 56 44 10 32 32 32 32 34 109 101 109 112 111 111 108 95 115 117 98 95 119 111 114 107 101 114 115 34 58 32 50 44 10 32 32 32 32 34 98 108 111 99 107 95 97 100 100 114 101 115 115 101 115 95 116 111 95 107 101 101 112 34 58 32 51 48 48 10 125]
+Create blockchain  &{0xc00029c000 0xc000012880}
+Initialized hydra parser with: 
+&{mainnet Unknown BitcoinNet (2951408119) 8333 [seed.bitcoin.sipa.be dnsseed.bluematt.me dnsseed.bitcoin.dashjr.org seed.bitcoinstats.com seed.bitnodes.io seed.bitcoin.jonasschnelli.ch] 0x1c814e0 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f 26959946667150639794667015087019630673637144422540572481103610249215 486604799 227931 388381 363725 500 210000 336h0m0s 10m0s 4 false 0s false [{11111 0000000069e244f73d78e8fd29ba2fd2ed618bd6fa2ee92559f542fdb26e7c1d} {33333 000000002dd5588a74784eaa7ab0507a18ad16a236e7b1ce69f00d7ddfb5d0a6} {74000 0000000000573993a3c9e41ce34471c079dcf5f52a0e824a81e7f953b8661a20} {105000 00000000000291ce28027faea320c8d2b054b2e0fe44a773f3eefb151d6bdc97} {134444 00000000000005b12ffd4cd315cd34ffd4a594f430ac814c91184a0d42d2b0fe} {168000 000000000000099e61ea72015e79632f216fe6cb33d7899acb35b75c8303b763} {193000 000000000000059f452a5f7340de6682a977387c17010ff6e6c3bd83ca8b1317} {210000 000000000000048b95347e83192f69cf0366076336c639f9b7228e9ba171342e} {216116 00000000000001b4f4b433e81ee46494af945cf96014816a4e2370f11b23df4e} {225430 00000000000001c108384350f74090433e7fcf79a606b8e797f065b130575932} {250000 000000000000003887df1f29024b06fc2200b55f8af8f35453d7be294df2d214} {267300 000000000000000a83fbd660e918f218bf37edd92b748ad940483c7c116179ac} {279000 0000000000000001ae8c72a0b0c301f67e3afca10e819efa9041e458e9bd7e40} {300255 0000000000000000162804527c6e9b9f0563a280525f9d08c12041def0a0f3b2} {319400 000000000000000021c6052e9becade189495d1c539aa37c58917305fd15f13b} {343185 0000000000000000072b8bf361d01a6ba7d445dd024203fafc78768ed4368554} {352940 000000000000000010755df42dba556bb72be6a32f3ce0b6941ce4430152c9ff} {382320 00000000000000000a8dc6ed5b133d0eb2fd6af56203e4159789b092defd8ab2}] 1916 2016 [{28 1199145601 1230767999} {0 1462060800 1493596800} {1 1479168000 1510704000} {0 0 0}] false hc 1 [40] [63] [128] [6] [10] 0 [4 136 173 228] [4 136 178 30] 0}
+&{Hydra HYDRA https://hydra.nodes.changex.io: user pass 25 true tcp://127.0.0.1:38363  300 8 2  true true 76067358 77429938 78792518 2301   100}
+Function name: apiIndexConnected to new block. 
+
+First address map:
+map[]
+Tx id:  39ebd0f9f24b2229f3dc44d2e54b4ef9d2a15d479edacf101e8c714ba83c1807
+Called on: 39ebd0f9f24b2229f3dc44d2e54b4ef9d2a15d479edacf101e8c714ba83c1807 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [57 235 208 249 242 75 34 41 243 220 68 210 229 75 78 249 210 161 93 71 158 218 207 16 30 140 113 75 168 60 24 7]
+Tx id:  f37f8065f2b16a93a6590c253292e76e542e03bf9308d2f36a2bacbdcba966e5
+Called on: f37f8065f2b16a93a6590c253292e76e542e03bf9308d2f36a2bacbdcba966e5 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [243 127 128 101 242 177 106 147 166 89 12 37 50 146 231 110 84 46 3 191 147 8 210 243 106 43 172 189 203 169 102 229]
+Tx addresses map: 
+map[9����K")��D��KN�ҡ]G����qK�<:0xc00044cbc0]
+Addr descriptor: ad:
+Addr descriptor: ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Tx addresses map: 
+map[9����K")��D��KN�ҡ]G����qK�<:0xc00044cbc0 ��e��j��Y%2��nT.����j+��˩f�:0xc00044cc80]
+Addr descriptor: ad:
+Addr descriptor: ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+Address: &{140539920163936} 
+Real addreses list: 
+map[]
+btxid: 
+[243 127 128 101 242 177 106 147 166 89 12 37 50 146 231 110 84 46 3 191 147 8 210 243 106 43 172 189 203 169 102 229]
+��e��j��Y%2��nT.����j+��˩f�
+bytes:  ��e��j��Y%2��nT.����j+��˩f�
+[243 127 128 101 242 177 106 147 166 89 12 37 50 146 231 110 84 46 3 191 147 8 210 243 106 43 172 189 203 169 102 229]
+Addr descriptor: ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+Real addreses list: 
+map[v��+3J����)�q�g���4QN��:[{[243 127 128 101 242 177 106 147 166 89 12 37 50 146 231 110 84 46 3 191 147 8 210 243 106 43 172 189 203 169 102 229] [1]}]]
+[1]
+[243 127 128 101 242 177 106 147 166 89 12 37 50 146 231 110 84 46 3 191 147 8 210 243 106 43 172 189 203 169 102 229]
+btxid: 
+[243 127 128 101 242 177 106 147 166 89 12 37 50 146 231 110 84 46 3 191 147 8 210 243 106 43 172 189 203 169 102 229]
+��e��j��Y%2��nT.����j+��˩f�
+bytes:  ��e��j��Y%2��nT.����j+��˩f�
+[243 127 128 101 242 177 106 147 166 89 12 37 50 146 231 110 84 46 3 191 147 8 210 243 106 43 172 189 203 169 102 229]
+Input addrdesc: ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+Input valueSat: 17609819505
+Input ValueSatBase10: 17609819505
+Output addrdesc: ad:
+Output valueSat: 0
+Output ValueSatBase10: 0
+Output addrdesc: ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+Output valueSat: 19803363215
+Output ValueSatBase10: 19803363215
+bytes:  ��e��j��Y%2��nT.����j+��˩f�
+[243 127 128 101 242 177 106 147 166 89 12 37 50 146 231 110 84 46 3 191 147 8 210 243 106 43 172 189 203 169 102 229]
+Called on: 39ebd0f9f24b2229f3dc44d2e54b4ef9d2a15d479edacf101e8c714ba83c1807 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []Called on: f37f8065f2b16a93a6590c253292e76e542e03bf9308d2f36a2bacbdcba966e5 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []addresses12: map[v��+3J����)�q�g���4QN��:[{[243 127 128 101 242 177 106 147 166 89 12 37 50 146 231 110 84 46 3 191 147 8 210 243 106 43 172 189 203 169 102 229] [1 2 -1]}]]
+Storing tx address here3
+Tx addresses map: map[9����K")��D��KN�ҡ]G����qK�<:0xc00044cbc0 �M�d��V��$伝�P_`��ثP��%���Fe:0xc00044cd80 ��e��j��Y%2��nT.����j+��˩f�:0xc00044cc80]
+Input addrdesc  ad:
+Input value sat   {false []}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Output value sat   {false []}
+tx height:  544595
+Input addrdesc  ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+Input value sat   {false [19803363215]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+Output value sat   {false [10193000000]}
+Output addrdesc  ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+Output value sat   {false [10194870838]}
+tx height:  544595
+Input addrdesc  ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+Input value sat   {false [17609819505]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+Output value sat   {false [19803363215]}
+tx height:  466013
+Transaction tx store: 9����K")��D��KN�ҡ]G����qK�< 
+Transaction tx store: ��e��j��Y%2��nT.����j+��˩f� 
+Transaction tx store: �M�d��V��$伝�P_`��ثP��%���Fe 
+TA INPUT: 
+ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+{false [17609819505]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+{false [19803363215]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+{false [17609819505]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+true
+{false [19803363215]}
+Buf output: 
+[156 184 93 1 25 118 169 20 177 43 51 74 235 164 203 219 41 232 113 137 103 142 207 18 220 52 81 78 136 172 5 4 25 160 133 113 2 0 0 51 118 169 20 177 43 51 74 235 164 203 219 41 232 113 137 103 142 207 18 220 52 81 78 136 172 5 4 156 95 87 143]
+TxStore: [156 184 93 1 25 118 169 20 177 43 51 74 235 164 203 219 41 232 113 137 103 142 207 18 220 52 81 78 136 172 5 4 25 160 133 113 2 0 0 51 118 169 20 177 43 51 74 235 164 203 219 41 232 113 137 103 142 207 18 220 52 81 78 136 172 5 4 156 95 87 143] 
+TA INPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+{false []}
+Original buf: 
+[]
+Appending ta input: 
+ad:
+{false []}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+false
+{false []}
+Buf output: 
+[161 158 83 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0]
+TxStore: [161 158 83 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0] 
+TA INPUT: 
+ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+{false [19803363215]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+{false [10193000000]}
+TA OUTPUT: 
+ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+{false [10194870838]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+{false [19803363215]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+false
+{false [10193000000]}
+Appending ta output: 
+ad:76a914b12b334aeba4cbdb29e87189678ecf12dc34514e88ac
+false
+{false [10194870838]}
+Buf output: 
+[161 158 83 1 25 118 169 20 177 43 51 74 235 164 203 219 41 232 113 137 103 142 207 18 220 52 81 78 136 172 5 4 156 95 87 143 3 0 0 50 118 169 20 177 43 51 74 235 164 203 219 41 232 113 137 103 142 207 18 220 52 81 78 136 172 5 2 95 140 214 64 50 118 169 20 177 43 51 74 235 164 203 219 41 232 113 137 103 142 207 18 220 52 81 78 136 172 5 2 95 169 98 54]
+TxStore: [161 158 83 1 25 118 169 20 177 43 51 74 235 164 203 219 41 232 113 137 103 142 207 18 220 52 81 78 136 172 5 4 156 95 87 143 3 0 0 50 118 169 20 177 43 51 74 235 164 203 219 41 232 113 137 103 142 207 18 220 52 81 78 136 172 5 2 95 140 214 64 50 118 169 20 177 43 51 74 235 164 203 219 41 232 113 137 103 142 207 18 220 52 81 78 136 172 5 2 95 169 98 54] 
+Storing address contracts:: %v 
+ map[]
+BalanceStore: {%!d(bool=false) [78551003029864]} 
+Check at: &{140539920163936} 
+addr desc:  v��+3J����)�q�g���4QN��
+TX indice:  [243 127 128 101 242 177 106 147 166 89 12 37 50 146 231 110 84 46 3 191 147 8 210 243 106 43 172 189 203 169 102 229]
+TX indice specific:  1
+TX indice specific:  2
+TX indice specific:  -1
+AddressStore: [118 169 20 177 43 51 74 235 164 203 219 41 232 113 137 103 142 207 18 220 52 81 78 136 172 255 247 176 172] 
+ ��e��j��Y%2��nT.����j+��˩f�Connected to new block. 
+
+First address map:
+map[]
+Tx id:  6caaf3f5c24b998ba73e87aa863e4d2cf1cfe466be18ffb267678880cc3ebb05
+Called on: 6caaf3f5c24b998ba73e87aa863e4d2cf1cfe466be18ffb267678880cc3ebb05 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [108 170 243 245 194 75 153 139 167 62 135 170 134 62 77 44 241 207 228 102 190 24 255 178 103 103 136 128 204 62 187 5]
+Tx id:  155aeb472dc55946d00606c61126bfb18c18f03c32869939410427112efd2822
+Called on: 155aeb472dc55946d00606c61126bfb18c18f03c32869939410427112efd2822 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [21 90 235 71 45 197 89 70 208 6 6 198 17 38 191 177 140 24 240 60 50 134 153 57 65 4 39 17 46 253 40 34]
+Tx addresses map: 
+map[l����K���>���>M,���f���gg���>�:0xc000806380]
+Addr descriptor: ad:
+Addr descriptor: ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Tx addresses map: 
+map[Z�G-�YF��&����<2��9A'.�(":0xc0008063c0 l����K���>���>M,���f���gg���>�:0xc000806380]
+Addr descriptor: ad:
+Addr descriptor: ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Address: &{140539920163936} 
+Real addreses list: 
+map[]
+btxid: 
+[21 90 235 71 45 197 89 70 208 6 6 198 17 38 191 177 140 24 240 60 50 134 153 57 65 4 39 17 46 253 40 34]
+Z�G-�YF��&����<2��9A'.�("
+bytes:  Z�G-�YF��&����<2��9A'.�("
+[21 90 235 71 45 197 89 70 208 6 6 198 17 38 191 177 140 24 240 60 50 134 153 57 65 4 39 17 46 253 40 34]
+Addr descriptor: ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Real addreses list: 
+map[v���*����5}��"%c3(��:[{[21 90 235 71 45 197 89 70 208 6 6 198 17 38 191 177 140 24 240 60 50 134 153 57 65 4 39 17 46 253 40 34] [1]}]]
+[1]
+[21 90 235 71 45 197 89 70 208 6 6 198 17 38 191 177 140 24 240 60 50 134 153 57 65 4 39 17 46 253 40 34]
+btxid: 
+[21 90 235 71 45 197 89 70 208 6 6 198 17 38 191 177 140 24 240 60 50 134 153 57 65 4 39 17 46 253 40 34]
+Z�G-�YF��&����<2��9A'.�("
+bytes:  Z�G-�YF��&����<2��9A'.�("
+[21 90 235 71 45 197 89 70 208 6 6 198 17 38 191 177 140 24 240 60 50 134 153 57 65 4 39 17 46 253 40 34]
+Input addrdesc: ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Input valueSat: 19123779757
+Input ValueSatBase10: 19123779757
+Output addrdesc: ad:
+Output valueSat: 0
+Output ValueSatBase10: 0
+Output addrdesc: ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Output valueSat: 19694930423
+Output ValueSatBase10: 19694930423
+bytes:  Z�G-�YF��&����<2��9A'.�("
+[21 90 235 71 45 197 89 70 208 6 6 198 17 38 191 177 140 24 240 60 50 134 153 57 65 4 39 17 46 253 40 34]
+Called on: 6caaf3f5c24b998ba73e87aa863e4d2cf1cfe466be18ffb267678880cc3ebb05 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []Called on: 155aeb472dc55946d00606c61126bfb18c18f03c32869939410427112efd2822 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []addresses12: map[v���*����5}��"%c3(��:[{[21 90 235 71 45 197 89 70 208 6 6 198 17 38 191 177 140 24 240 60 50 134 153 57 65 4 39 17 46 253 40 34] [1 2 -1]}]]
+Storing tx address here3
+Tx addresses map: map[Z�G-�YF��&����<2��9A'.�(":0xc0008063c0 l����K���>���>M,���f���gg���>�:0xc000806380 wȳ?��>����5���	��������!�7:0xc000806500]
+Input addrdesc  ad:
+Input value sat   {false []}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Output value sat   {false []}
+tx height:  544596
+Input addrdesc  ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Input value sat   {false [19694930423]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Output value sat   {false [10139000000]}
+Output addrdesc  ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Output value sat   {false [10140438521]}
+tx height:  544596
+Input addrdesc  ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Input value sat   {false [19123779757]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Output value sat   {false [19694930423]}
+tx height:  516118
+Transaction tx store: wȳ?��>����5���	��������!�7 
+Transaction tx store: l����K���>���>M,���f���gg���>� 
+Transaction tx store: Z�G-�YF��&����<2��9A'.�(" 
+TA INPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+{false []}
+Original buf: 
+[]
+Appending ta input: 
+ad:
+{false []}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+false
+{false []}
+Buf output: 
+[161 158 84 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0]
+TxStore: [161 158 84 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0] 
+TA INPUT: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [19694930423]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [10139000000]}
+TA OUTPUT: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [10140438521]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [19694930423]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+false
+{false [10139000000]}
+Appending ta output: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+false
+{false [10140438521]}
+Buf output: 
+[161 158 84 1 25 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 4 149 232 201 247 3 0 0 50 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 2 92 84 220 192 50 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 2 92 106 207 249]
+TxStore: [161 158 84 1 25 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 4 149 232 201 247 3 0 0 50 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 2 92 84 220 192 50 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 2 92 106 207 249] 
+TA INPUT: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [19123779757]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [19694930423]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [19123779757]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+true
+{false [19694930423]}
+Buf output: 
+[159 192 22 1 25 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 4 115 221 184 173 2 0 0 51 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 4 149 232 201 247]
+TxStore: [159 192 22 1 25 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 4 115 221 184 173 2 0 0 51 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 4 149 232 201 247] 
+Storing address contracts:: %v 
+ map[]
+BalanceStore: {%!d(bool=false) [28157303341001]} 
+Check at: &{140539920163936} 
+addr desc:  v���*����5}��"%c3(��
+TX indice:  [21 90 235 71 45 197 89 70 208 6 6 198 17 38 191 177 140 24 240 60 50 134 153 57 65 4 39 17 46 253 40 34]
+TX indice specific:  1
+TX indice specific:  2
+TX indice specific:  -1
+AddressStore: [118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 255 247 176 171] 
+ Z�G-�YF��&����<2��9A'.�("Connected to new block. 
+
+First address map:
+map[]
+Tx id:  558a3982e8f78b88630e5324e6c46a08b38a3cfd319a0587d3bff29c24f19733
+Called on: 558a3982e8f78b88630e5324e6c46a08b38a3cfd319a0587d3bff29c24f19733 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [85 138 57 130 232 247 139 136 99 14 83 36 230 196 106 8 179 138 60 253 49 154 5 135 211 191 242 156 36 241 151 51]
+Tx id:  2e757d824a8e4456b0d747d443c28cd091d9b5a0fdcbe975ea8cc26bd5350c10
+Called on: 2e757d824a8e4456b0d747d443c28cd091d9b5a0fdcbe975ea8cc26bd5350c10 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [46 117 125 130 74 142 68 86 176 215 71 212 67 194 140 208 145 217 181 160 253 203 233 117 234 140 194 107 213 53 12 16]
+Tx addresses map: 
+map[U�9�����cS$��j��<�1��ӿ��$��3:0xc00044d6c0]
+Addr descriptor: ad:
+Addr descriptor: ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Tx addresses map: 
+map[.u}�J�DV��G�CБٵ����u���k�5:0xc00044d700 U�9�����cS$��j��<�1��ӿ��$��3:0xc00044d6c0]
+Addr descriptor: ad:
+Addr descriptor: ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Address: &{140539920163936} 
+Real addreses list: 
+map[]
+btxid: 
+[46 117 125 130 74 142 68 86 176 215 71 212 67 194 140 208 145 217 181 160 253 203 233 117 234 140 194 107 213 53 12 16]
+.u}�J�DV��G�CБٵ����u���k�5
+bytes:  .u}�J�DV��G�CБٵ����u���k�5
+[46 117 125 130 74 142 68 86 176 215 71 212 67 194 140 208 145 217 181 160 253 203 233 117 234 140 194 107 213 53 12 16]
+Input addrdesc: ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Input valueSat: 18432749638
+Input ValueSatBase10: 18432749638
+Output addrdesc: ad:
+Output valueSat: 0
+Output ValueSatBase10: 0
+Output addrdesc: ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Output valueSat: 19010781555
+Output ValueSatBase10: 19010781555
+bytes:  .u}�J�DV��G�CБٵ����u���k�5
+[46 117 125 130 74 142 68 86 176 215 71 212 67 194 140 208 145 217 181 160 253 203 233 117 234 140 194 107 213 53 12 16]
+Called on: 558a3982e8f78b88630e5324e6c46a08b38a3cfd319a0587d3bff29c24f19733 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []Called on: 2e757d824a8e4456b0d747d443c28cd091d9b5a0fdcbe975ea8cc26bd5350c10 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []addresses12: map[v���*����5}��"%c3(��:[{[46 117 125 130 74 142 68 86 176 215 71 212 67 194 140 208 145 217 181 160 253 203 233 117 234 140 194 107 213 53 12 16] [1 -1]}]]
+Storing tx address here3
+Tx addresses map: map[.u}�J�DV��G�CБٵ����u���k�5:0xc00044d700 U�9�����cS$��j��<�1��ӿ��$��3:0xc00044d6c0 �֗�+	�O�i���	�w�+��LI5��+���:0xc000806080]
+Input addrdesc  ad:
+Input value sat   {false []}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Output value sat   {false []}
+tx height:  544597
+Input addrdesc  ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Input value sat   {false [19010781555]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Output value sat   {false [19595290127]}
+tx height:  544597
+Input addrdesc  ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Input value sat   {false [18432749638]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Output value sat   {false [19010781555]}
+tx height:  530871
+Transaction tx store: U�9�����cS$��j��<�1��ӿ��$��3 
+Transaction tx store: .u}�J�DV��G�CБٵ����u���k�5 
+Transaction tx store: �֗�+	�O�i���	�w�+��LI5��+��� 
+TA INPUT: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [18432749638]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [19010781555]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [18432749638]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+true
+{false [19010781555]}
+Buf output: 
+[160 179 55 1 25 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 4 74 173 112 70 2 0 0 51 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 4 109 33 129 115]
+TxStore: [160 179 55 1 25 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 4 74 173 112 70 2 0 0 51 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 4 109 33 129 115] 
+TA INPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+{false []}
+Original buf: 
+[]
+Appending ta input: 
+ad:
+{false []}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+false
+{false []}
+Buf output: 
+[161 158 85 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0]
+TxStore: [161 158 85 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0] 
+TA INPUT: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [19010781555]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [19595290127]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [19010781555]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+false
+{false [19595290127]}
+Buf output: 
+[161 158 85 1 25 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 4 109 33 129 115 2 0 0 50 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 4 143 248 102 15]
+TxStore: [161 158 85 1 25 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 4 109 33 129 115 2 0 0 50 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 4 143 248 102 15] 
+Storing address contracts:: %v 
+ map[]
+BalanceStore: {%!d(bool=false) [28157887849573]} 
+Check at: &{140539920163936} 
+addr desc:  v���*����5}��"%c3(��
+TX indice:  [46 117 125 130 74 142 68 86 176 215 71 212 67 194 140 208 145 217 181 160 253 203 233 117 234 140 194 107 213 53 12 16]
+TX indice specific:  1
+TX indice specific:  -1
+AddressStore: [118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 255 247 176 170] 
+ .u}�J�DV��G�CБٵ����u���k�5Connected to new block. 
+
+First address map:
+map[]
+Tx id:  d5ab4b03fc10252772e1e6f2a9e139045f02909b2f9893f97b94070f166048a0
+Called on: d5ab4b03fc10252772e1e6f2a9e139045f02909b2f9893f97b94070f166048a0 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [213 171 75 3 252 16 37 39 114 225 230 242 169 225 57 4 95 2 144 155 47 152 147 249 123 148 7 15 22 96 72 160]
+Tx id:  8d721978147b699641c9975ddcc18aee9f3badb4635e587bf14d53c2b3686ed3
+Called on: 8d721978147b699641c9975ddcc18aee9f3badb4635e587bf14d53c2b3686ed3 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [141 114 25 120 20 123 105 150 65 201 151 93 220 193 138 238 159 59 173 180 99 94 88 123 241 77 83 194 179 104 110 211]
+Tx addresses map: 
+map[իK�%'r�����9_��/���{�`H�:0xc00044c3c0]
+Addr descriptor: ad:
+Addr descriptor: ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Tx addresses map: 
+map[�rx{i�Aɗ]�����;��c^X{�MS³hn�:0xc00044c400 իK�%'r�����9_��/���{�`H�:0xc00044c3c0]
+Addr descriptor: ad:
+Addr descriptor: ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Address: &{140539920163936} 
+Real addreses list: 
+map[]
+btxid: 
+[141 114 25 120 20 123 105 150 65 201 151 93 220 193 138 238 159 59 173 180 99 94 88 123 241 77 83 194 179 104 110 211]
+�rx{i�Aɗ]�����;��c^X{�MS³hn�
+bytes:  �rx{i�Aɗ]�����;��c^X{�MS³hn�
+[141 114 25 120 20 123 105 150 65 201 151 93 220 193 138 238 159 59 173 180 99 94 88 123 241 77 83 194 179 104 110 211]
+Input addrdesc: ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Input valueSat: 12490615976
+Input ValueSatBase10: 12490615976
+Output addrdesc: ad:
+Output valueSat: 0
+Output ValueSatBase10: 0
+Output addrdesc: ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Output valueSat: 14546533121
+Output ValueSatBase10: 14546533121
+bytes:  �rx{i�Aɗ]�����;��c^X{�MS³hn�
+[141 114 25 120 20 123 105 150 65 201 151 93 220 193 138 238 159 59 173 180 99 94 88 123 241 77 83 194 179 104 110 211]
+Called on: d5ab4b03fc10252772e1e6f2a9e139045f02909b2f9893f97b94070f166048a0 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []Called on: 8d721978147b699641c9975ddcc18aee9f3badb4635e587bf14d53c2b3686ed3 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []addresses12: map[v���*����5}��"%c3(��:[{[141 114 25 120 20 123 105 150 65 201 151 93 220 193 138 238 159 59 173 180 99 94 88 123 241 77 83 194 179 104 110 211] [1 -1]}]]
+Storing tx address here3
+Tx addresses map: map[�rx{i�Aɗ]�����;��c^X{�MS³hn�:0xc00044c400 ��fR��:�yA��"��@�Z��ML��HE�:0xc00044c640 իK�%'r�����9_��/���{�`H�:0xc00044c3c0]
+Input addrdesc  ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Input value sat   {false [12490615976]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Output value sat   {false [14546533121]}
+tx height:  386192
+Input addrdesc  ad:
+Input value sat   {false []}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Output value sat   {false []}
+tx height:  544598
+Input addrdesc  ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Input value sat   {false [14546533121]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+Output value sat   {false [15131042168]}
+tx height:  544598
+Transaction tx store: իK�%'r�����9_��/���{�`H� 
+Transaction tx store: �rx{i�Aɗ]�����;��c^X{�MS³hn� 
+Transaction tx store: ��fR��:�yA��"��@�Z��ML��HE� 
+TA INPUT: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [12490615976]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [14546533121]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [12490615976]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+true
+{false [14546533121]}
+Buf output: 
+[151 201 16 1 25 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 2 232 127 172 168 2 0 0 51 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 3 99 10 123 1]
+TxStore: [151 201 16 1 25 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 2 232 127 172 168 2 0 0 51 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 3 99 10 123 1] 
+TA INPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+{false []}
+Original buf: 
+[]
+Appending ta input: 
+ad:
+{false []}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+false
+{false []}
+Buf output: 
+[161 158 86 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0]
+TxStore: [161 158 86 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0] 
+TA INPUT: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [14546533121]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [15131042168]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+{false [14546533121]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914bdf42af6048210b59319357d93d322256333042888ac
+false
+{false [15131042168]}
+Buf output: 
+[161 158 86 1 25 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 3 99 10 123 1 2 0 0 50 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 3 133 225 97 120]
+TxStore: [161 158 86 1 25 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 3 99 10 123 1 2 0 0 50 118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 5 3 133 225 97 120] 
+Storing address contracts:: %v 
+ map[]
+BalanceStore: {%!d(bool=false) [28158472358620]} 
+Check at: &{140539920163936} 
+addr desc:  v���*����5}��"%c3(��
+TX indice:  [141 114 25 120 20 123 105 150 65 201 151 93 220 193 138 238 159 59 173 180 99 94 88 123 241 77 83 194 179 104 110 211]
+TX indice specific:  1
+TX indice specific:  -1
+AddressStore: [118 169 20 189 244 42 246 4 130 16 181 147 25 53 125 147 211 34 37 99 51 4 40 136 172 255 247 176 169] 
+ �rx{i�Aɗ]�����;��c^X{�MS³hn�Connected to new block. 
+
+First address map:
+map[]
+Tx id:  9d4ca367764327387e4d86f5e059c1967d8e342ee7877e45b671f9bd7c3d6a6b
+Called on: 9d4ca367764327387e4d86f5e059c1967d8e342ee7877e45b671f9bd7c3d6a6b 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [157 76 163 103 118 67 39 56 126 77 134 245 224 89 193 150 125 142 52 46 231 135 126 69 182 113 249 189 124 61 106 107]
+Tx id:  a6aeac03d243fe0a01f08fb674aa9c63a74e56e1ff9a3ee2ffb271f9b5c4a4e0
+Called on: a6aeac03d243fe0a01f08fb674aa9c63a74e56e1ff9a3ee2ffb271f9b5c4a4e0 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [166 174 172 3 210 67 254 10 1 240 143 182 116 170 156 99 167 78 86 225 255 154 62 226 255 178 113 249 181 196 164 224]
+Tx addresses map: 
+map[�L�gvC'8~M���Y��}�4.��~E�q��|=jk:0xc000806900]
+Addr descriptor: ad:
+Addr descriptor: ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Tx addresses map: 
+map[�L�gvC'8~M���Y��}�4.��~E�q��|=jk:0xc000806900 ����C�
+���t��c�NV���>���q��Ĥ�:0xc000806940]
+Addr descriptor: ad:
+Addr descriptor: ad:76a914e11a492d8a783a71263f279964313c5486743b1f88ac
+Address: &{140539920163936} 
+Real addreses list: 
+map[]
+btxid: 
+[166 174 172 3 210 67 254 10 1 240 143 182 116 170 156 99 167 78 86 225 255 154 62 226 255 178 113 249 181 196 164 224]
+����C�
+���t��c�NV���>���q��Ĥ�
+bytes:  ����C�
+���t��c�NV���>���q��Ĥ�
+[166 174 172 3 210 67 254 10 1 240 143 182 116 170 156 99 167 78 86 225 255 154 62 226 255 178 113 249 181 196 164 224]
+Input addrdesc: ad:76a914e11a492d8a783a71263f279964313c5486743b1f88ac
+Input valueSat: 14374759929
+Input ValueSatBase10: 14374759929
+Output addrdesc: ad:
+Output valueSat: 0
+Output ValueSatBase10: 0
+Output addrdesc: ad:76a914e11a492d8a783a71263f279964313c5486743b1f88ac
+Output valueSat: 14949340686
+Output ValueSatBase10: 14949340686
+bytes:  ����C�
+���t��c�NV���>���q��Ĥ�
+[166 174 172 3 210 67 254 10 1 240 143 182 116 170 156 99 167 78 86 225 255 154 62 226 255 178 113 249 181 196 164 224]
+Called on: 9d4ca367764327387e4d86f5e059c1967d8e342ee7877e45b671f9bd7c3d6a6b 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []Called on: a6aeac03d243fe0a01f08fb674aa9c63a74e56e1ff9a3ee2ffb271f9b5c4a4e0 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []addresses12: map[v��I-�x:q&?'�d1<T�t;��:[{[166 174 172 3 210 67 254 10 1 240 143 182 116 170 156 99 167 78 86 225 255 154 62 226 255 178 113 249 181 196 164 224] [1 -1]}]]
+Storing tx address here3
+Tx addresses map: map[�L�gvC'8~M���Y��}�4.��~E�q��|=jk:0xc000806900 ���s��m�S�k����f:����|��@E��zt:0xc000806a00 ����C�
+���t��c�NV���>���q��Ĥ�:0xc000806940]
+Input addrdesc  ad:
+Input value sat   {false []}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Output value sat   {false []}
+tx height:  544599
+Input addrdesc  ad:76a914e11a492d8a783a71263f279964313c5486743b1f88ac
+Input value sat   {false [14949340686]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914e11a492d8a783a71263f279964313c5486743b1f88ac
+Output value sat   {false [15533850207]}
+tx height:  544599
+Input addrdesc  ad:76a914e11a492d8a783a71263f279964313c5486743b1f88ac
+Input value sat   {false [14374759929]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914e11a492d8a783a71263f279964313c5486743b1f88ac
+Output value sat   {false [14949340686]}
+tx height:  523494
+Transaction tx store: �L�gvC'8~M���Y��}�4.��~E�q��|=jk 
+Transaction tx store: ����C�
+���t��c�NV���>���q��Ĥ� 
+Transaction tx store: ���s��m�S�k����f:����|��@E��zt 
+TA INPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+{false []}
+Original buf: 
+[]
+Appending ta input: 
+ad:
+{false []}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+false
+{false []}
+Buf output: 
+[161 158 87 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0]
+TxStore: [161 158 87 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0] 
+TA INPUT: 
+ad:76a914e11a492d8a783a71263f279964313c5486743b1f88ac
+{false [14949340686]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914e11a492d8a783a71263f279964313c5486743b1f88ac
+{false [15533850207]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914e11a492d8a783a71263f279964313c5486743b1f88ac
+{false [14949340686]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914e11a492d8a783a71263f279964313c5486743b1f88ac
+false
+{false [15533850207]}
+Buf output: 
+[161 158 87 1 25 118 169 20 225 26 73 45 138 120 58 113 38 63 39 153 100 49 60 84 134 116 59 31 136 172 5 3 123 12 214 14 2 0 0 50 118 169 20 225 26 73 45 138 120 58 113 38 63 39 153 100 49 60 84 134 116 59 31 136 172 5 3 157 227 190 95]
+TxStore: [161 158 87 1 25 118 169 20 225 26 73 45 138 120 58 113 38 63 39 153 100 49 60 84 134 116 59 31 136 172 5 3 123 12 214 14 2 0 0 50 118 169 20 225 26 73 45 138 120 58 113 38 63 39 153 100 49 60 84 134 116 59 31 136 172 5 3 157 227 190 95] 
+TA INPUT: 
+ad:76a914e11a492d8a783a71263f279964313c5486743b1f88ac
+{false [14374759929]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914e11a492d8a783a71263f279964313c5486743b1f88ac
+{false [14949340686]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914e11a492d8a783a71263f279964313c5486743b1f88ac
+{false [14374759929]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914e11a492d8a783a71263f279964313c5486743b1f88ac
+true
+{false [14949340686]}
+Buf output: 
+[159 249 102 1 25 118 169 20 225 26 73 45 138 120 58 113 38 63 39 153 100 49 60 84 134 116 59 31 136 172 5 3 88 205 109 249 2 0 0 51 118 169 20 225 26 73 45 138 120 58 113 38 63 39 153 100 49 60 84 134 116 59 31 136 172 5 3 123 12 214 14]
+TxStore: [159 249 102 1 25 118 169 20 225 26 73 45 138 120 58 113 38 63 39 153 100 49 60 84 134 116 59 31 136 172 5 3 88 205 109 249 2 0 0 51 118 169 20 225 26 73 45 138 120 58 113 38 63 39 153 100 49 60 84 134 116 59 31 136 172 5 3 123 12 214 14] 
+Storing address contracts:: %v 
+ map[]
+BalanceStore: {%!d(bool=false) [99807080891900]} 
+Check at: &{140539920163936} 
+addr desc:  v��I-�x:q&?'�d1<T�t;��
+TX indice:  [166 174 172 3 210 67 254 10 1 240 143 182 116 170 156 99 167 78 86 225 255 154 62 226 255 178 113 249 181 196 164 224]
+TX indice specific:  1
+TX indice specific:  -1
+AddressStore: [118 169 20 225 26 73 45 138 120 58 113 38 63 39 153 100 49 60 84 134 116 59 31 136 172 255 247 176 168] 
+ ����C�
+���t��c�NV���>���q��Ĥ�Connected to new block. 
+
+First address map:
+map[]
+Tx id:  6f713d19ad0b60be82b9e02a48abe911177ed9feb557977da327ba8f21210077
+Called on: 6f713d19ad0b60be82b9e02a48abe911177ed9feb557977da327ba8f21210077 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [111 113 61 25 173 11 96 190 130 185 224 42 72 171 233 17 23 126 217 254 181 87 151 125 163 39 186 143 33 33 0 119]
+Tx id:  21a1426c2e51c16f753e1ae7093eddd4095bfed2f0cf5deb5a432d649baf5947
+Called on: 21a1426c2e51c16f753e1ae7093eddd4095bfed2f0cf5deb5a432d649baf5947 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [33 161 66 108 46 81 193 111 117 62 26 231 9 62 221 212 9 91 254 210 240 207 93 235 90 67 45 100 155 175 89 71]
+Tx addresses map: 
+map[oq=�`����*H��~���W�}�'��!! w:0xc00044c7c0]
+Addr descriptor: ad:
+Addr descriptor: ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Tx addresses map: 
+map[!�Bl.Q�ou>�	>��	[����]�ZC-d��YG:0xc00044c800 oq=�`����*H��~���W�}�'��!! w:0xc00044c7c0]
+Addr descriptor: ad:
+Addr descriptor: ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Address: &{140539920163936} 
+Real addreses list: 
+map[]
+btxid: 
+[33 161 66 108 46 81 193 111 117 62 26 231 9 62 221 212 9 91 254 210 240 207 93 235 90 67 45 100 155 175 89 71]
+!�Bl.Q�ou>�	>��	[����]�ZC-d��YG
+bytes:  !�Bl.Q�ou>�	>��	[����]�ZC-d��YG
+[33 161 66 108 46 81 193 111 117 62 26 231 9 62 221 212 9 91 254 210 240 207 93 235 90 67 45 100 155 175 89 71]
+Input addrdesc: ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Input valueSat: 25462000000
+Input ValueSatBase10: 25462000000
+Output addrdesc: ad:
+Output valueSat: 0
+Output ValueSatBase10: 0
+Output addrdesc: ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Output valueSat: 13011000000
+Output ValueSatBase10: 13011000000
+Output addrdesc: ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Output valueSat: 13011275992
+Output ValueSatBase10: 13011275992
+bytes:  !�Bl.Q�ou>�	>��	[����]�ZC-d��YG
+[33 161 66 108 46 81 193 111 117 62 26 231 9 62 221 212 9 91 254 210 240 207 93 235 90 67 45 100 155 175 89 71]
+Called on: 6f713d19ad0b60be82b9e02a48abe911177ed9feb557977da327ba8f21210077 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []Called on: 21a1426c2e51c16f753e1ae7093eddd4095bfed2f0cf5deb5a432d649baf5947 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []addresses12: map[v���1�V���+��J,���:[{[33 161 66 108 46 81 193 111 117 62 26 231 9 62 221 212 9 91 254 210 240 207 93 235 90 67 45 100 155 175 89 71] [1 -1]}]]
+Storing tx address here3
+Tx addresses map: map[!�Bl.Q�ou>�	>��	[����]�ZC-d��YG:0xc00044c800 oq=�`����*H��~���W�}�'��!! w:0xc00044c7c0 z��NJ3�UH�`�m�]���K�ZB"6����:0xc00044c0c0]
+Input addrdesc  ad:
+Input value sat   {false []}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Output value sat   {false []}
+tx height:  544600
+Input addrdesc  ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Input value sat   {false [13011275992]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Output value sat   {false [13595785988]}
+tx height:  544600
+Input addrdesc  ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Input value sat   {false [25462000000]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Output value sat   {false [13011000000]}
+Output addrdesc  ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Output value sat   {false [13011275992]}
+tx height:  492437
+Transaction tx store: z��NJ3�UH�`�m�]���K�ZB"6���� 
+Transaction tx store: oq=�`����*H��~���W�}�'��!! w 
+Transaction tx store: !�Bl.Q�ou>�	>��	[����]�ZC-d��YG 
+TA INPUT: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [25462000000]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [13011000000]}
+TA OUTPUT: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [13011275992]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [25462000000]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+false
+{false [13011000000]}
+Appending ta output: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+true
+{false [13011275992]}
+Buf output: 
+[158 135 21 1 25 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 5 237 167 73 128 3 0 0 50 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 3 7 132 26 192 51 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 3 7 136 80 216]
+TxStore: [158 135 21 1 25 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 5 237 167 73 128 3 0 0 50 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 3 7 132 26 192 51 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 3 7 136 80 216] 
+TA INPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+{false []}
+Original buf: 
+[]
+Appending ta input: 
+ad:
+{false []}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+false
+{false []}
+Buf output: 
+[161 158 88 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0]
+TxStore: [161 158 88 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0] 
+TA INPUT: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [13011275992]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [13595785988]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [13011275992]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+false
+{false [13595785988]}
+Buf output: 
+[161 158 88 1 25 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 3 7 136 80 216 2 0 0 50 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 3 42 95 59 4]
+TxStore: [161 158 88 1 25 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 3 7 136 80 216 2 0 0 50 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 3 42 95 59 4] 
+Storing address contracts:: %v 
+ map[]
+BalanceStore: {%!d(bool=false) [98697852121845]} 
+Check at: &{140539920163936} 
+addr desc:  v���1�V���+��J,���
+TX indice:  [33 161 66 108 46 81 193 111 117 62 26 231 9 62 221 212 9 91 254 210 240 207 93 235 90 67 45 100 155 175 89 71]
+TX indice specific:  1
+TX indice specific:  -1
+AddressStore: [118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 255 247 176 167] 
+ !�Bl.Q�ou>�	>��	[����]�ZC-d��YGConnected to new block. 
+
+First address map:
+map[]
+Tx id:  ba2de2539e5b9fa953ce6bba6b7cb4b2801a31f4f9b2f3a4776ba3f869997db1
+Called on: ba2de2539e5b9fa953ce6bba6b7cb4b2801a31f4f9b2f3a4776ba3f869997db1 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [186 45 226 83 158 91 159 169 83 206 107 186 107 124 180 178 128 26 49 244 249 178 243 164 119 107 163 248 105 153 125 177]
+Tx id:  99e26cc8092d37e3c24a36c4c753f723e29b2b859cc324c78a0b60ed08a9875c
+Called on: 99e26cc8092d37e3c24a36c4c753f723e29b2b859cc324c78a0b60ed08a9875c 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [153 226 108 200 9 45 55 227 194 74 54 196 199 83 247 35 226 155 43 133 156 195 36 199 138 11 96 237 8 169 135 92]
+Tx addresses map: 
+map[�-�S�[��S�k�k|���1�����wk��i�}�:0xc0008060c0]
+Addr descriptor: ad:
+Addr descriptor: ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Tx addresses map: 
+map[��l�	-7��J6��S�#��+���$Ǌ`���\:0xc0008061c0 �-�S�[��S�k�k|���1�����wk��i�}�:0xc0008060c0]
+Addr descriptor: ad:
+Addr descriptor: ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+Address: &{140539920163936} 
+Real addreses list: 
+map[]
+btxid: 
+[153 226 108 200 9 45 55 227 194 74 54 196 199 83 247 35 226 155 43 133 156 195 36 199 138 11 96 237 8 169 135 92]
+��l�	-7��J6��S�#��+���$Ǌ`���\
+bytes:  ��l�	-7��J6��S�#��+���$Ǌ`���\
+[153 226 108 200 9 45 55 227 194 74 54 196 199 83 247 35 226 155 43 133 156 195 36 199 138 11 96 237 8 169 135 92]
+Input addrdesc: ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+Input valueSat: 20000000000
+Input ValueSatBase10: 20000000000
+Output addrdesc: ad:
+Output valueSat: 0
+Output ValueSatBase10: 0
+Output addrdesc: ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+Output valueSat: 10932000000
+Output ValueSatBase10: 10932000000
+Output addrdesc: ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+Output valueSat: 10932430556
+Output ValueSatBase10: 10932430556
+bytes:  ��l�	-7��J6��S�#��+���$Ǌ`���\
+[153 226 108 200 9 45 55 227 194 74 54 196 199 83 247 35 226 155 43 133 156 195 36 199 138 11 96 237 8 169 135 92]
+Called on: ba2de2539e5b9fa953ce6bba6b7cb4b2801a31f4f9b2f3a4776ba3f869997db1 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []Called on: 99e26cc8092d37e3c24a36c4c753f723e29b2b859cc324c78a0b60ed08a9875c 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []addresses12: map[v���!��z�ˌ�L�ѸL�Z2���:[{[153 226 108 200 9 45 55 227 194 74 54 196 199 83 247 35 226 155 43 133 156 195 36 199 138 11 96 237 8 169 135 92] [1 -1]}]]
+Storing tx address here3
+Tx addresses map: map[��l�	-7��J6��S�#��+���$Ǌ`���\:0xc0008061c0 �-�S�[��S�k�k|���1�����wk��i�}�:0xc0008060c0 �r�zZ��Jc���Z�M
+����^��Z����:0xc0008062c0]
+Input addrdesc  ad:
+Input value sat   {false []}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Output value sat   {false []}
+tx height:  544601
+Input addrdesc  ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+Input value sat   {false [10932430556]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+Output value sat   {false [11516941026]}
+tx height:  544601
+Input addrdesc  ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+Input value sat   {false [20000000000]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+Output value sat   {false [10932000000]}
+Output addrdesc  ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+Output value sat   {false [10932430556]}
+tx height:  265756
+Transaction tx store: �-�S�[��S�k�k|���1�����wk��i�}� 
+Transaction tx store: ��l�	-7��J6��S�#��+���$Ǌ`���\ 
+Transaction tx store: �r�zZ��Jc���Z�M
+����^��Z���� 
+TA INPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+{false []}
+Original buf: 
+[]
+Appending ta input: 
+ad:
+{false []}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+false
+{false []}
+Buf output: 
+[161 158 89 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0]
+TxStore: [161 158 89 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0] 
+TA INPUT: 
+ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+{false [10932430556]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+{false [11516941026]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+{false [10932430556]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+false
+{false [11516941026]}
+Buf output: 
+[161 158 89 1 25 118 169 20 228 146 33 254 158 122 192 203 140 164 76 3 140 209 184 76 160 90 50 152 136 172 5 2 139 159 166 220 2 0 0 50 118 169 20 228 146 33 254 158 122 192 203 140 164 76 3 140 209 184 76 160 90 50 152 136 172 5 2 174 118 146 226]
+TxStore: [161 158 89 1 25 118 169 20 228 146 33 254 158 122 192 203 140 164 76 3 140 209 184 76 160 90 50 152 136 172 5 2 139 159 166 220 2 0 0 50 118 169 20 228 146 33 254 158 122 192 203 140 164 76 3 140 209 184 76 160 90 50 152 136 172 5 2 174 118 146 226] 
+TA INPUT: 
+ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+{false [20000000000]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+{false [10932000000]}
+TA OUTPUT: 
+ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+{false [10932430556]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+{false [20000000000]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+true
+{false [10932000000]}
+Appending ta output: 
+ad:76a914e49221fe9e7ac0cb8ca44c038cd1b84ca05a329888ac
+true
+{false [10932430556]}
+Buf output: 
+[144 156 28 1 25 118 169 20 228 146 33 254 158 122 192 203 140 164 76 3 140 209 184 76 160 90 50 152 136 172 5 4 168 23 200 0 3 0 0 51 118 169 20 228 146 33 254 158 122 192 203 140 164 76 3 140 209 184 76 160 90 50 152 136 172 5 2 139 153 21 0 51 118 169 20 228 146 33 254 158 122 192 203 140 164 76 3 140 209 184 76 160 90 50 152 136 172 5 2 139 159 166 220]
+TxStore: [144 156 28 1 25 118 169 20 228 146 33 254 158 122 192 203 140 164 76 3 140 209 184 76 160 90 50 152 136 172 5 4 168 23 200 0 3 0 0 51 118 169 20 228 146 33 254 158 122 192 203 140 164 76 3 140 209 184 76 160 90 50 152 136 172 5 2 139 153 21 0 51 118 169 20 228 146 33 254 158 122 192 203 140 164 76 3 140 209 184 76 160 90 50 152 136 172 5 2 139 159 166 220] 
+Storing address contracts:: %v 
+ map[]
+BalanceStore: {%!d(bool=false) [52189185025309]} 
+Check at: &{140539920163936} 
+addr desc:  v���!��z�ˌ�L�ѸL�Z2���
+TX indice:  [153 226 108 200 9 45 55 227 194 74 54 196 199 83 247 35 226 155 43 133 156 195 36 199 138 11 96 237 8 169 135 92]
+TX indice specific:  1
+TX indice specific:  -1
+AddressStore: [118 169 20 228 146 33 254 158 122 192 203 140 164 76 3 140 209 184 76 160 90 50 152 136 172 255 247 176 166] 
+ ��l�	-7��J6��S�#��+���$Ǌ`���\Connected to new block. 
+
+First address map:
+map[]
+Tx id:  59f721c17e268b1579745e8bada53b63dc97ee0570888f580fe5ef7426af3855
+Called on: 59f721c17e268b1579745e8bada53b63dc97ee0570888f580fe5ef7426af3855 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [89 247 33 193 126 38 139 21 121 116 94 139 173 165 59 99 220 151 238 5 112 136 143 88 15 229 239 116 38 175 56 85]
+Tx id:  1003bc5c715f01efee389a485cf93d43f28500c4d0d148e6cec887a30e2dff75
+Called on: 1003bc5c715f01efee389a485cf93d43f28500c4d0d148e6cec887a30e2dff75 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [16 3 188 92 113 95 1 239 238 56 154 72 92 249 61 67 242 133 0 196 208 209 72 230 206 200 135 163 14 45 255 117]
+Tx addresses map: 
+map[Y�!�~&�yt^���;cܗ�p��X��t&�8U:0xc00069a040]
+Addr descriptor: ad:
+Addr descriptor: ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Tx addresses map: 
+map[�\q_��8�H\�=C�� ���H��ȇ�-�u:0xc00069a080 Y�!�~&�yt^���;cܗ�p��X��t&�8U:0xc00069a040]
+Addr descriptor: ad:
+Addr descriptor: ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+Address: &{140539920163936} 
+Real addreses list: 
+map[]
+btxid: 
+[16 3 188 92 113 95 1 239 238 56 154 72 92 249 61 67 242 133 0 196 208 209 72 230 206 200 135 163 14 45 255 117]
+�\q_��8�H\�=C�� ���H��ȇ�-�u
+bytes:  �\q_��8�H\�=C�� ���H��ȇ�-�u
+[16 3 188 92 113 95 1 239 238 56 154 72 92 249 61 67 242 133 0 196 208 209 72 230 206 200 135 163 14 45 255 117]
+Addr descriptor: ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+Real addreses list: 
+map[v�cA�mt_Y���t?Q�P;��:[{[16 3 188 92 113 95 1 239 238 56 154 72 92 249 61 67 242 133 0 196 208 209 72 230 206 200 135 163 14 45 255 117] [1]}]]
+[1]
+[16 3 188 92 113 95 1 239 238 56 154 72 92 249 61 67 242 133 0 196 208 209 72 230 206 200 135 163 14 45 255 117]
+btxid: 
+[16 3 188 92 113 95 1 239 238 56 154 72 92 249 61 67 242 133 0 196 208 209 72 230 206 200 135 163 14 45 255 117]
+�\q_��8�H\�=C�� ���H��ȇ�-�u
+bytes:  �\q_��8�H\�=C�� ���H��ȇ�-�u
+[16 3 188 92 113 95 1 239 238 56 154 72 92 249 61 67 242 133 0 196 208 209 72 230 206 200 135 163 14 45 255 117]
+Input addrdesc: ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+Input valueSat: 19393424826
+Input ValueSatBase10: 19393424826
+Output addrdesc: ad:
+Output valueSat: 0
+Output ValueSatBase10: 0
+Output addrdesc: ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+Output valueSat: 19954148535
+Output ValueSatBase10: 19954148535
+bytes:  �\q_��8�H\�=C�� ���H��ȇ�-�u
+[16 3 188 92 113 95 1 239 238 56 154 72 92 249 61 67 242 133 0 196 208 209 72 230 206 200 135 163 14 45 255 117]
+Called on: 59f721c17e268b1579745e8bada53b63dc97ee0570888f580fe5ef7426af3855 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []Called on: 1003bc5c715f01efee389a485cf93d43f28500c4d0d148e6cec887a30e2dff75 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []addresses12: map[v�cA�mt_Y���t?Q�P;��:[{[16 3 188 92 113 95 1 239 238 56 154 72 92 249 61 67 242 133 0 196 208 209 72 230 206 200 135 163 14 45 255 117] [1 2 -1]}]]
+Storing tx address here3
+Tx addresses map: map[�\q_��8�H\�=C�� ���H��ȇ�-�u:0xc00069a080 R�4�ZZp���r-�5w�/E%����~�ۉ�R*��:0xc00069a140 Y�!�~&�yt^���;cܗ�p��X��t&�8U:0xc00069a040]
+Input addrdesc  ad:
+Input value sat   {false []}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Output value sat   {false []}
+tx height:  544602
+Input addrdesc  ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+Input value sat   {false [19954148535]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+Output value sat   {false [10269000000]}
+Output addrdesc  ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+Output value sat   {false [10269659480]}
+tx height:  544602
+Input addrdesc  ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+Input value sat   {false [19393424826]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+Output value sat   {false [19954148535]}
+tx height:  493421
+Transaction tx store: Y�!�~&�yt^���;cܗ�p��X��t&�8U 
+Transaction tx store: �\q_��8�H\�=C�� ���H��ȇ�-�u 
+Transaction tx store: R�4�ZZp���r-�5w�/E%����~�ۉ�R*�� 
+TA INPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+{false []}
+Original buf: 
+[]
+Appending ta input: 
+ad:
+{false []}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+false
+{false []}
+Buf output: 
+[161 158 90 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0]
+TxStore: [161 158 90 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0] 
+TA INPUT: 
+ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+{false [19954148535]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+{false [10269000000]}
+TA OUTPUT: 
+ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+{false [10269659480]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+{false [19954148535]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+false
+{false [10269000000]}
+Appending ta output: 
+ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+false
+{false [10269659480]}
+Buf output: 
+[161 158 90 1 25 118 169 20 99 65 174 2 109 116 95 25 89 140 178 228 18 116 63 81 179 28 80 59 136 172 5 4 165 92 36 183 3 0 0 50 118 169 20 99 65 174 2 109 116 95 25 89 140 178 228 18 116 63 81 179 28 80 59 136 172 5 2 100 20 129 64 50 118 169 20 99 65 174 2 109 116 95 25 89 140 178 228 18 116 63 81 179 28 80 59 136 172 5 2 100 30 145 88]
+TxStore: [161 158 90 1 25 118 169 20 99 65 174 2 109 116 95 25 89 140 178 228 18 116 63 81 179 28 80 59 136 172 5 4 165 92 36 183 3 0 0 50 118 169 20 99 65 174 2 109 116 95 25 89 140 178 228 18 116 63 81 179 28 80 59 136 172 5 2 100 20 129 64 50 118 169 20 99 65 174 2 109 116 95 25 89 140 178 228 18 116 63 81 179 28 80 59 136 172 5 2 100 30 145 88] 
+TA INPUT: 
+ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+{false [19393424826]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+{false [19954148535]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+{false [19393424826]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a9146341ae026d745f19598cb2e412743f51b31c503b88ac
+true
+{false [19954148535]}
+Buf output: 
+[158 142 109 1 25 118 169 20 99 65 174 2 109 116 95 25 89 140 178 228 18 116 63 81 179 28 80 59 136 172 5 4 131 240 45 186 2 0 0 51 118 169 20 99 65 174 2 109 116 95 25 89 140 178 228 18 116 63 81 179 28 80 59 136 172 5 4 165 92 36 183]
+TxStore: [158 142 109 1 25 118 169 20 99 65 174 2 109 116 95 25 89 140 178 228 18 116 63 81 179 28 80 59 136 172 5 4 131 240 45 186 2 0 0 51 118 169 20 99 65 174 2 109 116 95 25 89 140 178 228 18 116 63 81 179 28 80 59 136 172 5 4 165 92 36 183] 
+Storing address contracts:: %v 
+ map[]
+BalanceStore: {%!d(bool=false) [4565944382922]} 
+Check at: &{140539920163936} 
+addr desc:  v�cA�mt_Y���t?Q�P;��
+TX indice:  [16 3 188 92 113 95 1 239 238 56 154 72 92 249 61 67 242 133 0 196 208 209 72 230 206 200 135 163 14 45 255 117]
+TX indice specific:  1
+TX indice specific:  2
+TX indice specific:  -1
+AddressStore: [118 169 20 99 65 174 2 109 116 95 25 89 140 178 228 18 116 63 81 179 28 80 59 136 172 255 247 176 165] 
+ �\q_��8�H\�=C�� ���H��ȇ�-�uConnected to new block. 
+
+First address map:
+map[]
+Tx id:  24df70566a83a0a8473c89379a4160f2a19329e96ce3a7e4b157ad5972f57b86
+Called on: 24df70566a83a0a8473c89379a4160f2a19329e96ce3a7e4b157ad5972f57b86 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [36 223 112 86 106 131 160 168 71 60 137 55 154 65 96 242 161 147 41 233 108 227 167 228 177 87 173 89 114 245 123 134]
+Tx id:  0f3714a983e3eba56f8f1f3eb36a6eba18e0001528c935cd042a3c560e2fde53
+Called on: 0f3714a983e3eba56f8f1f3eb36a6eba18e0001528c935cd042a3c560e2fde53 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [15 55 20 169 131 227 235 165 111 143 31 62 179 106 110 186 24 224 0 21 40 201 53 205 4 42 60 86 14 47 222 83]
+Tx addresses map: 
+map[$�pVj���G<�7�A`���)�l����W�Yr�{�:0xc00070e300]
+Addr descriptor: ad:
+Addr descriptor: ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Tx addresses map: 
+map[7�����o�>�jn�� (�5�*<V/�S:0xc00070e400 $�pVj���G<�7�A`���)�l����W�Yr�{�:0xc00070e300]
+Addr descriptor: ad:
+Addr descriptor: ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Address: &{140539920163936} 
+Real addreses list: 
+map[]
+btxid: 
+[15 55 20 169 131 227 235 165 111 143 31 62 179 106 110 186 24 224 0 21 40 201 53 205 4 42 60 86 14 47 222 83]
+7�����o�>�jn�� (�5�*<V/�S
+bytes:  7�����o�>�jn�� (�5�*<V/�S
+[15 55 20 169 131 227 235 165 111 143 31 62 179 106 110 186 24 224 0 21 40 201 53 205 4 42 60 86 14 47 222 83]
+Input addrdesc: ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Input valueSat: 11842607924
+Input ValueSatBase10: 11842607924
+Output addrdesc: ad:
+Output valueSat: 0
+Output ValueSatBase10: 0
+Output addrdesc: ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Output valueSat: 12416759262
+Output ValueSatBase10: 12416759262
+bytes:  7�����o�>�jn�� (�5�*<V/�S
+[15 55 20 169 131 227 235 165 111 143 31 62 179 106 110 186 24 224 0 21 40 201 53 205 4 42 60 86 14 47 222 83]
+Called on: 24df70566a83a0a8473c89379a4160f2a19329e96ce3a7e4b157ad5972f57b86 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []Called on: 0f3714a983e3eba56f8f1f3eb36a6eba18e0001528c935cd042a3c560e2fde53 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []addresses12: map[v���1�V���+��J,���:[{[15 55 20 169 131 227 235 165 111 143 31 62 179 106 110 186 24 224 0 21 40 201 53 205 4 42 60 86 14 47 222 83] [1 -1]}]]
+Storing tx address here3
+Tx addresses map: map[7�����o�>�jn�� (�5�*<V/�S:0xc00070e400 $�pVj���G<�7�A`���)�l����W�Yr�{�:0xc00070e300 ���P�i��X�J��W���O��0��ɔo_2:0xc00044c0c0]
+Input addrdesc  ad:
+Input value sat   {false []}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Output value sat   {false []}
+tx height:  544603
+Input addrdesc  ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Input value sat   {false [12416759262]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Output value sat   {false [13001270681]}
+tx height:  544603
+Input addrdesc  ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Input value sat   {false [11842607924]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Output value sat   {false [12416759262]}
+tx height:  522573
+Transaction tx store: $�pVj���G<�7�A`���)�l����W�Yr�{� 
+Transaction tx store: 7�����o�>�jn�� (�5�*<V/�S 
+Transaction tx store: ���P�i��X�J��W���O��0��ɔo_2 
+TA INPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+{false []}
+Original buf: 
+[]
+Appending ta input: 
+ad:
+{false []}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+false
+{false []}
+Buf output: 
+[161 158 91 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0]
+TxStore: [161 158 91 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0] 
+TA INPUT: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [12416759262]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [13001270681]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [12416759262]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+false
+{false [13001270681]}
+Buf output: 
+[161 158 91 1 25 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 2 228 24 181 222 2 0 0 50 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 3 6 239 165 153]
+TxStore: [161 158 91 1 25 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 2 228 24 181 222 2 0 0 50 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 3 6 239 165 153] 
+TA INPUT: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [11842607924]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [12416759262]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [11842607924]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+true
+{false [12416759262]}
+Buf output: 
+[159 242 77 1 25 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 2 193 223 219 52 2 0 0 51 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 2 228 24 181 222]
+TxStore: [159 242 77 1 25 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 2 193 223 219 52 2 0 0 51 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 2 228 24 181 222] 
+Storing address contracts:: %v 
+ map[]
+BalanceStore: {%!d(bool=false) [98698436633264]} 
+Check at: &{140539920163936} 
+addr desc:  v���1�V���+��J,���
+TX indice:  [15 55 20 169 131 227 235 165 111 143 31 62 179 106 110 186 24 224 0 21 40 201 53 205 4 42 60 86 14 47 222 83]
+TX indice specific:  1
+TX indice specific:  -1
+AddressStore: [118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 255 247 176 164] 
+ 7�����o�>�jn�� (�5�*<V/�SFunction name: apiBlockIndexFunction name: apiTxSpecificFunction name: apiTxFunction name: apiAddressFunction name: apiXpubFunction name: apiUtxoFunction name: apiBlockFunction name: apiBlockRawFunction name: apiSendTxFunction name: apiEstimateFeeFunction name: apiBalanceHistoryFunction name: apiBlockIndexFunction name: apiTxSpecificFunction name: apiTxFunction name: apiAddressFunction name: apiXpubFunction name: apiUtxoFunction name: apiBlockFunction name: apiBlockRawFunction name: apiSendTxFunction name: apiEstimateFeeFunction name: apiFeeStatsFunction name: apiBalanceHistoryFunction name: apiTickersFunction name: apiMultiTickersFunction name: apiTickersListCreating new hydra RPC With: 
+[123 10 32 32 32 32 34 100 101 112 114 101 99 97 116 101 100 114 112 99 34 58 32 34 101 115 116 105 109 97 116 101 102 101 101 34 44 10 32 32 32 32 34 102 105 97 116 95 114 97 116 101 115 34 58 32 34 99 111 105 110 103 101 99 107 111 34 44 10 32 32 32 32 34 102 105 97 116 95 114 97 116 101 115 95 112 97 114 97 109 115 34 58 32 34 123 92 34 117 114 108 92 34 58 32 92 34 104 116 116 112 115 58 47 47 97 112 105 46 99 111 105 110 103 101 99 107 111 46 99 111 109 47 97 112 105 47 118 51 92 34 44 32 92 34 99 111 105 110 92 34 58 32 92 34 104 121 100 114 97 92 34 44 32 92 34 112 101 114 105 111 100 83 101 99 111 110 100 115 92 34 58 32 54 48 125 34 44 10 32 32 32 32 34 108 111 103 101 118 101 110 116 115 34 58 32 34 49 34 44 10 32 32 32 32 34 99 111 105 110 95 110 97 109 101 34 58 32 34 72 121 100 114 97 34 44 10 32 32 32 32 34 99 111 105 110 95 115 104 111 114 116 99 117 116 34 58 32 34 72 89 68 82 65 34 44 10 32 32 32 32 34 99 111 105 110 95 108 97 98 101 108 34 58 32 34 72 121 100 114 97 34 44 10 32 32 32 32 34 114 112 99 95 117 114 108 34 58 32 34 104 116 116 112 115 58 47 47 104 121 100 114 97 46 110 111 100 101 115 46 99 104 97 110 103 101 120 46 105 111 58 34 44 10 32 32 32 32 34 114 112 99 95 117 115 101 114 34 58 32 34 117 115 101 114 34 44 10 32 32 32 32 34 114 112 99 95 112 97 115 115 34 58 32 34 112 97 115 115 34 44 10 32 32 32 32 34 114 112 99 95 116 105 109 101 111 117 116 34 58 32 50 53 44 10 32 32 32 32 34 112 97 114 115 101 34 58 32 116 114 117 101 44 10 32 32 32 32 34 109 101 115 115 97 103 101 95 113 117 101 117 101 95 98 105 110 100 105 110 103 34 58 32 34 116 99 112 58 47 47 49 50 55 46 48 46 48 46 49 58 51 56 51 54 51 34 44 10 32 32 32 32 34 115 117 98 118 101 114 115 105 111 110 34 58 32 34 34 44 10 32 32 32 32 34 97 100 100 114 101 115 115 95 102 111 114 109 97 116 34 58 32 34 34 44 10 32 32 32 32 34 120 112 117 98 95 109 97 103 105 99 34 58 32 55 54 48 54 55 51 53 56 44 10 32 32 32 32 34 120 112 117 98 95 109 97 103 105 99 95 115 101 103 119 105 116 95 112 50 115 104 34 58 32 55 55 52 50 57 57 51 56 44 10 32 32 32 32 34 120 112 117 98 95 109 97 103 105 99 95 115 101 103 119 105 116 95 110 97 116 105 118 101 34 58 32 55 56 55 57 50 53 49 56 44 10 32 32 32 32 34 115 108 105 112 52 52 34 58 32 50 51 48 49 44 10 10 32 32 32 32 34 109 101 109 112 111 111 108 95 119 111 114 107 101 114 115 34 58 32 56 44 10 32 32 32 32 34 109 101 109 112 111 111 108 95 115 117 98 95 119 111 114 107 101 114 115 34 58 32 50 44 10 32 32 32 32 34 98 108 111 99 107 95 97 100 100 114 101 115 115 101 115 95 116 111 95 107 101 101 112 34 58 32 51 48 48 10 125]
+Create blockchain  &{0xc0002b0000 0xc0003fc880}
+Initialized hydra parser with: 
+&{mainnet Unknown BitcoinNet (2951408119) 8333 [seed.bitcoin.sipa.be dnsseed.bluematt.me dnsseed.bitcoin.dashjr.org seed.bitcoinstats.com seed.bitnodes.io seed.bitcoin.jonasschnelli.ch] 0x1c814e0 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f 26959946667150639794667015087019630673637144422540572481103610249215 486604799 227931 388381 363725 500 210000 336h0m0s 10m0s 4 false 0s false [{11111 0000000069e244f73d78e8fd29ba2fd2ed618bd6fa2ee92559f542fdb26e7c1d} {33333 000000002dd5588a74784eaa7ab0507a18ad16a236e7b1ce69f00d7ddfb5d0a6} {74000 0000000000573993a3c9e41ce34471c079dcf5f52a0e824a81e7f953b8661a20} {105000 00000000000291ce28027faea320c8d2b054b2e0fe44a773f3eefb151d6bdc97} {134444 00000000000005b12ffd4cd315cd34ffd4a594f430ac814c91184a0d42d2b0fe} {168000 000000000000099e61ea72015e79632f216fe6cb33d7899acb35b75c8303b763} {193000 000000000000059f452a5f7340de6682a977387c17010ff6e6c3bd83ca8b1317} {210000 000000000000048b95347e83192f69cf0366076336c639f9b7228e9ba171342e} {216116 00000000000001b4f4b433e81ee46494af945cf96014816a4e2370f11b23df4e} {225430 00000000000001c108384350f74090433e7fcf79a606b8e797f065b130575932} {250000 000000000000003887df1f29024b06fc2200b55f8af8f35453d7be294df2d214} {267300 000000000000000a83fbd660e918f218bf37edd92b748ad940483c7c116179ac} {279000 0000000000000001ae8c72a0b0c301f67e3afca10e819efa9041e458e9bd7e40} {300255 0000000000000000162804527c6e9b9f0563a280525f9d08c12041def0a0f3b2} {319400 000000000000000021c6052e9becade189495d1c539aa37c58917305fd15f13b} {343185 0000000000000000072b8bf361d01a6ba7d445dd024203fafc78768ed4368554} {352940 000000000000000010755df42dba556bb72be6a32f3ce0b6941ce4430152c9ff} {382320 00000000000000000a8dc6ed5b133d0eb2fd6af56203e4159789b092defd8ab2}] 1916 2016 [{28 1199145601 1230767999} {0 1462060800 1493596800} {1 1479168000 1510704000} {0 0 0}] false hc 1 [40] [63] [128] [6] [10] 0 [4 136 173 228] [4 136 178 30] 0}
+&{Hydra HYDRA https://hydra.nodes.changex.io: user pass 25 true tcp://127.0.0.1:38363  300 8 2  true true 76067358 77429938 78792518 2301   100}
+Function name: apiIndexConnected to new block. 
+
+First address map:
+map[]
+Tx id:  897201e7b14d024754e93b50df78ae589ee734ccb544839c3494f12f41f1de50
+Called on: 897201e7b14d024754e93b50df78ae589ee734ccb544839c3494f12f41f1de50 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [137 114 1 231 177 77 2 71 84 233 59 80 223 120 174 88 158 231 52 204 181 68 131 156 52 148 241 47 65 241 222 80]
+Tx id:  8083a61242c527b7f8a28b16cc5ef4e07f97eb4b9d0c0596a267993d8a747f41
+Called on: 8083a61242c527b7f8a28b16cc5ef4e07f97eb4b9d0c0596a267993d8a747f41 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [128 131 166 18 66 197 39 183 248 162 139 22 204 94 244 224 127 151 235 75 157 12 5 150 162 103 153 61 138 116 127 65]
+Tx addresses map: 
+map[�r��MGT�;P�x�X��4̵D��4��/A��P:0xc000826280]
+Addr descriptor: ad:
+Addr descriptor: ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Tx addresses map: 
+map[���B�'�����^����K���g�=�tA:0xc0008262c0 �r��MGT�;P�x�X��4̵D��4��/A��P:0xc000826280]
+Addr descriptor: ad:
+Addr descriptor: ad:76a914e7f6101846f9f6d2dd4b11f740f927e63698c8ac88ac
+Address: &{139892722544160} 
+Real addreses list: 
+map[]
+btxid: 
+[128 131 166 18 66 197 39 183 248 162 139 22 204 94 244 224 127 151 235 75 157 12 5 150 162 103 153 61 138 116 127 65]
+���B�'�����^����K���g�=�tA
+bytes:  ���B�'�����^����K���g�=�tA
+[128 131 166 18 66 197 39 183 248 162 139 22 204 94 244 224 127 151 235 75 157 12 5 150 162 103 153 61 138 116 127 65]
+Input addrdesc: ad:76a914e7f6101846f9f6d2dd4b11f740f927e63698c8ac88ac
+Input valueSat: 10502181576
+Input ValueSatBase10: 10502181576
+Output addrdesc: ad:
+Output valueSat: 0
+Output ValueSatBase10: 0
+Output addrdesc: ad:76a914e7f6101846f9f6d2dd4b11f740f927e63698c8ac88ac
+Output valueSat: 11057967137
+Output ValueSatBase10: 11057967137
+Output addrdesc: ad:76a9144fab77e8f3a87380308ce66acdcfc71e3b538f7688ac
+Output valueSat: 27816509
+Output ValueSatBase10: 27816509
+Output addrdesc: ad:76a914a38b68124b029bcd28ce70cd9535e62e9f906d7888ac
+Output valueSat: 3740250
+Output ValueSatBase10: 3740250
+bytes:  ���B�'�����^����K���g�=�tA
+[128 131 166 18 66 197 39 183 248 162 139 22 204 94 244 224 127 151 235 75 157 12 5 150 162 103 153 61 138 116 127 65]
+Called on: 897201e7b14d024754e93b50df78ae589ee734ccb544839c3494f12f41f1de50 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []Called on: 8083a61242c527b7f8a28b16cc5ef4e07f97eb4b9d0c0596a267993d8a747f41 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []addresses12: map[v���F����K�@�'�6�Ȭ��:[{[128 131 166 18 66 197 39 183 248 162 139 22 204 94 244 224 127 151 235 75 157 12 5 150 162 103 153 61 138 116 127 65] [1 -1]}]]
+Storing tx address here3
+Tx addresses map: map[J�mE�F��[�~f���a�G�$�L@W���!�PC:0xc000826380 ���B�'�����^����K���g�=�tA:0xc0008262c0 �r��MGT�;P�x�X��4̵D��4��/A��P:0xc000826280]
+Input addrdesc  ad:76a914e7f6101846f9f6d2dd4b11f740f927e63698c8ac88ac
+Input value sat   {false [11057967137]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914e7f6101846f9f6d2dd4b11f740f927e63698c8ac88ac
+Output value sat   {false [11642479031]}
+tx height:  544604
+Input addrdesc  ad:76a914e7f6101846f9f6d2dd4b11f740f927e63698c8ac88ac
+Input value sat   {false [10502181576]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914e7f6101846f9f6d2dd4b11f740f927e63698c8ac88ac
+Output value sat   {false [11057967137]}
+Output addrdesc  ad:76a9144fab77e8f3a87380308ce66acdcfc71e3b538f7688ac
+Output value sat   {false [27816509]}
+Output addrdesc  ad:76a914a38b68124b029bcd28ce70cd9535e62e9f906d7888ac
+Output value sat   {false [3740250]}
+tx height:  482524
+Input addrdesc  ad:
+Input value sat   {false []}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Output value sat   {false []}
+tx height:  544604
+Transaction tx store: �r��MGT�;P�x�X��4̵D��4��/A��P 
+Transaction tx store: ���B�'�����^����K���g�=�tA 
+Transaction tx store: J�mE�F��[�~f���a�G�$�L@W���!�PC 
+TA INPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+{false []}
+Original buf: 
+[]
+Appending ta input: 
+ad:
+{false []}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+false
+{false []}
+Buf output: 
+[161 158 92 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0]
+TxStore: [161 158 92 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0] 
+TA INPUT: 
+ad:76a914e7f6101846f9f6d2dd4b11f740f927e63698c8ac88ac
+{false [11057967137]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914e7f6101846f9f6d2dd4b11f740f927e63698c8ac88ac
+{false [11642479031]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914e7f6101846f9f6d2dd4b11f740f927e63698c8ac88ac
+{false [11057967137]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914e7f6101846f9f6d2dd4b11f740f927e63698c8ac88ac
+false
+{false [11642479031]}
+Buf output: 
+[161 158 92 1 25 118 169 20 231 246 16 24 70 249 246 210 221 75 17 247 64 249 39 230 54 152 200 172 136 172 5 2 147 27 48 33 2 0 0 50 118 169 20 231 246 16 24 70 249 246 210 221 75 17 247 64 249 39 230 54 152 200 172 136 172 5 2 181 242 33 183]
+TxStore: [161 158 92 1 25 118 169 20 231 246 16 24 70 249 246 210 221 75 17 247 64 249 39 230 54 152 200 172 136 172 5 2 147 27 48 33 2 0 0 50 118 169 20 231 246 16 24 70 249 246 210 221 75 17 247 64 249 39 230 54 152 200 172 136 172 5 2 181 242 33 183] 
+TA INPUT: 
+ad:76a914e7f6101846f9f6d2dd4b11f740f927e63698c8ac88ac
+{false [10502181576]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914e7f6101846f9f6d2dd4b11f740f927e63698c8ac88ac
+{false [11057967137]}
+TA OUTPUT: 
+ad:76a9144fab77e8f3a87380308ce66acdcfc71e3b538f7688ac
+{false [27816509]}
+TA OUTPUT: 
+ad:76a914a38b68124b029bcd28ce70cd9535e62e9f906d7888ac
+{false [3740250]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914e7f6101846f9f6d2dd4b11f740f927e63698c8ac88ac
+{false [10502181576]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914e7f6101846f9f6d2dd4b11f740f927e63698c8ac88ac
+true
+{false [11057967137]}
+Appending ta output: 
+ad:76a9144fab77e8f3a87380308ce66acdcfc71e3b538f7688ac
+true
+{false [27816509]}
+Appending ta output: 
+ad:76a914a38b68124b029bcd28ce70cd9535e62e9f906d7888ac
+false
+{false [3740250]}
+Buf output: 
+[157 185 92 1 25 118 169 20 231 246 16 24 70 249 246 210 221 75 17 247 64 249 39 230 54 152 200 172 136 172 5 2 113 250 146 200 4 0 0 51 118 169 20 231 246 16 24 70 249 246 210 221 75 17 247 64 249 39 230 54 152 200 172 136 172 5 2 147 27 48 33 51 118 169 20 79 171 119 232 243 168 115 128 48 140 230 106 205 207 199 30 59 83 143 118 136 172 4 1 168 114 61 50 118 169 20 163 139 104 18 75 2 155 205 40 206 112 205 149 53 230 46 159 144 109 120 136 172 3 57 18 90]
+TxStore: [157 185 92 1 25 118 169 20 231 246 16 24 70 249 246 210 221 75 17 247 64 249 39 230 54 152 200 172 136 172 5 2 113 250 146 200 4 0 0 51 118 169 20 231 246 16 24 70 249 246 210 221 75 17 247 64 249 39 230 54 152 200 172 136 172 5 2 147 27 48 33 51 118 169 20 79 171 119 232 243 168 115 128 48 140 230 106 205 207 199 30 59 83 143 118 136 172 4 1 168 114 61 50 118 169 20 163 139 104 18 75 2 155 205 40 206 112 205 149 53 230 46 159 144 109 120 136 172 3 57 18 90] 
+Storing address contracts:: %v 
+ map[]
+BalanceStore: {%!d(bool=false) [2578198412250]} 
+Check at: &{139892722544160} 
+addr desc:  v���F����K�@�'�6�Ȭ��
+TX indice:  [128 131 166 18 66 197 39 183 248 162 139 22 204 94 244 224 127 151 235 75 157 12 5 150 162 103 153 61 138 116 127 65]
+TX indice specific:  1
+TX indice specific:  -1
+AddressStore: [118 169 20 231 246 16 24 70 249 246 210 221 75 17 247 64 249 39 230 54 152 200 172 136 172 255 247 176 163] 
+ ���B�'�����^����K���g�=�tAConnected to new block. 
+
+First address map:
+map[]
+Tx id:  115c478269ef1f198ae77293399c81146c10cec5d5b9dedf71604dfcb202acf2
+Called on: 115c478269ef1f198ae77293399c81146c10cec5d5b9dedf71604dfcb202acf2 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [17 92 71 130 105 239 31 25 138 231 114 147 57 156 129 20 108 16 206 197 213 185 222 223 113 96 77 252 178 2 172 242]
+Tx id:  236c75b1d44bb9394b84cf1605bc7e81aa2820c81464a782b4811dbdee31ca9d
+Called on: 236c75b1d44bb9394b84cf1605bc7e81aa2820c81464a782b4811dbdee31ca9d 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [35 108 117 177 212 75 185 57 75 132 207 22 5 188 126 129 170 40 32 200 20 100 167 130 180 129 29 189 238 49 202 157]
+Tx addresses map: 
+map[\G�i���r�9��l��չ��q`M����:0xc000c5e040]
+Addr descriptor: ad:
+Addr descriptor: ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Tx addresses map: 
+map[\G�i���r�9��l��չ��q`M����:0xc000c5e040 #lu��K�9K���~��( �d������1ʝ:0xc000c5e0c0]
+Addr descriptor: ad:
+Addr descriptor: ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Address: &{139892722544160} 
+Real addreses list: 
+map[]
+btxid: 
+[35 108 117 177 212 75 185 57 75 132 207 22 5 188 126 129 170 40 32 200 20 100 167 130 180 129 29 189 238 49 202 157]
+#lu��K�9K���~��( �d������1ʝ
+bytes:  #lu��K�9K���~��( �d������1ʝ
+[35 108 117 177 212 75 185 57 75 132 207 22 5 188 126 129 170 40 32 200 20 100 167 130 180 129 29 189 238 49 202 157]
+Addr descriptor: ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Real addreses list: 
+map[v���1�V���+��J,���:[{[35 108 117 177 212 75 185 57 75 132 207 22 5 188 126 129 170 40 32 200 20 100 167 130 180 129 29 189 238 49 202 157] [1]}]]
+[1]
+[35 108 117 177 212 75 185 57 75 132 207 22 5 188 126 129 170 40 32 200 20 100 167 130 180 129 29 189 238 49 202 157]
+btxid: 
+[35 108 117 177 212 75 185 57 75 132 207 22 5 188 126 129 170 40 32 200 20 100 167 130 180 129 29 189 238 49 202 157]
+#lu��K�9K���~��( �d������1ʝ
+bytes:  #lu��K�9K���~��( �d������1ʝ
+[35 108 117 177 212 75 185 57 75 132 207 22 5 188 126 129 170 40 32 200 20 100 167 130 180 129 29 189 238 49 202 157]
+Input addrdesc: ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Input valueSat: 41063000000
+Input ValueSatBase10: 41063000000
+Output addrdesc: ad:
+Output valueSat: 0
+Output ValueSatBase10: 0
+Output addrdesc: ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Output valueSat: 21573000000
+Output ValueSatBase10: 21573000000
+Output addrdesc: ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Output valueSat: 21573007278
+Output ValueSatBase10: 21573007278
+bytes:  #lu��K�9K���~��( �d������1ʝ
+[35 108 117 177 212 75 185 57 75 132 207 22 5 188 126 129 170 40 32 200 20 100 167 130 180 129 29 189 238 49 202 157]
+Called on: 115c478269ef1f198ae77293399c81146c10cec5d5b9dedf71604dfcb202acf2 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []Called on: 236c75b1d44bb9394b84cf1605bc7e81aa2820c81464a782b4811dbdee31ca9d 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []addresses12: map[v���1�V���+��J,���:[{[35 108 117 177 212 75 185 57 75 132 207 22 5 188 126 129 170 40 32 200 20 100 167 130 180 129 29 189 238 49 202 157] [1 2 -1]}]]
+Storing tx address here3
+Tx addresses map: map[\G�i���r�9��l��չ��q`M����:0xc000c5e040 #lu��K�9K���~��( �d������1ʝ:0xc000c5e0c0 d>��08�n�9���>oua�?Ca&b��.LH�:0xc000c5e240]
+Input addrdesc  ad:
+Input value sat   {false []}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Output value sat   {false []}
+tx height:  544605
+Input addrdesc  ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Input value sat   {false [21573007278]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Output value sat   {false [11078000000]}
+Output addrdesc  ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Output value sat   {false [11079519646]}
+tx height:  544605
+Input addrdesc  ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Input value sat   {false [41063000000]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Output value sat   {false [21573000000]}
+Output addrdesc  ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+Output value sat   {false [21573007278]}
+tx height:  402318
+Transaction tx store: \G�i���r�9��l��չ��q`M���� 
+Transaction tx store: #lu��K�9K���~��( �d������1ʝ 
+Transaction tx store: d>��08�n�9���>oua�?Ca&b��.LH� 
+TA INPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+{false []}
+Original buf: 
+[]
+Appending ta input: 
+ad:
+{false []}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+false
+{false []}
+Buf output: 
+[161 158 93 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0]
+TxStore: [161 158 93 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0] 
+TA INPUT: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [21573007278]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [11078000000]}
+TA OUTPUT: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [11079519646]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [21573007278]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+false
+{false [11078000000]}
+Appending ta output: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+false
+{false [11079519646]}
+Buf output: 
+[161 158 93 1 25 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 5 5 217 247 174 3 0 0 50 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 2 148 76 221 128 50 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 2 148 100 13 158]
+TxStore: [161 158 93 1 25 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 5 5 217 247 174 3 0 0 50 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 2 148 76 221 128 50 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 2 148 100 13 158] 
+TA INPUT: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [41063000000]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [21573000000]}
+TA OUTPUT: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [21573007278]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+{false [41063000000]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+true
+{false [21573000000]}
+Appending ta output: 
+ad:76a914f2a731891a5612c5d801d22b18b3ec0f4a2c0d9c88ac
+true
+{false [21573007278]}
+Buf output: 
+[152 199 14 1 25 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 9 143 139 167 192 3 0 0 51 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 5 5 217 219 64 51 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 5 5 217 247 174]
+TxStore: [152 199 14 1 25 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 9 143 139 167 192 3 0 0 51 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 5 5 217 219 64 51 118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 5 5 5 217 247 174] 
+Storing address contracts:: %v 
+ map[]
+BalanceStore: {%!d(bool=false) [98699021145632]} 
+Check at: &{139892722544160} 
+addr desc:  v���1�V���+��J,���
+TX indice:  [35 108 117 177 212 75 185 57 75 132 207 22 5 188 126 129 170 40 32 200 20 100 167 130 180 129 29 189 238 49 202 157]
+TX indice specific:  1
+TX indice specific:  2
+TX indice specific:  -1
+AddressStore: [118 169 20 242 167 49 137 26 86 18 197 216 1 210 43 24 179 236 15 74 44 13 156 136 172 255 247 176 162] 
+ #lu��K�9K���~��( �d������1ʝConnected to new block. 
+
+First address map:
+map[]
+Tx id:  14f8df4f76d446d22c30fcda0bdb54e8458fd570370d99a8d7585091e88aa20c
+Called on: 14f8df4f76d446d22c30fcda0bdb54e8458fd570370d99a8d7585091e88aa20c 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [20 248 223 79 118 212 70 210 44 48 252 218 11 219 84 232 69 143 213 112 55 13 153 168 215 88 80 145 232 138 162 12]
+Tx id:  191f14802f28f55e258f688cf62af9daf600c60c7c36f058e1e3c0d87e52bfb6
+Called on: 191f14802f28f55e258f688cf62af9daf600c60c7c36f058e1e3c0d87e52bfb6 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [25 31 20 128 47 40 245 94 37 143 104 140 246 42 249 218 246 0 198 12 124 54 240 88 225 227 192 216 126 82 191 182]
+Tx addresses map: 
+map[��Ov�F�,0���T�E��p7���XP�芢:0xc000596940]
+Addr descriptor: ad:
+Addr descriptor: ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Tx addresses map: 
+map[��Ov�F�,0���T�E��p7���XP�芢:0xc000596940 �/(�^%�h��*��� �|6�X����~R��:0xc000596980]
+Addr descriptor: ad:
+Addr descriptor: ad:76a9149e7c07161490b8964ee32614fda40b53e4d0cca888ac
+Address: &{139892722544160} 
+Real addreses list: 
+map[]
+btxid: 
+[25 31 20 128 47 40 245 94 37 143 104 140 246 42 249 218 246 0 198 12 124 54 240 88 225 227 192 216 126 82 191 182]
+�/(�^%�h��*��� �|6�X����~R��
+bytes:  �/(�^%�h��*��� �|6�X����~R��
+[25 31 20 128 47 40 245 94 37 143 104 140 246 42 249 218 246 0 198 12 124 54 240 88 225 227 192 216 126 82 191 182]
+Input addrdesc: ad:76a9149e7c07161490b8964ee32614fda40b53e4d0cca888ac
+Input valueSat: 18540714395
+Input ValueSatBase10: 18540714395
+Output addrdesc: ad:
+Output valueSat: 0
+Output ValueSatBase10: 0
+Output addrdesc: ad:76a9149e7c07161490b8964ee32614fda40b53e4d0cca888ac
+Output valueSat: 19119384816
+Output ValueSatBase10: 19119384816
+bytes:  �/(�^%�h��*��� �|6�X����~R��
+[25 31 20 128 47 40 245 94 37 143 104 140 246 42 249 218 246 0 198 12 124 54 240 88 225 227 192 216 126 82 191 182]
+Called on: 14f8df4f76d446d22c30fcda0bdb54e8458fd570370d99a8d7585091e88aa20c 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []Called on: 191f14802f28f55e258f688cf62af9daf600c60c7c36f058e1e3c0d87e52bfb6 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []addresses12: map[v��|���N�&��S��̨��:[{[25 31 20 128 47 40 245 94 37 143 104 140 246 42 249 218 246 0 198 12 124 54 240 88 225 227 192 216 126 82 191 182] [1 -1]}]]
+Storing tx address here3
+Tx addresses map: map[��Ov�F�,0���T�E��p7���XP�芢:0xc000596940 �/(�^%�h��*��� �|6�X����~R��:0xc000596980 a��zf`��۵���p}L�4��:1pX�s�ݘC:0xc000596a40]
+Input addrdesc  ad:
+Input value sat   {false []}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Output value sat   {false []}
+tx height:  544606
+Input addrdesc  ad:76a9149e7c07161490b8964ee32614fda40b53e4d0cca888ac
+Input value sat   {false [19119384816]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a9149e7c07161490b8964ee32614fda40b53e4d0cca888ac
+Output value sat   {false [19703897659]}
+tx height:  544606
+Input addrdesc  ad:76a9149e7c07161490b8964ee32614fda40b53e4d0cca888ac
+Input value sat   {false [18540714395]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a9149e7c07161490b8964ee32614fda40b53e4d0cca888ac
+Output value sat   {false [19119384816]}
+tx height:  532231
+Transaction tx store: ��Ov�F�,0���T�E��p7���XP�芢 
+Transaction tx store: �/(�^%�h��*��� �|6�X����~R�� 
+Transaction tx store: a��zf`��۵���p}L�4��:1pX�s�ݘC 
+TA INPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+{false []}
+Original buf: 
+[]
+Appending ta input: 
+ad:
+{false []}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+false
+{false []}
+Buf output: 
+[161 158 94 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0]
+TxStore: [161 158 94 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0] 
+TA INPUT: 
+ad:76a9149e7c07161490b8964ee32614fda40b53e4d0cca888ac
+{false [19119384816]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a9149e7c07161490b8964ee32614fda40b53e4d0cca888ac
+{false [19703897659]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a9149e7c07161490b8964ee32614fda40b53e4d0cca888ac
+{false [19119384816]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a9149e7c07161490b8964ee32614fda40b53e4d0cca888ac
+false
+{false [19703897659]}
+Buf output: 
+[161 158 94 1 25 118 169 20 158 124 7 22 20 144 184 150 78 227 38 20 253 164 11 83 228 208 204 168 136 172 5 4 115 154 168 240 2 0 0 50 118 169 20 158 124 7 22 20 144 184 150 78 227 38 20 253 164 11 83 228 208 204 168 136 172 5 4 150 113 158 59]
+TxStore: [161 158 94 1 25 118 169 20 158 124 7 22 20 144 184 150 78 227 38 20 253 164 11 83 228 208 204 168 136 172 5 4 115 154 168 240 2 0 0 50 118 169 20 158 124 7 22 20 144 184 150 78 227 38 20 253 164 11 83 228 208 204 168 136 172 5 4 150 113 158 59] 
+TA INPUT: 
+ad:76a9149e7c07161490b8964ee32614fda40b53e4d0cca888ac
+{false [18540714395]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a9149e7c07161490b8964ee32614fda40b53e4d0cca888ac
+{false [19119384816]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a9149e7c07161490b8964ee32614fda40b53e4d0cca888ac
+{false [18540714395]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a9149e7c07161490b8964ee32614fda40b53e4d0cca888ac
+true
+{false [19119384816]}
+Buf output: 
+[160 190 7 1 25 118 169 20 158 124 7 22 20 144 184 150 78 227 38 20 253 164 11 83 228 208 204 168 136 172 5 4 81 28 217 155 2 0 0 51 118 169 20 158 124 7 22 20 144 184 150 78 227 38 20 253 164 11 83 228 208 204 168 136 172 5 4 115 154 168 240]
+TxStore: [160 190 7 1 25 118 169 20 158 124 7 22 20 144 184 150 78 227 38 20 253 164 11 83 228 208 204 168 136 172 5 4 81 28 217 155 2 0 0 51 118 169 20 158 124 7 22 20 144 184 150 78 227 38 20 253 164 11 83 228 208 204 168 136 172 5 4 115 154 168 240] 
+Storing address contracts:: %v 
+ map[]
+BalanceStore: {%!d(bool=false) [2390201690491]} 
+Check at: &{139892722544160} 
+addr desc:  v��|���N�&��S��̨��
+TX indice:  [25 31 20 128 47 40 245 94 37 143 104 140 246 42 249 218 246 0 198 12 124 54 240 88 225 227 192 216 126 82 191 182]
+TX indice specific:  1
+TX indice specific:  -1
+AddressStore: [118 169 20 158 124 7 22 20 144 184 150 78 227 38 20 253 164 11 83 228 208 204 168 136 172 255 247 176 161] 
+ �/(�^%�h��*��� �|6�X����~R��Connected to new block. 
+
+First address map:
+map[]
+Tx id:  3511e64bf697fece1405c512f7930bb8066a696509146776a230eccbf9a01257
+Called on: 3511e64bf697fece1405c512f7930bb8066a696509146776a230eccbf9a01257 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [53 17 230 75 246 151 254 206 20 5 197 18 247 147 11 184 6 106 105 101 9 20 103 118 162 48 236 203 249 160 18 87]
+Tx id:  5afce47e7f6d8d621dc5a86fd237f578ca948b584c6fc03433b093c9b16880b8
+Called on: 5afce47e7f6d8d621dc5a86fd237f578ca948b584c6fc03433b093c9b16880b8 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Contracts are: 
+[]
+Hex transaction id: %v 
+ [90 252 228 126 127 109 141 98 29 197 168 111 210 55 245 120 202 148 139 88 76 111 192 52 51 176 147 201 177 104 128 184]
+Tx addresses map: 
+map[5�K��������jie	gv�0����W:0xc000730480]
+Addr descriptor: ad:
+Addr descriptor: ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Tx addresses map: 
+map[5�K��������jie	gv�0����W:0xc000730480 Z��~m�bŨo�7�xʔ�XLo�43��ɱh��:0xc000730500]
+Addr descriptor: ad:
+Addr descriptor: ad:76a914dc4ddfc31f8e6fb8441d998d4c18236aca1af80988ac
+Address: &{139892722544160} 
+Real addreses list: 
+map[]
+btxid: 
+[90 252 228 126 127 109 141 98 29 197 168 111 210 55 245 120 202 148 139 88 76 111 192 52 51 176 147 201 177 104 128 184]
+Z��~m�bŨo�7�xʔ�XLo�43��ɱh��
+bytes:  Z��~m�bŨo�7�xʔ�XLo�43��ɱh��
+[90 252 228 126 127 109 141 98 29 197 168 111 210 55 245 120 202 148 139 88 76 111 192 52 51 176 147 201 177 104 128 184]
+Input addrdesc: ad:76a914dc4ddfc31f8e6fb8441d998d4c18236aca1af80988ac
+Input valueSat: 10978336050
+Input ValueSatBase10: 10978336050
+Output addrdesc: ad:
+Output valueSat: 0
+Output ValueSatBase10: 0
+Output addrdesc: ad:76a914dc4ddfc31f8e6fb8441d998d4c18236aca1af80988ac
+Output valueSat: 12948259168
+Output ValueSatBase10: 12948259168
+bytes:  Z��~m�bŨo�7�xʔ�XLo�43��ɱh��
+[90 252 228 126 127 109 141 98 29 197 168 111 210 55 245 120 202 148 139 88 76 111 192 52 51 176 147 201 177 104 128 184]
+Called on: 3511e64bf697fece1405c512f7930bb8066a696509146776a230eccbf9a01257 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []Called on: 5afce47e7f6d8d621dc5a86fd237f578ca948b584c6fc03433b093c9b16880b8 
+{<nil> <nil>}
+Returning hrc transfers: 
+[]
+Ercs we get:  []
+Err is:  <nil>
+Any erc20s?: []addresses12: map[v��M���o�D��L#j��	��:[{[90 252 228 126 127 109 141 98 29 197 168 111 210 55 245 120 202 148 139 88 76 111 192 52 51 176 147 201 177 104 128 184] [1 -1]}]]
+Storing tx address here3
+Tx addresses map: map[5�K��������jie	gv�0����W:0xc000730480 Z��~m�bŨo�7�xʔ�XLo�43��ɱh��:0xc000730500 ��IOaʹʓ�����Y2�F���x7��:0xc000730640]
+Input addrdesc  ad:
+Input value sat   {false []}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+Output value sat   {false []}
+tx height:  544607
+Input addrdesc  ad:76a914dc4ddfc31f8e6fb8441d998d4c18236aca1af80988ac
+Input value sat   {false [12948259168]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914dc4ddfc31f8e6fb8441d998d4c18236aca1af80988ac
+Output value sat   {false [13532772485]}
+tx height:  544607
+Input addrdesc  ad:76a914dc4ddfc31f8e6fb8441d998d4c18236aca1af80988ac
+Input value sat   {false [10978336050]}
+Output addrdesc  ad:
+Output value sat   {false []}
+Output addrdesc  ad:76a914dc4ddfc31f8e6fb8441d998d4c18236aca1af80988ac
+Output value sat   {false [12948259168]}
+tx height:  333557
+Transaction tx store: 5�K��������jie	gv�0����W 
+Transaction tx store: Z��~m�bŨo�7�xʔ�XLo�43��ɱh�� 
+Transaction tx store: ��IOaʹʓ�����Y2�F���x7�� 
+TA INPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+{false []}
+Original buf: 
+[]
+Appending ta input: 
+ad:
+{false []}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:6a24aa21a9ed598bdca4eab6001d5753ba33e9a50b1986649f4b477948b5f761decd6b742b4e
+false
+{false []}
+Buf output: 
+[161 158 95 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0]
+TxStore: [161 158 95 1 0 0 2 0 0 76 106 36 170 33 169 237 89 139 220 164 234 182 0 29 87 83 186 51 233 165 11 25 134 100 159 75 71 121 72 181 247 97 222 205 107 116 43 78 0] 
+TA INPUT: 
+ad:76a914dc4ddfc31f8e6fb8441d998d4c18236aca1af80988ac
+{false [12948259168]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914dc4ddfc31f8e6fb8441d998d4c18236aca1af80988ac
+{false [13532772485]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914dc4ddfc31f8e6fb8441d998d4c18236aca1af80988ac
+{false [12948259168]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914dc4ddfc31f8e6fb8441d998d4c18236aca1af80988ac
+false
+{false [13532772485]}
+Buf output: 
+[161 158 95 1 25 118 169 20 220 77 223 195 31 142 111 184 68 29 153 141 76 24 35 106 202 26 248 9 136 172 5 3 3 198 193 96 2 0 0 50 118 169 20 220 77 223 195 31 142 111 184 68 29 153 141 76 24 35 106 202 26 248 9 136 172 5 3 38 157 184 133]
+TxStore: [161 158 95 1 25 118 169 20 220 77 223 195 31 142 111 184 68 29 153 141 76 24 35 106 202 26 248 9 136 172 5 3 3 198 193 96 2 0 0 50 118 169 20 220 77 223 195 31 142 111 184 68 29 153 141 76 24 35 106 202 26 248 9 136 172 5 3 38 157 184 133] 
+TA INPUT: 
+ad:76a914dc4ddfc31f8e6fb8441d998d4c18236aca1af80988ac
+{false [10978336050]}
+TA OUTPUT: 
+ad:
+{false []}
+TA OUTPUT: 
+ad:76a914dc4ddfc31f8e6fb8441d998d4c18236aca1af80988ac
+{false [12948259168]}
+Original buf: 
+[]
+Appending ta input: 
+ad:76a914dc4ddfc31f8e6fb8441d998d4c18236aca1af80988ac
+{false [10978336050]}
+Appending ta output: 
+ad:
+false
+{false []}
+Appending ta output: 
+ad:76a914dc4ddfc31f8e6fb8441d998d4c18236aca1af80988ac
+true
+{false [12948259168]}
+Buf output: 
+[148 173 117 1 25 118 169 20 220 77 223 195 31 142 111 184 68 29 153 141 76 24 35 106 202 26 248 9 136 172 5 2 142 92 29 50 2 0 0 51 118 169 20 220 77 223 195 31 142 111 184 68 29 153 141 76 24 35 106 202 26 248 9 136 172 5 3 3 198 193 96]
+TxStore: [148 173 117 1 25 118 169 20 220 77 223 195 31 142 111 184 68 29 153 141 76 24 35 106 202 26 248 9 136 172 5 2 142 92 29 50 2 0 0 51 118 169 20 220 77 223 195 31 142 111 184 68 29 153 141 76 24 35 106 202 26 248 9 136 172 5 3 3 198 193 96] 
+Storing address contracts:: %v 
+ map[]
+BalanceStore: {%!d(bool=false) [5540308986882]} 
+Check at: &{139892722544160} 
+addr desc:  v��M���o�D��L#j��	��
+TX indice:  [90 252 228 126 127 109 141 98 29 197 168 111 210 55 245 120 202 148 139 88 76 111 192 52 51 176 147 201 177 104 128 184]
+TX indice specific:  1
+TX indice specific:  -1
+AddressStore: [118 169 20 220 77 223 195 31 142 111 184 68 29 153 141 76 24 35 106 202 26 248 9 136 172 255 247 176 160] 

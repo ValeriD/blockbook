@@ -1,6 +1,8 @@
 package db
 
 import (
+	"fmt"
+
 	"github.com/golang/glog"
 	"github.com/juju/errors"
 	"github.com/trezor/blockbook/bchain"
@@ -89,6 +91,8 @@ func (c *TxCache) GetTransaction(txid string) (*bchain.Tx, int, error) {
 			return nil, 0, errors.New("Unknown chain type")
 		}
 		if c.enabled {
+			fmt.Println("Putting transaction id into database: ")
+			fmt.Println(&tx.Txid)
 			err = c.db.PutTx(tx, h, tx.Blocktime)
 			// do not return caching error, only log it
 			if err != nil {

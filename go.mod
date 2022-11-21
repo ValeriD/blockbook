@@ -43,6 +43,11 @@ require (
 )
 
 require (
+	github.com/btcsuite/btcutil v0.0.0-20190425235716-9e5f4b9a998d
+	github.com/dcb9/go-ethereum v1.8.10
+)
+
+require (
 	github.com/PiRK/cashaddr-converter v0.0.0-20220121162910-c6cb45163b29 // indirect
 	github.com/StackExchange/wmi v0.0.0-20180116203802-5d049714c4a6 // indirect
 	github.com/agl/ed25519 v0.0.0-20170116200512-5312a6153412 // indirect

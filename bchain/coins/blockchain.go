@@ -31,6 +31,7 @@ import (
 	"github.com/trezor/blockbook/bchain/coins/fujicoin"
 	"github.com/trezor/blockbook/bchain/coins/gamecredits"
 	"github.com/trezor/blockbook/bchain/coins/grs"
+	"github.com/trezor/blockbook/bchain/coins/hydra"
 	"github.com/trezor/blockbook/bchain/coins/koto"
 	"github.com/trezor/blockbook/bchain/coins/liquid"
 	"github.com/trezor/blockbook/bchain/coins/litecoin"
@@ -52,7 +53,6 @@ import (
 	"github.com/trezor/blockbook/bchain/coins/viacoin"
 	"github.com/trezor/blockbook/bchain/coins/vipstarcoin"
 	"github.com/trezor/blockbook/bchain/coins/zec"
-	"github.com/trezor/blockbook/bchain/coins/hydra"
 	"github.com/trezor/blockbook/common"
 )
 

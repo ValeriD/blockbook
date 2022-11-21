@@ -53,6 +53,15 @@ func NewWorker(db *db.RocksDB, chain bchain.BlockChain, mempool bchain.Mempool, 
 }
 
 func (w *Worker) getAddressesFromVout(vout *bchain.Vout) (bchain.AddressDescriptor, []string, bool, error) {
+	for i, v := range vout.ScriptPubKey.Addresses {
+		fmt.Println("Original vout: ", v)
+		decipheredHex := v
+		//decipheredHex, err := hex.DecodeString(vout.ScriptPubKey.Addresses[i])
+		//if err != nil {
+		//	fmt.Println("error decrypting vout")
+		//}
+		vout.ScriptPubKey.Addresses[i] = string(decipheredHex)
+	}
 	addrDesc, err := w.chainParser.GetAddrDescFromVout(vout)
 	if err != nil {
 		return nil, nil, false, err
@@ -196,6 +205,14 @@ func (w *Worker) GetTransactionFromBchainTx(bchainTx *bchain.Tx, height int, spe
 						vout := &otx.Vout[vin.Vout]
 						vin.ValueSat = (*Amount)(&vout.ValueSat)
 						vin.AddrDesc, vin.Addresses, vin.IsAddress, err = w.getAddressesFromVout(vout)
+
+						// for i2, _ := range vin.Addresses {
+						// 	decoded, err := hex.DecodeString(vin.Addresses[i])
+						// 	if err != nil {
+						// 		vin.Addresses[i2] = string("nil")
+						// 	}
+						// 	vin.Addresses[i2] = string(decoded)
+						// }
 						if err != nil {
 							glog.Errorf("getAddressesFromVout error %v, vout %+v", err, vout)
 						}
@@ -206,6 +223,14 @@ func (w *Worker) GetTransactionFromBchainTx(bchainTx *bchain.Tx, height int, spe
 						vin.ValueSat = (*Amount)(&output.ValueSat)
 						vin.AddrDesc = output.AddrDesc
 						vin.Addresses, vin.IsAddress, err = output.Addresses(w.chainParser)
+
+						// for i2, _ := range vin.Addresses {
+						// 	decoded, err := hex.DecodeString(vin.Addresses[i])
+						// 	if err != nil {
+						// 		vin.Addresses[i2] = string("nil")
+						// 	}
+						// 	vin.Addresses[i2] = string(decoded)
+						// }
 						if err != nil {
 							glog.Errorf("output.Addresses error %v, tx %v, output %v", err, bchainVin.Txid, i)
 						}
@@ -229,6 +254,16 @@ func (w *Worker) GetTransactionFromBchainTx(bchainTx *bchain.Tx, height int, spe
 	vouts := make([]Vout, len(bchainTx.Vout))
 	for i := range bchainTx.Vout {
 		bchainVout := &bchainTx.Vout[i]
+		// for i2, v := range bchainVout.ScriptPubKey.Addresses {
+		// 	fmt.Println("Original address: " + v)
+		// 	decoded, err := hex.DecodeString(v)
+		// 	if err != nil {
+		// 		fmt.Println("err on bchinvout:")
+		// 		fmt.Println(err)
+		// 	}
+		// 	fmt.Println("Decoded address: " + string(decoded))
+		// 	bchainVout.ScriptPubKey.Addresses[i2] = string(decoded)
+		// }
 		vout := &vouts[i]
 		vout.N = i
 		vout.ValueSat = (*Amount)(&bchainVout.ValueSat)
@@ -290,6 +325,7 @@ func (w *Worker) GetTransactionFromBchainTx(bchainTx *bchain.Tx, height int, spe
 			glog.Errorf("GetErc20FromTx error %v, %v", err, bchainTx)
 		}
 		tokens = w.getTokensFromErc20(ets)
+		fmt.Printf("Returned tokens are: %v \n", tokens)
 		ethTxData := hydra.GetEthereumTxData(bchainTx)
 		// mempool txs do not have fees yet
 		// if ethTxData.GasUsed != nil {
@@ -714,9 +750,12 @@ func (w *Worker) getEthereumToken(index int, addrDesc, contract bchain.AddressDe
 		}
 		validContract = false
 	}
+	fmt.Printf("Valid contract? %v \n", validContract)
+	fmt.Println("Details: ", details)
 	// do not read contract balances etc in case of Basic option
 	if details >= AccountDetailsTokenBalances && validContract {
 		b, err = w.chain.EthereumTypeGetErc20ContractBalance(addrDesc, contract)
+		fmt.Printf("Balance contract? %b \n", b)
 		if err != nil {
 			// return nil, nil, nil, errors.Annotatef(err, "EthereumTypeGetErc20ContractBalance %v %v", addrDesc, c.Contract)
 			glog.Warningf("EthereumTypeGetErc20ContractBalance addr %v, contract %v, %v", addrDesc, contract, err)
@@ -736,7 +775,7 @@ func (w *Worker) getEthereumToken(index int, addrDesc, contract bchain.AddressDe
 	}, nil
 }
 
-func (w *Worker) getEthereumTypeAddressBalances(addrDesc bchain.AddressDescriptor, details AccountDetails, filter *AddressFilter) (*db.AddrBalance, []Token, *bchain.Erc20Contract, uint64, int, int, error) {
+func (w *Worker) getHydraTypeAddressBalances(addrDesc bchain.AddressDescriptor, details AccountDetails, filter *AddressFilter) (*db.AddrBalance, []Token, *bchain.Erc20Contract, uint64, int, int, error) {
 	var (
 		ba             *db.AddrBalance
 		tokens         []Token
@@ -746,11 +785,12 @@ func (w *Worker) getEthereumTypeAddressBalances(addrDesc bchain.AddressDescripto
 	)
 	// unknown number of results for paging
 	totalResults := -1
-	ca, err := w.db.GetAddrDescContracts(addrDesc)
+	ca, err := w.db.GetHydraAddrDescContracts(addrDesc)
 	if err != nil {
 		return nil, nil, nil, 0, 0, 0, NewAPIError(fmt.Sprintf("Address not found, %v", err), true)
 	}
 	b, err := w.chain.EthereumTypeGetBalance(addrDesc)
+	fmt.Printf("Error we got: %d", err)
 	if err != nil {
 		return nil, nil, nil, 0, 0, 0, errors.Annotatef(err, "EthereumTypeGetBalance %v", addrDesc)
 	}
@@ -784,6 +824,123 @@ func (w *Worker) getEthereumTypeAddressBalances(addrDesc bchain.AddressDescripto
 					filter.Vout = i + 1
 				}
 				t, err := w.getEthereumToken(i+1, addrDesc, c.Contract, details, int(c.Txs))
+				fmt.Printf("Tokens we have: %v \n", t)
+				if err != nil {
+					return nil, nil, nil, 0, 0, 0, err
+				}
+				tokens[j] = *t
+				j++
+			}
+			// special handling if filter has contract
+			// if the address has no transactions with given contract, check the balance, the address may have some balance even without transactions
+			if len(filterDesc) > 0 && j == 0 && details >= AccountDetailsTokens {
+				t, err := w.getEthereumToken(0, addrDesc, filterDesc, details, 0)
+				fmt.Printf("Tokens we1 have: %v \n", t)
+				if err != nil {
+					return nil, nil, nil, 0, 0, 0, err
+				}
+				tokens = []Token{*t}
+				// switch off query for transactions, there are no transactions
+				filter.Vout = AddressFilterVoutQueryNotNecessary
+			} else {
+				tokens = tokens[:j]
+			}
+		}
+		ci, err = w.chain.EthereumTypeGetErc20ContractInfo(addrDesc)
+		glog.Warningf("Contract: %s \n", ci)
+		if err != nil {
+			return nil, nil, nil, 0, 0, 0, err
+		}
+		if filter.FromHeight == 0 && filter.ToHeight == 0 {
+			// compute total results for paging
+			if filter.Vout == AddressFilterVoutOff {
+				totalResults = int(ca.TotalTxs)
+			} else if filter.Vout == 0 {
+				totalResults = int(ca.NonContractTxs)
+			} else if filter.Vout > 0 && filter.Vout-1 < len(ca.Contracts) {
+				totalResults = int(ca.Contracts[filter.Vout-1].Txs)
+			} else if filter.Vout == AddressFilterVoutQueryNotNecessary {
+				totalResults = 0
+			}
+		}
+		nonContractTxs = int(ca.NonContractTxs)
+	} else {
+		// addresses without any normal transactions can have internal transactions and therefore balance
+		if b != nil {
+			ba = &db.AddrBalance{
+				BalanceSat: *b,
+			}
+		}
+		// special handling if filtering for a contract, check the ballance of it
+		if len(filterDesc) > 0 && details >= AccountDetailsTokens {
+			t, err := w.getEthereumToken(0, addrDesc, filterDesc, details, 0)
+			if err != nil {
+				return nil, nil, nil, 0, 0, 0, err
+			}
+			tokens = []Token{*t}
+			// switch off query for transactions, there are no transactions
+			filter.Vout = AddressFilterVoutQueryNotNecessary
+		}
+	}
+	return ba, tokens, ci, n, nonContractTxs, totalResults, nil
+}
+
+func (w *Worker) getEthereumTypeAddressBalances(addrDesc bchain.AddressDescriptor, details AccountDetails, filter *AddressFilter) (*db.AddrBalance, []Token, *bchain.Erc20Contract, uint64, int, int, error) {
+	var (
+		ba             *db.AddrBalance
+		tokens         []Token
+		ci             *bchain.Erc20Contract
+		n              uint64
+		nonContractTxs int
+	)
+	// unknown number of results for paging
+	totalResults := -1
+	fmt.Printf("Address looking for: %d \n\n\n", addrDesc)
+	ca, err := w.db.GetHydraAddrDescContracts(addrDesc)
+	fmt.Printf("Contracts of address: %d", ca)
+	if err != nil {
+		return nil, nil, nil, 0, 0, 0, NewAPIError(fmt.Sprintf("Address not found, %v", err), true)
+	}
+	fmt.Printf("Address: %d", ca)
+	fmt.Print("Here")
+	b, err := w.chain.EthereumTypeGetBalance(addrDesc)
+	fmt.Printf("Error we got: %d", err)
+	if err != nil {
+		return nil, nil, nil, 0, 0, 0, errors.Annotatef(err, "EthereumTypeGetBalance %v", addrDesc)
+	}
+	var filterDesc bchain.AddressDescriptor
+	fmt.Printf("\n Contractwehave: %s \n", filter.Contract)
+	if filter.Contract != "" {
+		filterDesc, err = w.chainParser.GetAddrDescFromAddress(filter.Contract)
+		if err != nil {
+			return nil, nil, nil, 0, 0, 0, NewAPIError(fmt.Sprintf("Invalid contract filter, %v", err), true)
+		}
+	}
+	if ca != nil {
+		ba = &db.AddrBalance{
+			Txs: uint32(ca.TotalTxs),
+		}
+		if b != nil {
+			ba.BalanceSat = *b
+		}
+		n, err = w.chain.EthereumTypeGetNonce(addrDesc)
+		if err != nil {
+			return nil, nil, nil, 0, 0, 0, errors.Annotatef(err, "EthereumTypeGetNonce %v", addrDesc)
+		}
+		fmt.Printf("Details requested: %d \n", details)
+		if details > AccountDetailsBasic {
+			tokens = make([]Token, len(ca.Contracts))
+			var j int
+			for i, c := range ca.Contracts {
+				if len(filterDesc) > 0 {
+					if !bytes.Equal(filterDesc, c.Contract) {
+						continue
+					}
+					// filter only transactions of this contract
+					filter.Vout = i + 1
+				}
+				t, err := w.getEthereumToken(i+1, addrDesc, c.Contract, details, int(c.Txs))
+				fmt.Printf("Token we have: %v \n", t)
 				if err != nil {
 					return nil, nil, nil, 0, 0, 0, err
 				}
@@ -837,6 +994,11 @@ func (w *Worker) getEthereumTypeAddressBalances(addrDesc bchain.AddressDescripto
 			tokens = []Token{*t}
 			// switch off query for transactions, there are no transactions
 			filter.Vout = AddressFilterVoutQueryNotNecessary
+		} else {
+			c, err := w.db.GetHydraAddrDescContracts(addrDesc)
+
+			fmt.Println("Contracts for that address are: ", c)
+			fmt.Println("Error for contracts is: ", err)
 		}
 	}
 	return ba, tokens, ci, n, nonContractTxs, totalResults, nil
@@ -888,7 +1050,7 @@ func (w *Worker) getAddrDescAndNormalizeAddress(address string) (bchain.AddressD
 		// try if the address is not address descriptor converted to string
 		addrDesc, errAd = bchain.AddressDescriptorFromString(address)
 		if errAd != nil {
-			return nil, "", NewAPIError(fmt.Sprintf("Invalid address, %v", err), true)
+			return nil, "", NewAPIError(fmt.Sprintf("Invalid addres, %v", err), true)
 		}
 	}
 	// convert the address to the format defined by the parser
@@ -981,6 +1143,7 @@ func (w *Worker) GetAddress(address string, page int, txsOnPage int, option Acco
 	} else {
 		// ba can be nil if the address is only in mempool!
 		ba, err = w.db.GetAddrDescBalance(addrDesc, db.AddressBalanceDetailNoUTXO)
+		fmt.Printf("Hope we dont get here. %v \n", ba)
 		if err != nil {
 			return nil, NewAPIError(fmt.Sprintf("Address not found, %v", err), true)
 		}
@@ -1111,7 +1274,7 @@ func (w *Worker) balanceHistoryForTxid(addrDesc bchain.AddressDescriptor, txid s
 	var ta *db.TxAddresses
 	var bchainTx *bchain.Tx
 	var height uint32
-	if w.chainType == bchain.ChainBitcoinType { //TODO add HydraType
+	if w.chainType == bchain.ChainBitcoinType || w.chainType == bchain.ChainHydraType { //TODO add HydraType
 		ta, err = w.db.GetTxAddresses(txid)
 		if err != nil {
 			return nil, err
@@ -1153,6 +1316,7 @@ func (w *Worker) balanceHistoryForTxid(addrDesc bchain.AddressDescriptor, txid s
 		ownInputIndex := -1
 		for i := range ta.Inputs {
 			tai := &ta.Inputs[i]
+			fmt.Printf("DB TX input: %v \n", tai)
 			if _, found := selfAddrDesc[string(tai.AddrDesc)]; found {
 				if ownInputIndex < 0 {
 					ownInputIndex = i
@@ -1167,6 +1331,7 @@ func (w *Worker) balanceHistoryForTxid(addrDesc bchain.AddressDescriptor, txid s
 		}
 		for i := range ta.Outputs {
 			tao := &ta.Outputs[i]
+			fmt.Printf("DB TX output: %v \n", tao)
 			if bytes.Equal(addrDesc, tao.AddrDesc) {
 				(*big.Int)(bh.ReceivedSat).Add((*big.Int)(bh.ReceivedSat), &tao.ValueSat)
 			}

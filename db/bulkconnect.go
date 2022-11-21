@@ -1,6 +1,7 @@
 package db
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/flier/gorocksdb"
@@ -91,6 +92,7 @@ func (b *BulkConnect) storeTxAddresses(wb *gorocksdb.WriteBatch, all bool) (int,
 			}
 		}
 	}
+	fmt.Println("Storing tx address here4")
 	if err := b.d.storeTxAddresses(wb, txm); err != nil {
 		return 0, 0, err
 	}

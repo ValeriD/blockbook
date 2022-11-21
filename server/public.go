@@ -1004,6 +1004,8 @@ func (s *PublicServer) apiAddress(r *http.Request, apiVersion int) (interface{},
 	if err == nil && apiVersion == apiV1 {
 		return s.api.AddressToV1(address), nil
 	}
+	fmt.Printf("Error: %e", err)
+	fmt.Printf("Data: %v", address)
 	return address, err
 }
 
