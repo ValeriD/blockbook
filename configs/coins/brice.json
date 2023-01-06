@@ -1,9 +1,9 @@
 {
     "coin": {
-        "name": "Brice",
-        "shortcut": "BRICE",
-        "label": "Brice",
-        "alias": "Brice"
+        "name": "Brise",
+        "shortcut": "BRISE",
+        "label": "Brise",
+        "alias": "Brise"
     },
     "ports": {
         "backend_rpc": 8064,
@@ -18,9 +18,9 @@
         "rpc_timeout": 25
     },
     "backend": {
-        "package_name": "backend-brice",
+        "package_name": "backend-brise",
         "package_revision": "satoshilabs-1",
-        "system_user": "brice",
+        "system_user": "brise",
         "version": "1.10.17-25c9b49f",
         "binary_url": "",
         "verification_type": "",
@@ -38,8 +38,8 @@
         "client_config_file": ""
     },
     "blockbook": {
-        "package_name": "blockbook-brice",
-        "system_user": "blockbook-brice",
+        "package_name": "blockbook-brise",
+        "system_user": "blockbook-brise",
         "internal_binding_template": ":{{.Ports.BlockbookInternal}}",
         "public_binding_template": ":{{.Ports.BlockbookPublic}}",
         "explorer_url": "",
@@ -53,7 +53,7 @@
                 "mempoolTxTimeoutHours": 48,
                 "queryBackendOnMempoolResync": false,
                 "fiat_rates": "coingecko",
-                "fiat_rates_params": "{\"url\": \"https://api.coingecko.com/api/v3\", \"coin\": \"brice\", \"periodSeconds\": 60}"
+                "fiat_rates_params": "{\"url\": \"https://api.coingecko.com/api/v3\", \"coin\": \"brise\", \"periodSeconds\": 60}"
             }
         }
     },
